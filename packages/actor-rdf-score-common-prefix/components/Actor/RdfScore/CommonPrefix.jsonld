@@ -1,0 +1,20 @@
+{
+  "@context": [
+    "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-rdf-score-common-prefix",
+  "components": [
+    {
+      "@id": "carscp:Actor/RdfScore/CommonPrefix",
+      "@type": "Class",
+      "extends": "cbrs:Actor/RdfScore",
+      "requireElement": "ActorRdfScoreCommonPrefix",
+      "constructorArguments": [
+        {
+          "extends": "cbrs:Actor/RdfScore/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

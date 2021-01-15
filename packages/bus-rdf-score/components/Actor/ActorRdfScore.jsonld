@@ -1,0 +1,28 @@
+{
+  "@context": "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/bus-rdf-score",
+  "components": [
+    {
+      "@id": "cbrs:Actor/RdfScore",
+      "@type": "AbstractClass",
+      "extends": "cc:Actor",
+      "requireElement": "ActorRdfScore",
+      "comment": "A comunica actor for the rdf-score bus.",
+      "parameters": [
+        {
+          "@id": "cc:Actor/bus",
+          "defaultScoped": {
+            "defaultScope": "cbrs:Actor/RdfScore",
+            "defaultScopedValue": { "@id": "cbrs:Bus/RdfScore" }
+          }
+        }
+      ],
+      "constructorArguments": [
+        {
+          "@id": "cbrs:Actor/RdfScore/constructorArgumentsObject",
+          "extends": "cc:Actor/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

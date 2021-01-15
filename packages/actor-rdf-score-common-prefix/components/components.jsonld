@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-rdf-score-common-prefix",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-rdf-score-common-prefix",
+  "import": [
+    "files-carscp:components/Actor/RdfScore/CommonPrefix.jsonld"
+  ]
+}

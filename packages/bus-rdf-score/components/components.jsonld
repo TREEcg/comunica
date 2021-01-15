@@ -1,0 +1,10 @@
+{
+  "@context": "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/bus-rdf-score",
+  "@type": "Module",
+  "requireName": "@hdelva/bus-rdf-score",
+  "import": [
+    "files-cbrs:components/Bus/BusRdfScore.jsonld",
+    "files-cbrs:components/Actor/ActorRdfScore.jsonld"
+  ]
+}
