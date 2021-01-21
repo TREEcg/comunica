@@ -77,8 +77,8 @@ export type RDFScore = number | null;
 
 export interface IActorRdfScoreOutput extends IActorOutput {
   /**
-   * Each quad is scored on {[0, 1] ∪ {null}}*.
-   * 1 is the best possible score, 0 the worst valid score,
+   * Each quad is scored on {[0, +Inf[ ∪ {null}}*.
+   * Inf is the best possible score, 0 the worst valid score,
    * null indicates the quad is inadmissable - and no ordering is defined.
    * Higher dimensional values have the following ordering:
    * (a,b) ≤ (a′,b′) if and only if a < a′ or (a = a′ and b ≤ b′).

@@ -1,0 +1,36 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
+    "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/mediator-combine-sequence",
+  "components": [
+    {
+      "@id": "cmcs:Mediator/CombineSequence",
+      "@type": "Class",
+      "extends": "cc:Mediator",
+      "requireElement": "MediatorCombineSequence",
+      "parameters": [
+        {
+          "@id": "cmcs:Mediator/CombineSequence/field",
+          "comment": "The field name to mediate over",
+          "range": "xsd:string",
+          "unique": true,
+          "required": true
+        }
+      ],
+      "constructorArguments": [
+        {
+          "@id": "cmcs:Mediator/CombineSequence/constructorArgumentsObject",
+          "extends": "cc:Mediator/constructorArgumentsObject",
+          "fields": [
+            {
+              "keyRaw": "field",
+              "value": "cmcs:Mediator/CombineSequence/field"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

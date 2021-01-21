@@ -3,7 +3,7 @@
     "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
     "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
     "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
+    "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld"
   ],
@@ -20,10 +20,11 @@
     },
     {
       "@id": "config-sets:rdf-score.json#mediatorRdfScore",
-      "@type": "MediatorRace",
+      "@type": "MediatorCombineSequence",
       "cc:Mediator/bus": {
         "@id": "cbrs:Bus/RdfScore"
-      }
+      },
+      "cmcs:Mediator/CombineSequence/field": "score"
     }
   ]
 }

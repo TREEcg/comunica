@@ -50,7 +50,7 @@ export class ActorRdfScoreCommonPrefix extends ActorRdfScore<string> {
           }
         }
 
-        score = Math.max(score, t / minLength);
+        score = Math.max(score, t);
       }
     }
 

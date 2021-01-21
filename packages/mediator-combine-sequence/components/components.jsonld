@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/mediator-combine-sequence",
+  "@type": "Module",
+  "requireName": "@hdelva/mediator-combine-sequence",
+  "import": [
+    "files-cmcs:components/Mediator/CombineSequence.jsonld"
+  ]
+}

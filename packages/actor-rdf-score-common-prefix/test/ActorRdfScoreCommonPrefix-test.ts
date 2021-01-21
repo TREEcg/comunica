@@ -104,7 +104,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           'http://www.w3.org/2001/XMLSchema#string': [ 'alphonse', 'meterie' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 8 });
     });
 
     it('should match expected data type value, exact match, second value', () => {
@@ -114,7 +114,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           'http://www.w3.org/2001/XMLSchema#string': [ 'alphonse', 'meterie' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 7 });
     });
 
     it('should match expected predicate value, exact match', () => {
@@ -124,7 +124,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'alphonse', 'meterie' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 8 });
     });
 
     it('should match expected predicate value, exact match, second value', () => {
@@ -134,10 +134,10 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'alphonse', 'meterie' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 7 });
     });
 
-    it('should not always return 1', () => {
+    it('should not match everything', () => {
       const result = actor.run({
         quad: createStringQuad('sub', 'pred', 'pablo'),
         expectedPredicateValues: {
@@ -154,7 +154,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'de' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 2 });
     });
 
     it('should detect overlap correctly', () => {
@@ -164,7 +164,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'anna' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 0.75 });
+      return expect(result).resolves.toMatchObject({ score: 3 });
     });
 
     it('should prioritize explicit literValues', () => {
@@ -175,7 +175,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'anna' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 1 });
+      return expect(result).resolves.toMatchObject({ score: 4 });
     });
 
     it('should return 0 when no expected values match the quad', () => {

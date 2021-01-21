@@ -1,0 +1,11 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/componentsjs/^3.0.0/components/context.jsonld",
+    {
+      "cmcs": "https://example.org/mediator-combine-sequence/",
+      "files-cmcs": "cmcs:^1.0.0/",
+      "MediatorCombineSequence": "cmcs:Mediator/CombineSequence",
+      "field": "cmcs:Mediator/CombineSequence/field"
+    }
+  ]
+}
