@@ -4,7 +4,7 @@
     {
       "carscp": "https://example.org/actor-rdf-score-common-prefix/",
       "files-carscp": "carscp:^1.0.0/",
-      "ActorRdfScoreCommonPrefix": "carscp:Actor/ActorRdfScore/CommonPrefix"
+      "ActorRdfScoreCommonPrefix": "carscp:Actor/RdfScore/CommonPrefix"
     }
   ]
 }

@@ -25,9 +25,8 @@ export class ActorRdfScoreCommonPrefix extends ActorRdfScore<string> {
   }
 
   public async run(action: IActionRdfScore<string>): Promise<IActorRdfScoreOutputSingle> {
-    let score = Number.NaN;
+    let score = null;
 
-    // Check should be unnecessary, but it gives us the TS type guard
     if (action.quad.object.termType === 'Literal') {
       // Any literal results in a valid score
       score = 0;

@@ -189,7 +189,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
       return expect(result).resolves.toMatchObject({ score: 0 });
     });
 
-    it('should return NaN when it wasn\'t even a literal', () => {
+    it('should return null when it wasn\'t even a literal', () => {
       const result = actor.run({
         quad: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
         literalValue: 'anna',
@@ -197,7 +197,7 @@ describe('ActorRdfResolveHypermediaLinksNext', () => {
           pred: [ 'anna' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: Number.NaN });
+      return expect(result).resolves.toMatchObject({ score: null });
     });
   });
 });

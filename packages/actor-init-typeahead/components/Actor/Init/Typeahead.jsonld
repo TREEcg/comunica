@@ -1,0 +1,65 @@
+{
+  "@context": [
+    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-init/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-dereference/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-init-typeahead",
+  "components": [
+    {
+      "@id": "cit:Actor/Init/Typeahead",
+      "@type": "Class",
+      "extends": "cbi:Actor/Init",
+      "requireElement": "ActorInitTypeahead",
+      "parameters": [
+        {
+          "@id": "cit:mediatorRdfDereference",
+          "comment": "The RDF Dereference mediator",
+          "required": true,
+          "unique": true
+        },
+        {
+          "@id": "cit:mediatorRdfScore",
+          "comment": "The RDF Score mediator",
+          "required": true,
+          "unique": true
+        },
+        {
+          "@id": "cit:url",
+          "comment": "The URL to dereference",
+          "unique": true
+        },
+        {
+          "@id": "cit:value",
+          "comment": "The value to look for",
+          "unique": true
+        }
+      ],
+      "constructorArguments": [
+        {
+          "@id": "cit:Actor/Init/Typeahead/constructorArgumentsObject",
+          "extends": "cc:Actor/constructorArgumentsObject",
+          "fields": [
+            {
+              "keyRaw": "mediatorRdfDereference",
+              "value": "cit:mediatorRdfDereference"
+            },
+            {
+              "keyRaw": "mediatorRdfScore",
+              "value": "cit:mediatorRdfScore"
+            },
+            {
+              "keyRaw": "url",
+              "value": "cit:url"
+            },
+            {
+              "keyRaw": "value",
+              "value": "cit:value"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

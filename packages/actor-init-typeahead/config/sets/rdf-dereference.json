@@ -1,0 +1,37 @@
+{
+  "@context": [
+    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-dereference-http-parse/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-http-node-fetch/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-dereference/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:comunica:my",
+      "actors": [
+        {
+          "@id": "config-sets:rdf-dereference.json#rdfDereferencer",
+          "@type": "ActorRdfDereferenceHttpParse",
+          "mediatorHttp": {
+            "@id": "config-sets:http.json#mediatorHttp"
+          },
+          "mediatorRdfParseMediatypes": {
+            "@id": "config-sets:rdf-parsers.json#mediatorRdfParseMediatypes"
+          },
+          "mediatorRdfParseHandle": {
+            "@id": "config-sets:rdf-parsers.json#mediatorRdfParseHandle"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "config-sets:rdf-dereference.json#mediatorRdfDereference",
+      "@type": "MediatorRace",
+      "cc:Mediator/bus": {
+        "@id": "cbrd:Bus/RdfDereference"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "urn:comunica:my",
+  "@graph": [
+    {
+      "@id": "urn:comunica:my",
+      "actors": [
+        {
+          "@id": "config-sets:rdf-score.json#myRdfScoreCommonPrefix",
+          "@type": "ActorRdfScoreCommonPrefix"
+        }
+      ]
+    },
+    {
+      "@id": "config-sets:rdf-score.json#mediatorRdfScore",
+      "@type": "MediatorRace",
+      "cc:Mediator/bus": {
+        "@id": "cbrs:Bus/RdfScore"
+      }
+    }
+  ]
+}

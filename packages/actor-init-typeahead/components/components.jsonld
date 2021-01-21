@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-init-typeahead",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-init-typeahead",
+  "import": [
+    "files-cit:components/Actor/Init/Typeahead.jsonld"
+  ]
+}

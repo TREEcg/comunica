@@ -41,7 +41,7 @@ export abstract class ActorRdfScore<T> extends
 }
 
 // Multiple values may searched for at the same time
-type IExpectedValues = Record<string, any[]>;
+export type IExpectedValues = Record<string, any[]>;
 
 export interface IActionRdfScore<T> extends IAction {
   /**
@@ -73,26 +73,29 @@ export interface IActorRdfScoreTest extends IActorTest {
   suitable: boolean;
 }
 
+export type RDFScore = number | null;
+
 export interface IActorRdfScoreOutput extends IActorOutput {
   /**
-   * Each quad is scored on [0, 1]*.
-   * 0 is the worst possible score, 1 is the best possible score.
+   * Each quad is scored on {[0, 1] ∪ {null}}*.
+   * 1 is the best possible score, 0 the worst valid score,
+   * null indicates the quad is inadmissable - and no ordering is defined.
    * Higher dimensional values have the following ordering:
    * (a,b) ≤ (a′,b′) if and only if a < a′ or (a = a′ and b ≤ b′).
    */
-  score: number | number[];
+  score: RDFScore | RDFScore[];
 }
 
 export interface IActorRdfScoreOutputSingle extends IActorRdfScoreOutput {
   /**
    * Scalar scoring output, most likely the result of a single actor.
    */
-  score: number;
+  score: RDFScore;
 }
 
 export interface IActorRdfScoreOutputMultiple extends IActorRdfScoreOutput {
   /**
    * Higher dimensional scoring output, most likely the result of a mediator.
    */
-  score: number[];
+  score: RDFScore[];
 }

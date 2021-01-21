@@ -1,0 +1,17 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/componentsjs/^3.0.0/components/context.jsonld",
+    {
+      "cit": "https://example.org/actor-init-typeahead/",
+      "files-cit": "cit:^1.0.0/",
+      "config-sets": "files-cit:config/sets/",
+
+      "ActorInitTypeahead": "cit:Actor/Init/Typeahead",
+      "mediatorRdfDereference": "cit:mediatorRdfDereference",
+      "mediatorRdfScore": "cit:mediatorRdfScore",
+
+      "url": "cit:url",
+      "value": "cit:value"
+    }
+  ]
+}
