@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-rdf-score-bigram/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-rdf-score-bigram",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-rdf-score-bigram",
+  "import": [
+    "files-carsbg:components/Actor/RdfScore/BiGram.jsonld"
+  ]
+}

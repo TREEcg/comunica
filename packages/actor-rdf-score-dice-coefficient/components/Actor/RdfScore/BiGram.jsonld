@@ -1,0 +1,20 @@
+{
+  "@context": [
+    "https://example.org/actor-rdf-score-bigram/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-rdf-score-bigram",
+  "components": [
+    {
+      "@id": "carsbg:Actor/RdfScore/BiGram",
+      "@type": "Class",
+      "extends": "cbrs:Actor/RdfScore",
+      "requireElement": "ActorRdfScoreBiGram",
+      "constructorArguments": [
+        {
+          "extends": "cbrs:Actor/RdfScore/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}
