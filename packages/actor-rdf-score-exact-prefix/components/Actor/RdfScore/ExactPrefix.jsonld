@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://example.org/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-rdf-score-exact-prefix",
+  "components": [
+    {
+      "@id": "carsep:Actor/RdfScore/ExactPrefix",
+      "@type": "Class",
+      "extends": "cbrs:Actor/RdfScore",
+      "requireElement": "ActorRdfScoreExactPrefix",
+      "constructorArguments": [
+        {
+          "@id": "carsep:Actor/RdfScore/ExactPrefix/constructorArgumentsObject",
+          "extends": "cbrs:Actor/RdfScore/constructorArgumentsObject",
+          "fields": [
+            {
+              "keyRaw": "maxPrefixTolerance",
+              "value": "carsep:Actor/RdfScore/ExactPrefix/maxPrefixTolerance"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

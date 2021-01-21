@@ -93,23 +93,22 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
             // Send these to a NormalizeMediator
             // NormalizeActors know which values they can handle
             if (quad.object.termType === 'Literal') {
-              for (const literalValue of normalize(quad.object.value).split(/\s/u)) {
-                const action = {
-                  quad,
-                  literalValue,
-                  expectedDatatypeValues,
-                };
+              const literalValue = normalize(quad.object.value).split(/\s/u);
+              const action = {
+                quad,
+                literalValue,
+                expectedDatatypeValues,
+              };
 
-                let { score: quadScore } = await this.mediatorRdfScore.mediate(action);
-                if (!Array.isArray(quadScore)) {
-                  quadScore = [ quadScore ];
-                }
+              let { score: quadScore } = await this.mediatorRdfScore.mediate(action);
+              if (!Array.isArray(quadScore)) {
+                quadScore = [ quadScore ];
+              }
 
-                if (score.length === 0) {
-                  score = quadScore;
-                } else {
-                  score = updateScores(score, quadScore);
-                }
+              if (score.length === 0) {
+                score = quadScore;
+              } else {
+                score = updateScores(score, quadScore);
               }
             }
           }

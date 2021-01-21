@@ -22,7 +22,15 @@ export abstract class ActorRdfScore<T> extends
     super(args);
   }
 
-  protected extractExpectedValues(action: IActionRdfScore<T>): any[] {
+  protected extractFoundValues(action: IActionRdfScore<T>): any[] {
+    if (Array.isArray(action.literalValue)) {
+      return action.literalValue;
+    }
+
+    return [ action.literalValue || action.quad.object.value ];
+  }
+
+  protected extractExpectedValues(action: IActionRdfScore<T>): T[] {
     let expectedValues;
 
     if (action.expectedPredicateValues) {
@@ -63,7 +71,7 @@ export interface IActionRdfScore<T> extends IAction {
   /**
    * If provided, this represents the (normalized) value that should be evaluated instead of the object value.
    */
-  literalValue?: T;
+  literalValue?: T | T[];
 }
 
 export interface IActorRdfScoreTest extends IActorTest {

@@ -31,26 +31,33 @@ export class ActorRdfScoreCommonPrefix extends ActorRdfScore<string> {
       // Any literal results in a valid score
       score = 0;
 
-      // Prioritize the literalValue, as this may contain a preprocessed version of the literal
-      const found: string = action.literalValue || action.quad.object.value;
-
+      const foundValues: string[] = this.extractFoundValues(action);
       const expectedValues: string[] = this.extractExpectedValues(action);
 
-      // Of all specified expectedValues, take the one with the highest score
-      for (const expected of expectedValues) {
-        let t = 0;
-        const minLength = Math.min(expected.length, found.length);
+      const expectedTokens: Map<string, number> = new Map();
+      for (const token of expectedValues) {
+        const count = expectedTokens.get(token) || 0;
+        expectedTokens.set(token, count + 1);
+      }
 
-        for (let i = 0; i < minLength; i++) {
-          // TODO: Can we avoid direct indexing, might be a bottleneck
-          if (found[i] === expected[i]) {
-            t += 1;
-          } else {
-            break;
+      // We're trying to account for every character in the expected values
+      for (const [ expected, count ] of expectedTokens) {
+        let t = 0;
+
+        for (const found of foundValues) {
+          const minLength = Math.min(expected.length, found.length);
+
+          for (let i = 0; i < minLength; i++) {
+            // TODO: Can we avoid direct indexing, might be a bottleneck
+            if (found[i] === expected[i]) {
+              t += 1;
+            } else {
+              break;
+            }
           }
         }
 
-        score = Math.max(score, t);
+        score += Math.min(t, expected.length * count);
       }
     }
 

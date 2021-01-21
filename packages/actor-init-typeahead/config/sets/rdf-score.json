@@ -1,7 +1,7 @@
 {
   "@context": [
     "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
+    "https://example.org/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
     "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
     "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
@@ -14,7 +14,8 @@
       "actors": [
         {
           "@id": "config-sets:rdf-score.json#myRdfScoreCommonPrefix",
-          "@type": "ActorRdfScoreCommonPrefix"
+          "@type": "ActorRdfScoreExactPrefix",
+          "carsep:Actor/RdfScore/ExactPrefix/maxPrefixTolerance": 1
         }
       ]
     },
