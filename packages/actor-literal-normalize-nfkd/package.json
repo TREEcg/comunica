@@ -23,6 +23,9 @@
     "index.d.ts",
     "index.js"
   ],
+  "dependencies": {
+    "@types/rdf-js": "^3.0.0"
+  },
   "peerDependencies": {
     "@hdelva/bus-literal-normalize": "^1.0.0",
     "@comunica/core": "^1.8.0"

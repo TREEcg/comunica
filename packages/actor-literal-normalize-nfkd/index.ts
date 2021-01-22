@@ -1,1 +1,1 @@
-export * from './lib/ActorLiteralNormalizeNFKD';
+export * from './lib/ActorLiteralNormalizeNfkd';

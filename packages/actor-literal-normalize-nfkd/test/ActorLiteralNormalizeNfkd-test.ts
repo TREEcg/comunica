@@ -56,58 +56,72 @@ describe('ActorLiteralNormalizeNFKD', () => {
       actor = new ActorLiteralNormalizeNFKD({ name: 'actor', bus });
     });
 
+    it('should test on javascript primitives', () => {
+      const result = actor.test({
+        data: 'test',
+      });
+      return expect(result).resolves.toMatchObject({ suitable: true });
+    });
+
     it('should test on string value', () => {
       const result = actor.test({
-        quad: createStringQuad('sub', 'pred', 'test'),
+        data: createStringQuad('sub', 'pred', 'test'),
       });
       return expect(result).resolves.toMatchObject({ suitable: true });
     });
 
     it('should test on lang string value', () => {
       const result = actor.test({
-        quad: createLangStringQuad('sub', 'pred', 'test'),
+        data: createLangStringQuad('sub', 'pred', 'test'),
       });
       return expect(result).resolves.toMatchObject({ suitable: true });
     });
 
     it('should not test on integer value', () => {
       const result = actor.test({
-        quad: createNumberQuad('sub', 'pred', '4'),
+        data: createNumberQuad('sub', 'pred', '4'),
       });
       return expect(result).resolves.toMatchObject({ suitable: false });
     });
 
     it('should not test on non-literals', () => {
       const result = actor.test({
-        quad: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
+        data: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
       });
       return expect(result).resolves.toMatchObject({ suitable: false });
     });
 
     it('should not touch already normalized literals', () => {
       const result = actor.run({
-        quad: createStringQuad('sub', 'pred', 'alphonse'),
+        data: createStringQuad('sub', 'pred', 'alphonse'),
+      });
+      return expect(result).resolves.toMatchObject({ result: [ 'alphonse' ]});
+    });
+
+    it('should work on javascript primitives', () => {
+      const result = actor.run({
+        data: 'alphonse',
       });
       return expect(result).resolves.toMatchObject({ result: [ 'alphonse' ]});
     });
 
     it('should remove diacritics', () => {
       const result = actor.run({
-        quad: createStringQuad('sub', 'pred', 'bateau à moteur'),
+        data: createStringQuad('sub', 'pred', 'bateau à moteur'),
       });
       return expect(result).resolves.toMatchObject({ result: [ 'bateau', 'a', 'moteur' ]});
     });
 
     it('should lowercase', () => {
       const result = actor.run({
-        quad: createStringQuad('sub', 'pred', 'AlPhonSe'),
+        data: createStringQuad('sub', 'pred', 'AlPhonSe'),
       });
       return expect(result).resolves.toMatchObject({ result: [ 'alphonse' ]});
     });
 
     it('should not do anything if the input wasn\'t a literal', () => {
       const result = actor.run({
-        quad: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
+        data: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
       });
       return expect(result).resolves.toMatchObject({ result: []});
     });

@@ -3,19 +3,20 @@ import { Actor } from '@comunica/core';
 import type * as RDF from 'rdf-js';
 
 export abstract class ActorLiteralNormalize<T> extends
-  Actor<IActionLiteralNormalize, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<T>> {
+  Actor<IActionLiteralNormalize<T>, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<T>> {
   public constructor(
-    args: IActorArgs<IActionLiteralNormalize, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<T>>,
+    args: IActorArgs<IActionLiteralNormalize<T>, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<T>>,
   ) {
     super(args);
   }
 }
 
-export interface IActionLiteralNormalize extends IAction {
+export interface IActionLiteralNormalize<T> extends IAction {
   /**
    * The statement with the literal that is to be normalized
+   * OR the literal itself
    */
-  quad: RDF.Quad;
+  data: RDF.Quad | T;
 }
 
 export interface IActorLiteralNormalizeTest extends IActorTest {
