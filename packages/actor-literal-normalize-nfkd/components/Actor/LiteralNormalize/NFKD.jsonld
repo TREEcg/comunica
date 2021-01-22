@@ -1,0 +1,20 @@
+{
+  "@context": [
+    "https://example.org/actor-literal-normalize-nfkd/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-literal-normalize/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-literal-normalize-nfkd",
+  "components": [
+    {
+      "@id": "calnnfkd:Actor/LiteralNormalize/NFKD",
+      "@type": "Class",
+      "extends": "cbln:Actor/LiteralNormalize",
+      "requireElement": "ActorLiteralNormalizeNFKD",
+      "constructorArguments": [
+        {
+          "extends": "cbln:Actor/LiteralNormalize/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

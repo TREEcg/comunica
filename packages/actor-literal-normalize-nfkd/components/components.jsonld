@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-literal-normalize-nfkd/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-literal-normalize-nfkd",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-literal-normalize-nfkd",
+  "import": [
+    "files-calnnfkd:components/Actor/LiteralNormalize/NFKD.jsonld"
+  ]
+}

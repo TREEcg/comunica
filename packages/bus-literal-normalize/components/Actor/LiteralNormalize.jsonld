@@ -1,0 +1,28 @@
+{
+  "@context": "https://example.org/bus-literal-normalize/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/bus-literal-normalize",
+  "components": [
+    {
+      "@id": "cbln:Actor/LiteralNormalize",
+      "@type": "AbstractClass",
+      "extends": "cc:Actor",
+      "requireElement": "ActorLiteralNormalize",
+      "comment": "A comunica actor for the literal-normalize bus.",
+      "parameters": [
+        {
+          "@id": "cc:Actor/bus",
+          "defaultScoped": {
+            "defaultScope": "cbln:Actor/LiteralNormalize",
+            "defaultScopedValue": { "@id": "cbln:Bus/LiteralNormalize" }
+          }
+        }
+      ],
+      "constructorArguments": [
+        {
+          "@id": "cbln:Actor/LiteralNormalize/constructorArgumentsObject",
+          "extends": "cc:Actor/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}
