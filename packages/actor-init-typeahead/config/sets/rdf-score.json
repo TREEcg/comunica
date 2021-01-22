@@ -38,7 +38,8 @@
       "cc:Mediator/bus": {
         "@id": "cbrs:Bus/RdfScore"
       },
-      "cmcs:Mediator/CombineSequence/field": "score"
+      "cmcs:Mediator/CombineSequence/testField": "suitable",
+      "cmcs:Mediator/CombineSequence/outputField": "score"
     }
   ]
 }

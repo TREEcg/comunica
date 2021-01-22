@@ -1,37 +1,63 @@
-import type { Actor, IAction, IActorOutput, IActorTest } from '@comunica/core';
-import type { IMediatorCombineUnionArgs } from '@comunica/mediator-combine-union';
-import { MediatorCombineUnion } from '@comunica/mediator-combine-union';
+import type { Actor, IAction, IActorOutput, IActorReply, IActorTest, IMediatorArgs } from '@comunica/core';
+import { Mediator } from '@comunica/core';
 
 /**
- * A comunica mediator that chains the results of all actors together.
- * Check out the beforeActor configuration property, to guarantee the order of actors.
+ * Mediator that will send the action to _all_ subscribed Actors on the Bus.
+ * If one actor's test indicates it cannot handle the action,
+ * a `null` is inserted instead.
+ * There should always be a response for each actor,
+ * and the order is deterministic iff the actors are ordered using the beforeActor configuration.
  */
 export class MediatorCombineSequence<A extends Actor<I, T, O>, I extends IAction, T extends IActorTest,
-  O extends IActorOutput> extends MediatorCombineUnion<A, I, T, O> implements IMediatorCombineUnionArgs<A, I, T, O> {
+  O extends IActorOutput> extends Mediator<A, I, T, O> implements IMediatorCombineSequenceArgs<A, I, T, O> {
+  public readonly outputField: string;
+  public readonly testField: string;
+
   public constructor(args: IMediatorCombineSequenceArgs<A, I, T, O>) {
     super(args);
   }
 
-  protected createCombiner(): (results: O[]) => O {
-    return (results: O[]) => {
-      let data: any[] = [];
+  // Todo: consider returning an AsyncIterator<O> instead
+  public async mediate(action: I): Promise<O> {
+    let testResults: IActorReply<A, I, T, O>[];
+    try {
+      testResults = this.publish(action);
+    } catch {
+      testResults = [];
+    }
 
-      for (const result of results) {
-        const rr = <any>result;
-        if (Array.isArray(rr[this.field])) {
-          data = [ ...data, ...rr[this.field] ];
-        } else {
-          data.push(rr[this.field]);
-        }
+    const data = [];
+    for (const reply of testResults) {
+      const response = await reply.reply;
+      if ((<any> response)[this.testField]) {
+        // If the response is truthy, send it to the actor
+        const result = await reply.actor.runObservable(action);
+        data.push((<any> result)[this.outputField]);
+      } else {
+        // The response was not truthy, insert null in the responses
+        data.push(null);
       }
+    }
+    const result = {};
+    (<any> result)[this.outputField] = data;
 
-      const result: any = {};
-      result[this.field] = data;
-      return result;
-    };
+    return <O> result;
+  }
+
+  protected mediateWith(action: I, testResults: IActorReply<A, I, T, O>[]): Promise<A> {
+    throw new Error('Method not implemented.');
   }
 }
 
 export interface IMediatorCombineSequenceArgs<A extends Actor<I, T, O>, I extends IAction, T extends IActorTest,
-  O extends IActorOutput> extends IMediatorCombineUnionArgs<A, I, T, O> {
+  O extends IActorOutput> extends IMediatorArgs<A, I, T, O> {
+  /**
+   * The field name of the output field over which must be mediated.
+   */
+  outputField: string;
+
+  /**
+   * The field name of the test result field over which must be mediated.
+   */
+  testField: string;
 }

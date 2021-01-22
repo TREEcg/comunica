@@ -5,7 +5,8 @@
       "cmcs": "https://example.org/mediator-combine-sequence/",
       "files-cmcs": "cmcs:^1.0.0/",
       "MediatorCombineSequence": "cmcs:Mediator/CombineSequence",
-      "field": "cmcs:Mediator/CombineSequence/field"
+      "testField": "cmcs:Mediator/CombineSequence/testField",
+      "outputField": "cmcs:Mediator/CombineSequence/outputField"
     }
   ]
 }

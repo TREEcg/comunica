@@ -12,8 +12,15 @@
       "requireElement": "MediatorCombineSequence",
       "parameters": [
         {
-          "@id": "cmcs:Mediator/CombineSequence/field",
-          "comment": "The field name to mediate over",
+          "@id": "cmcs:Mediator/CombineSequence/testField",
+          "comment": "The test field name to mediate over",
+          "range": "xsd:string",
+          "unique": true,
+          "required": true
+        },
+        {
+          "@id": "cmcs:Mediator/CombineSequence/outputField",
+          "comment": "The output field name to gather results of/in",
           "range": "xsd:string",
           "unique": true,
           "required": true
@@ -25,8 +32,12 @@
           "extends": "cc:Mediator/constructorArgumentsObject",
           "fields": [
             {
-              "keyRaw": "field",
-              "value": "cmcs:Mediator/CombineSequence/field"
+              "keyRaw": "testField",
+              "value": "cmcs:Mediator/CombineSequence/testField"
+            },
+            {
+              "keyRaw": "outputField",
+              "value": "cmcs:Mediator/CombineSequence/outputField"
             }
           ]
         }
