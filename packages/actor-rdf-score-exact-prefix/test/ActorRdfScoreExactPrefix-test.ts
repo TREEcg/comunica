@@ -146,7 +146,7 @@ describe('ActorRdfScoreExactPrefix', () => {
           pred: [ 'alphonse', 'meterie' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: null });
+      return expect(result).resolves.toMatchObject({ score: Number.NEGATIVE_INFINITY });
     });
 
     it('should not count occurences twice', () => {
@@ -178,10 +178,10 @@ describe('ActorRdfScoreExactPrefix', () => {
           pred: [ 'anna' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: null });
+      return expect(result).resolves.toMatchObject({ score: Number.NEGATIVE_INFINITY });
     });
 
-    it('should return null when no expected values match the quad', () => {
+    it('should return -Inf when no expected values match the quad', () => {
       const result = actor.run({
         quad: createStringQuad('sub', 'otherpred', ' Anna '),
         literalValue: 'anna',
@@ -189,7 +189,7 @@ describe('ActorRdfScoreExactPrefix', () => {
           pred: [ 'anna' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: null });
+      return expect(result).resolves.toMatchObject({ score: Number.NEGATIVE_INFINITY });
     });
 
     it('should return null when it wasn\'t even a literal', () => {

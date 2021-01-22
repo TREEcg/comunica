@@ -101,18 +101,27 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
               let { score: quadScore } = await this.mediatorRdfScore.mediate(action);
               if (!Array.isArray(quadScore)) {
+                // Most useful mediators will return an array, but no guarantees
                 quadScore = [ quadScore ];
               }
 
-              if (score.length === 0) {
-                score = quadScore;
-              } else {
-                score = updateScores(score, quadScore);
+              if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+                // -Inf indicates the score is too bad to be used
+                if (score.length === 0) {
+                  // First valid score for this subject
+                  score = quadScore;
+                } else {
+                  score = updateScores(score, quadScore);
+                }
               }
             }
           }
 
-          if (score.length > 0 && !score.includes(null)) {
+          if (
+            score.length > 0 &&
+            !score.includes(null) &&
+            !score.includes(Number.NEGATIVE_INFINITY)
+          ) {
             const cast: number[] = <number[]> score;
             buffer.push({
               score: cast,
@@ -174,16 +183,10 @@ function compareResults(first: IRankedResult, second: IRankedResult): number {
     const e1 = first.score[i];
     const e2 = second.score[i];
 
-    if (e1 === null && e2 === null) {
+    if (e1 === null || e2 === null) {
       continue;
     }
 
-    if (e1 === null) {
-      return 1;
-    }
-    if (e2 === null) {
-      return -1;
-    }
     if (e1 < e2) {
       // Higher is better
       return 1;
@@ -209,18 +212,16 @@ function updateScores(original: RDFScore[], newScores: RDFScore[]): RDFScore[] {
   for (const newElement of newScores) {
     const originalElement = original[i];
 
-    if (newElement !== null) {
-      if (originalElement === null) {
-        // This is the first valid value
-        original[i] = newElement;
-      } else if (newElement > originalElement || better) {
-        // This is an improvement over the previous value
-        better = true;
-        original[i] = newElement;
-      } else if (originalElement > newElement && !better) {
-        break;
-      }
-    } else {
+    if (newElement === null) {
+      continue;
+    } else if (originalElement === null) {
+      // We have no valid score from actor i yet
+      original[i] = newElement;
+    } else if (newElement > originalElement || better) {
+      // This is an improvement over the previous value
+      better = true;
+      original[i] = newElement;
+    } else if (originalElement > newElement && !better) {
       break;
     }
     i += 1;

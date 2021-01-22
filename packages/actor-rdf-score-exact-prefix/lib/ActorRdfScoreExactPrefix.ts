@@ -53,6 +53,11 @@ export class ActorRdfScoreExactPrefix extends ActorRdfScoreCommonPrefix {
           score += expectedCount;
         }
       }
+
+      if (score !== expectedValues.length) {
+        // Not all values are accounted for
+        score = Number.NEGATIVE_INFINITY;
+      }
     }
 
     return { score };
