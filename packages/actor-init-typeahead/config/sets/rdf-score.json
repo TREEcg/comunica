@@ -3,6 +3,7 @@
     "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
     "https://example.org/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
     "https://example.org/actor-rdf-score-bigram/^1.0.0/components/context.jsonld",
+    "https://example.org/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
     "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
     "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
@@ -21,7 +22,13 @@
         },
         {
           "@id": "config-sets:rdf-score.json#myRdfScoreBiGram",
-          "@type": "ActorRdfScoreBiGram"
+          "@type": "ActorRdfScoreBiGram",
+          "beforeActor": "config-sets:rdf-score.json#myRdfScoreStringLength"
+        },
+        {
+          "@id": "config-sets:rdf-score.json#myRdfScoreStringLength",
+          "@type": "ActorRdfScoreStringLength",
+          "carssl:Actor/RdfScore/StringLength/ascending": true
         }
       ]
     },

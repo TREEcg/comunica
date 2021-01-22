@@ -14,7 +14,6 @@ import type {
 } from '@hdelva/bus-rdf-score';
 import * as N3 from 'n3';
 import type * as RDF from 'rdf-js';
-import * as RdfString from 'rdf-string';
 
 type DereferenceActor = Actor<IActionRdfDereference, IActorTest, IActorRdfDereferenceOutput>;
 type ScoreActor = Actor<IActionRdfScore<any>, IActorRdfScoreTest, IActorRdfScoreOutputSingle>;
@@ -66,7 +65,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
       readable.push(JSON.stringify(result.score));
       readable.push('\n');
       for (const quad of result.quads) {
-        readable.push(`${JSON.stringify(RdfString.quadToStringQuad(quad))}\n`);
+        readable.push(`${quad.object.value}\n`);
       }
     }
 
@@ -205,17 +204,27 @@ function compareResults(first: IRankedResult, second: IRankedResult): number {
 }
 
 function updateScores(original: RDFScore[], newScores: RDFScore[]): RDFScore[] {
-  newScores.forEach((element, i) => {
-    const otherElement = original[i];
+  let i = 0;
+  let better = false;
+  for (const newElement of newScores) {
+    const originalElement = original[i];
 
-    if (element === null) {
-      original[i] = otherElement;
-    } else if (otherElement === null) {
-      original[i] = element;
+    if (newElement !== null) {
+      if (originalElement === null) {
+        // This is the first valid value
+        original[i] = newElement;
+      } else if (newElement > originalElement || better) {
+        // This is an improvement over the previous value
+        better = true;
+        original[i] = newElement;
+      } else if (originalElement > newElement && !better) {
+        break;
+      }
     } else {
-      original[i] = Math.max(element, otherElement);
+      break;
     }
-  });
+    i += 1;
+  }
 
   return original;
 }

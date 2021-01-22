@@ -1,0 +1,28 @@
+{
+  "@context": [
+    "https://example.org/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-rdf-score-string-length",
+  "components": [
+    {
+      "@id": "carssl:Actor/RdfScore/StringLength",
+      "@type": "Class",
+      "extends": "cbrs:Actor/RdfScore",
+      "requireElement": "ActorRdfScoreStringLength",
+      "constructorArguments": [
+        {
+          "@id": "carssl:Actor/RdfScore/StringLength/constructorArgumentsObject",
+          "extends": "cbrs:Actor/RdfScore/constructorArgumentsObject",
+          "fields": [
+            {
+              "keyRaw": "ascending",
+              "value": "carssl:Actor/RdfScore/StringLength/ascending"
+            }
+          ]
+          
+        }
+      ]
+    }
+  ]
+}
