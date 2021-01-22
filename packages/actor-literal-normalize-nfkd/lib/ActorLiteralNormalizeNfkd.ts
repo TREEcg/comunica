@@ -20,7 +20,11 @@ export class ActorLiteralNormalizeNFKD extends ActorLiteralNormalize<string> {
   }
 
   public async test(action: IActionLiteralNormalize<string>): Promise<IActorLiteralNormalizeTest> {
-    return { suitable: this.isValidQuad(action.data) || this.isValidLiteral(action.data) };
+    const suitable = this.isValidQuad(action.data) || this.isValidLiteral(action.data);
+    if (!suitable) {
+      throw new Error('That ain\'t a string');
+    }
+    return { suitable };
   }
 
   public async run(action: IActionLiteralNormalize<string>): Promise<IActorLiteralNormalizeOutput<string>> {

@@ -81,14 +81,14 @@ describe('ActorLiteralNormalizeNFKD', () => {
       const result = actor.test({
         data: createNumberQuad('sub', 'pred', '4'),
       });
-      return expect(result).resolves.toMatchObject({ suitable: false });
+      return expect(result).rejects.toThrow();
     });
 
     it('should not test on non-literals', () => {
       const result = actor.test({
         data: createNamedNodeQuad('sub', 'otherpred', 'http://example.org'),
       });
-      return expect(result).resolves.toMatchObject({ suitable: false });
+      return expect(result).rejects.toThrow();
     });
 
     it('should not touch already normalized literals', () => {

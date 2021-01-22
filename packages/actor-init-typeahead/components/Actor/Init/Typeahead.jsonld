@@ -26,13 +26,9 @@
           "unique": true
         },
         {
-          "@id": "cit:url",
-          "comment": "The URL to dereference",
-          "unique": true
-        },
-        {
-          "@id": "cit:value",
-          "comment": "The value to look for",
+          "@id": "cit:mediatorLiteralNormalize",
+          "comment": "The literal normalize mediator",
+          "required": true,
           "unique": true
         }
       ],
@@ -50,12 +46,8 @@
               "value": "cit:mediatorRdfScore"
             },
             {
-              "keyRaw": "url",
-              "value": "cit:url"
-            },
-            {
-              "keyRaw": "value",
-              "value": "cit:value"
+              "keyRaw": "mediatorLiteralNormalize",
+              "value": "cit:mediatorLiteralNormalize"
             }
           ]
         }

@@ -29,8 +29,9 @@
       "mediatorRdfScore": {
         "@id": "config-sets:rdf-score.json#mediatorRdfScore"
       },
-      "cit:url": "https://ruben.verborgh.org/",
-      "cit:value": "route"
+      "mediatorLiteralNormalize": {
+        "@id": "config-sets:literal-normalize.json#mediatorLiteralNormalize"
+      }
     }
   ]
 }

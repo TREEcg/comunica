@@ -3,7 +3,13 @@ import type { IActionInit, IActorOutputInit } from '@comunica/bus-init';
 import { ActorInit } from '@comunica/bus-init';
 import type { IActionRdfDereference, IActorRdfDereferenceOutput } from '@comunica/bus-rdf-dereference';
 import type { IActorRdfParseOutput } from '@comunica/bus-rdf-parse';
-import type { Actor, IActorArgs, IActorTest, Mediator } from '@comunica/core';
+import type { ActionContext, Actor, IActorArgs, IActorTest, Mediator } from '@comunica/core';
+import type {
+  ActorLiteralNormalize,
+  IActionLiteralNormalize,
+  IActorLiteralNormalizeOutput,
+  IActorLiteralNormalizeTest,
+} from '@hdelva/bus-literal-normalize';
 import type {
   IActionRdfScore,
   IActorRdfScoreTest,
@@ -16,17 +22,17 @@ import * as N3 from 'n3';
 import type * as RDF from 'rdf-js';
 
 type DereferenceActor = Actor<IActionRdfDereference, IActorTest, IActorRdfDereferenceOutput>;
-type ScoreActor = Actor<IActionRdfScore<any>, IActorRdfScoreTest, IActorRdfScoreOutputSingle>;
+type ScoreActor<T> = Actor<IActionRdfScore<T>, IActorRdfScoreTest, IActorRdfScoreOutputSingle>;
 
 export class ActorInitTypeahead extends ActorInit implements IActorInitTypeaheadArgs {
   public readonly mediatorRdfDereference: Mediator<DereferenceActor, IActionRdfDereference,
   IActorTest, IActorRdfDereferenceOutput>;
 
-  public readonly mediatorRdfScore: Mediator<ScoreActor, IActionRdfScore<any>,
+  public readonly mediatorRdfScore: Mediator<ScoreActor<any>, IActionRdfScore<any>,
   IActorRdfScoreTest, IActorRdfScoreOutput>;
 
-  public readonly url: string;
-  public readonly value: string;
+  public readonly mediatorLiteralNormalize: Mediator<ActorLiteralNormalize<any>, IActionLiteralNormalize<any>,
+  IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<any>>;
 
   public constructor(args: IActorInitTypeaheadArgs) {
     super(args);
@@ -36,38 +42,68 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
     return true;
   }
 
-  public async run(action: IActionInit): Promise<IActorOutputInit> {
-    const dereference: IActionRdfDereference = {
-      context: action.context,
-      url: action.argv.length > 0 ? action.argv[0] : this.url ?? '',
-    };
+  public async * query(args: IActorInitTypeaheadQueryArgs): AsyncGenerator<IRankedResult[]> {
+    let results: IRankedResult[] = [];
 
-    const expectedValue = action.argv.length > 1 ? action.argv[1] : this.value ?? '';
-    const expectedDatatypeValues = {
-      'http://www.w3.org/2001/XMLSchema#string': [ expectedValue ],
-      'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString': [ expectedValue ],
-    };
-
-    if (!dereference.url) {
-      throw new Error('A URL must be given either in the config or as CLI arg');
+    for (const url of args.urls) {
+      const dereference: IActionRdfDereference = {
+        context: args.context,
+        url,
+      };
+      const parsedQuads: IActorRdfParseOutput = await this.mediatorRdfDereference.mediate(dereference);
+      results = await this.processPage(parsedQuads, results, args.expectedDatatypeValues);
+      yield results;
     }
-    const parsedQuads: IActorRdfParseOutput = await this.mediatorRdfDereference.mediate(dereference);
+  }
+
+  public async run(action: IActionInit): Promise<IActorOutputInit> {
+    const [ url, ...rawValues ] = action.argv;
 
     const readable = new Readable();
     readable._read = () => {
       // Do nothing
     };
 
-    const rankedResults = await this.processPage(parsedQuads, [], expectedDatatypeValues);
-    for (const result of rankedResults) {
-      readable.push(result.subject);
-      readable.push('\n');
-      readable.push(JSON.stringify(result.score));
-      readable.push('\n');
-      for (const quad of result.quads) {
-        readable.push(`${quad.object.value}\n`);
+    const start = new Date();
+
+    let expectedValues: string[] = [];
+    for (const rawValue of rawValues) {
+      try {
+        const result = await this.mediatorLiteralNormalize.mediate({ data: rawValue });
+        expectedValues = [ ...expectedValues, ...result.result ];
+      } catch {
+        expectedValues.push(rawValue);
       }
     }
+
+    const expectedDatatypeValues = {
+      'http://www.w3.org/2001/XMLSchema#string': expectedValues,
+      'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString': expectedValues,
+    };
+
+    const query = {
+      urls: [ url ],
+      expectedDatatypeValues,
+      expectedPredicateValues: {},
+      context: action.context,
+    };
+
+    let i = 1;
+    for await (const rankedResults of this.query(query)) {
+      for (const result of rankedResults) {
+        readable.push(`[${i}]`);
+        readable.push(`  Subject: ${result.subject}\n`);
+        readable.push(`  Score:   ${JSON.stringify(result.score)}\n`);
+        for (const quad of result.quads) {
+          readable.push(`    ${quad.predicate.value}\n`);
+          readable.push(`      ${quad.object.value}\n`);
+        }
+      }
+      i += 1;
+    }
+
+    const elapsed = new Date().getTime() - start.getTime();
+    readable.push(`Finished in ${elapsed} ms`);
 
     return { stdout: readable };
   }
@@ -88,31 +124,31 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
           let score: RDFScore[] = [];
           const quads = store.getQuads(subject, null, null, null);
           for (const quad of quads) {
-            // TODO
-            // Send these to a NormalizeMediator
-            // NormalizeActors know which values they can handle
-            if (quad.object.termType === 'Literal') {
-              const literalValue = normalize(quad.object.value).split(/\s/u);
-              const action = {
-                quad,
-                literalValue,
-                expectedDatatypeValues,
-              };
+            const action: IActionRdfScore<any> = {
+              quad,
+              expectedDatatypeValues,
+            };
 
-              let { score: quadScore } = await this.mediatorRdfScore.mediate(action);
-              if (!Array.isArray(quadScore)) {
-                // Most useful mediators will return an array, but no guarantees
-                quadScore = [ quadScore ];
-              }
+            try {
+              const literalValue = await this.mediatorLiteralNormalize.mediate({ data: quad });
+              action.literalValue = literalValue.result;
+            } catch {
+              // Is ok
+            }
 
-              if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
-                // -Inf indicates the score is too bad to be used
-                if (score.length === 0) {
-                  // First valid score for this subject
-                  score = quadScore;
-                } else {
-                  score = updateScores(score, quadScore);
-                }
+            let { score: quadScore } = await this.mediatorRdfScore.mediate(action);
+            if (!Array.isArray(quadScore)) {
+              // Most useful mediators will return an array, but no guarantees
+              quadScore = [ quadScore ];
+            }
+
+            if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+              // -Inf indicates the score is too bad to be used
+              if (score.length === 0) {
+                // First valid score for this subject
+                score = quadScore;
+              } else {
+                score = this.updateScores(score, quadScore);
               }
             }
           }
@@ -122,7 +158,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
             !score.includes(null) &&
             !score.includes(Number.NEGATIVE_INFINITY)
           ) {
-            const cast: number[] = <number[]> score;
+            const cast: number[] = <number[]>score;
             buffer.push({
               score: cast,
               subject: subject.value,
@@ -138,6 +174,36 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
     return result;
   }
+
+  /**
+   * Function to combine scores from different RDF statements
+   * @param original the current score array
+   * @param newScores a score array with potential updates
+   */
+  protected updateScores(original: RDFScore[], newScores: RDFScore[]): RDFScore[] {
+    let i = 0;
+    let better = false;
+    for (const newElement of newScores) {
+      const originalElement = original[i];
+
+      if (newElement === null) {
+        continue;
+      } else if (originalElement === null) {
+        // We have no valid score from actor i yet
+        original[i] = newElement;
+      } else if (newElement > originalElement || better) {
+        // This is an improvement over the previous value
+        better = true;
+        original[i] = newElement;
+      } else if (originalElement > newElement && !better) {
+        // The current score is better; abort
+        break;
+      }
+      i += 1;
+    }
+
+    return original;
+  }
 }
 
 export interface IRankedResult {
@@ -147,15 +213,24 @@ export interface IRankedResult {
 }
 
 export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorTest, IActorOutputInit> {
-
   mediatorRdfDereference: Mediator<DereferenceActor, IActionRdfDereference,
   IActorTest, IActorRdfDereferenceOutput>;
 
-  mediatorRdfScore: Mediator<ScoreActor, IActionRdfScore<any>,
+  mediatorRdfScore: Mediator<ScoreActor<any>, IActionRdfScore<any>,
   IActorTest, IActorRdfScoreOutput>;
 
-  url: string;
-  value: string;
+  mediatorLiteralNormalize: Mediator<ActorLiteralNormalize<any>, IActionLiteralNormalize<any>,
+  IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<any>>;
+}
+
+export interface IActorInitTypeaheadQueryArgs {
+  // Todo, add tree relation data
+  urls: string[];
+
+  expectedDatatypeValues: IExpectedValues;
+  expectedPredicateValues: IExpectedValues;
+
+  context?: ActionContext;
 }
 
 const characterRegex = /[^\p{L}\p{N}\p{Z}]/gu;
@@ -204,28 +279,4 @@ function compareResults(first: IRankedResult, second: IRankedResult): number {
   }
 
   return 0;
-}
-
-function updateScores(original: RDFScore[], newScores: RDFScore[]): RDFScore[] {
-  let i = 0;
-  let better = false;
-  for (const newElement of newScores) {
-    const originalElement = original[i];
-
-    if (newElement === null) {
-      continue;
-    } else if (originalElement === null) {
-      // We have no valid score from actor i yet
-      original[i] = newElement;
-    } else if (newElement > originalElement || better) {
-      // This is an improvement over the previous value
-      better = true;
-      original[i] = newElement;
-    } else if (originalElement > newElement && !better) {
-      break;
-    }
-    i += 1;
-  }
-
-  return original;
 }

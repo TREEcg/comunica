@@ -9,9 +9,7 @@
       "ActorInitTypeahead": "cit:Actor/Init/Typeahead",
       "mediatorRdfDereference": "cit:mediatorRdfDereference",
       "mediatorRdfScore": "cit:mediatorRdfScore",
-
-      "url": "cit:url",
-      "value": "cit:value"
+      "mediatorLiteralNormalize": "cit:mediatorLiteralNormalize"
     }
   ]
 }
