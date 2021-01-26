@@ -9,6 +9,11 @@ import type {
   IActorRdfMetadataExtractOutput,
 } from '@comunica/bus-rdf-metadata-extract';
 import type { IActorRdfParseOutput } from '@comunica/bus-rdf-parse';
+import type {
+  ActorRdfResolveHypermediaLinks,
+  IActionRdfResolveHypermediaLinks,
+  IActorRdfResolveHypermediaLinksOutput,
+} from '@comunica/bus-rdf-resolve-hypermedia-links';
 import type { ActionContext, Actor, IActorArgs, IActorTest, Mediator } from '@comunica/core';
 import type {
   ActorLiteralNormalize,
@@ -45,6 +50,9 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
   public readonly mediatorMetadataExtract: Mediator<ActorRdfMetadataExtract, IActionRdfMetadataExtract,
   IActorTest, IActorRdfMetadataExtractOutput>;
+
+  public readonly mediatorHypermediaLinks: Mediator<ActorRdfResolveHypermediaLinks, IActionRdfResolveHypermediaLinks,
+  IActorTest, IActorRdfResolveHypermediaLinksOutput>;
 
   public constructor(args: IActorInitTypeaheadArgs) {
     super(args);
@@ -125,6 +133,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
         .mediate({ url, metadata: rdfMetadataOuput.metadata });
 
       const _treeNodes = this.extractTreeNodes(metadata);
+      const { urls: _urls } = await this.mediatorHypermediaLinks.mediate({ metadata });
 
       results = await this.processPage(rdfMetadataOuput.data, results, args.expectedDatatypeValues);
       yield results;
@@ -272,6 +281,9 @@ export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorT
 
   mediatorMetadataExtract: Mediator<ActorRdfMetadataExtract, IActionRdfMetadataExtract,
   IActorTest, IActorRdfMetadataExtractOutput>;
+
+  mediatorHypermediaLinks: Mediator<ActorRdfResolveHypermediaLinks, IActionRdfResolveHypermediaLinks,
+  IActorTest, IActorRdfResolveHypermediaLinksOutput>;
 }
 
 export interface IActorInitTypeaheadQueryArgs {

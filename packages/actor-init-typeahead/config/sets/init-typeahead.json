@@ -37,6 +37,9 @@
       },
       "mediatorMetadataExtract": {
         "@id": "config-sets:resolve-hypermedia.json#mediatorMetadataExtract"
+      },
+      "mediatorHypermediaLinks": {
+        "@id": "config-sets:resolve-hypermedia.json#mediatorHypermediaLinks"
       }
     }
   ]

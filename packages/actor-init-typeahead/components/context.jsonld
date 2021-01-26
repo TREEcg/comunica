@@ -11,7 +11,8 @@
       "mediatorRdfScore": "cit:mediatorRdfScore",
       "mediatorLiteralNormalize": "cit:mediatorLiteralNormalize",
       "mediatorMetadata": "cit:mediatorMetadata",
-      "mediatorMetadataExtract": "cit:mediatorMetadataExtract"
+      "mediatorMetadataExtract": "cit:mediatorMetadataExtract",
+      "mediatorHypermediaLinks": "cit:mediatorHypermediaLinks"
     }
   ]
 }

@@ -42,6 +42,12 @@
           "comment": "The metadata extract mediator",
           "required": true,
           "unique": true
+        },
+        {
+          "@id": "cit:mediatorHypermediaLinks",
+          "comment": "The hypermedia links mediator",
+          "required": true,
+          "unique": true
         }
       ],
       "constructorArguments": [
@@ -68,6 +74,10 @@
             {
               "keyRaw": "mediatorMetadataExtract",
               "value": "cit:mediatorMetadataExtract"
+            },
+            {
+              "keyRaw": "mediatorHypermediaLinks",
+              "value": "cit:mediatorHypermediaLinks"
             }
           ]
         }

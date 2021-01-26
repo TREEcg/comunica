@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-rdf-resolve-hypermedia-links-tree-all",
+  "import": [
+    "files-carrhlta:components/Actor/RdfResolveHypermediaLinks/TreeAll.jsonld"
+  ]
+}

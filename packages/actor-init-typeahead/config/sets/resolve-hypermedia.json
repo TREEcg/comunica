@@ -9,7 +9,9 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-all/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-combine-union/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-extract-tree-relations/^1.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-extract-tree-relations/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-resolve-hypermedia-links/^1.0.0/components/context.jsonld",
+    "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld"
   ],
   "@id": "urn:comunica:my",
   "@graph": [
@@ -31,6 +33,10 @@
         {
           "@id": "config-sets:resolve-hypermedia.json#myRdfMetadataExtractTreeRelations",
           "@type": "ActorRdfMetadataExtractTreeRelations"
+        },
+        {
+          "@id": "config-sets:resolve-hypermedia.json#myHypermediaLinksTreeAll",
+          "@type": "ActorRdfResolveHypermediaLinksTreeAll"
         }
       ]
     },
@@ -48,6 +54,13 @@
         "@id": "cbrme:Bus/RdfMetadataExtract"
       },
       "cmcu:Mediator/CombineUnion/field": "metadata"
+    },
+    {
+      "@id": "config-sets:resolve-hypermedia.json#mediatorHypermediaLinks",
+      "@type": "MediatorRace",
+      "cc:Mediator/bus": {
+        "@id": "cbrrhl:Bus/RdfResolveHypermediaLinks"
+      }
     }
   ]
 }
