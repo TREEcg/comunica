@@ -30,9 +30,11 @@
     "index.js"
   ],
   "dependencies": {
+    "@comunica/actor-rdf-metadata-extract-tree-relations": "^1.1.0",
     "@comunica/bus-http": "^1.18.1",
     "@comunica/bus-init": "^1.18.1",
     "@comunica/bus-rdf-dereference": "^1.18.1",
+    "@comunica/bus-rdf-metadata": "^1.19.0",
     "@comunica/bus-rdf-parse": "^1.18.1",
     "@comunica/core": "^1.18.1",
     "@comunica/runner": "^1.18.1",

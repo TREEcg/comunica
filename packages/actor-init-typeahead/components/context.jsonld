@@ -9,7 +9,9 @@
       "ActorInitTypeahead": "cit:Actor/Init/Typeahead",
       "mediatorRdfDereference": "cit:mediatorRdfDereference",
       "mediatorRdfScore": "cit:mediatorRdfScore",
-      "mediatorLiteralNormalize": "cit:mediatorLiteralNormalize"
+      "mediatorLiteralNormalize": "cit:mediatorLiteralNormalize",
+      "mediatorMetadata": "cit:mediatorMetadata",
+      "mediatorMetadataExtract": "cit:mediatorMetadataExtract"
     }
   ]
 }

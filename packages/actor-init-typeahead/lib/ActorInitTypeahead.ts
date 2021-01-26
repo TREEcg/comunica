@@ -2,6 +2,12 @@ import { Readable } from 'stream';
 import type { IActionInit, IActorOutputInit } from '@comunica/bus-init';
 import { ActorInit } from '@comunica/bus-init';
 import type { IActionRdfDereference, IActorRdfDereferenceOutput } from '@comunica/bus-rdf-dereference';
+import type { ActorRdfMetadata, IActionRdfMetadata, IActorRdfMetadataOutput } from '@comunica/bus-rdf-metadata';
+import type {
+  ActorRdfMetadataExtract,
+  IActionRdfMetadataExtract,
+  IActorRdfMetadataExtractOutput,
+} from '@comunica/bus-rdf-metadata-extract';
 import type { IActorRdfParseOutput } from '@comunica/bus-rdf-parse';
 import type { ActionContext, Actor, IActorArgs, IActorTest, Mediator } from '@comunica/core';
 import type {
@@ -34,26 +40,18 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
   public readonly mediatorLiteralNormalize: Mediator<ActorLiteralNormalize<any>, IActionLiteralNormalize<any>,
   IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<any>>;
 
+  public readonly mediatorMetadata: Mediator<ActorRdfMetadata, IActionRdfMetadata,
+  IActorTest, IActorRdfMetadataOutput>;
+
+  public readonly mediatorMetadataExtract: Mediator<ActorRdfMetadataExtract, IActionRdfMetadataExtract,
+  IActorTest, IActorRdfMetadataExtractOutput>;
+
   public constructor(args: IActorInitTypeaheadArgs) {
     super(args);
   }
 
   public async test(action: IActionInit): Promise<IActorTest> {
     return true;
-  }
-
-  public async * query(args: IActorInitTypeaheadQueryArgs): AsyncGenerator<IRankedResult[]> {
-    let results: IRankedResult[] = [];
-
-    for (const url of args.urls) {
-      const dereference: IActionRdfDereference = {
-        context: args.context,
-        url,
-      };
-      const parsedQuads: IActorRdfParseOutput = await this.mediatorRdfDereference.mediate(dereference);
-      results = await this.processPage(parsedQuads, results, args.expectedDatatypeValues);
-      yield results;
-    }
   }
 
   public async run(action: IActionInit): Promise<IActorOutputInit> {
@@ -108,18 +106,65 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
     return { stdout: readable };
   }
 
+  public async * query(args: IActorInitTypeaheadQueryArgs): AsyncGenerator<IRankedResult[]> {
+    let results: IRankedResult[] = [];
+
+    for (const url of args.urls) {
+      const dereference: IActionRdfDereference = {
+        context: args.context,
+        url,
+      };
+
+      const rdfDereferenceOutput: IActorRdfParseOutput = await this.mediatorRdfDereference.mediate(dereference);
+
+      // Determine the metadata
+      const rdfMetadataOuput: IActorRdfMetadataOutput = await this.mediatorMetadata.mediate(
+        { url, quads: rdfDereferenceOutput.quads, triples: rdfDereferenceOutput.triples },
+      );
+      const { metadata } = await this.mediatorMetadataExtract
+        .mediate({ url, metadata: rdfMetadataOuput.metadata });
+
+      const _treeNodes = this.extractTreeNodes(metadata);
+
+      results = await this.processPage(rdfMetadataOuput.data, results, args.expectedDatatypeValues);
+      yield results;
+    }
+  }
+
+  protected extractTreeNodes(metadata: Record<string, any>): Record<string, ITreeNode> {
+    const result: Record<string, ITreeNode> = {};
+    if ('treeProperties' in metadata) {
+      for (const [ _, relation ] of metadata.treeProperties.relations) {
+        const uri: string = relation['tree:node'];
+        const type = relation['@type'];
+        const value = relation['tree:value'];
+
+        if (!(uri in result)) {
+          result[uri] = {
+            uri,
+            values: {},
+          };
+        }
+
+        const node: ITreeNode = result[uri];
+        node.values[type] = value;
+      }
+    }
+    return result;
+  }
+
   protected processPage(
-    parsedQuads: IActorRdfParseOutput,
+    quadStream: RDF.Stream,
     previousResults: IRankedResult[],
     expectedDatatypeValues: IExpectedValues,
   ): Promise<IRankedResult[]> {
     const buffer: IRankedResult[] = [ ...previousResults ];
 
     const store = new N3.Store();
-    store.import(parsedQuads.quads);
+    store.import(quadStream);
 
     const result: Promise<IRankedResult[]> = new Promise(resolve => {
-      parsedQuads.quads.on('end', async() => {
+      quadStream.on('end', async() => {
         for (const subject of store.getSubjects(null, null, null)) {
           let score: RDFScore[] = [];
           const quads = store.getQuads(subject, null, null, null);
@@ -221,6 +266,12 @@ export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorT
 
   mediatorLiteralNormalize: Mediator<ActorLiteralNormalize<any>, IActionLiteralNormalize<any>,
   IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<any>>;
+
+  mediatorMetadata: Mediator<ActorRdfMetadata, IActionRdfMetadata,
+  IActorTest, IActorRdfMetadataOutput>;
+
+  mediatorMetadataExtract: Mediator<ActorRdfMetadataExtract, IActionRdfMetadataExtract,
+  IActorTest, IActorRdfMetadataExtractOutput>;
 }
 
 export interface IActorInitTypeaheadQueryArgs {
@@ -231,17 +282,6 @@ export interface IActorInitTypeaheadQueryArgs {
   expectedPredicateValues: IExpectedValues;
 
   context?: ActionContext;
-}
-
-const characterRegex = /[^\p{L}\p{N}\p{Z}]/gu;
-function normalize(input: string): string {
-  // Get rid of whitespace
-  input = input.trim();
-  input = input.toLowerCase();
-  // Normalize diacritics
-  input = input.normalize('NFKD');
-  input = input.replace(characterRegex, '');
-  return input;
 }
 
 function compareResults(first: IRankedResult, second: IRankedResult): number {
@@ -279,4 +319,9 @@ function compareResults(first: IRankedResult, second: IRankedResult): number {
   }
 
   return 0;
+}
+
+interface ITreeNode {
+  uri: string;
+  values: Record<string, RDF.Literal>;
 }

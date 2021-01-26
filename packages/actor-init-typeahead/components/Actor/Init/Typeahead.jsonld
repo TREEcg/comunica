@@ -30,6 +30,18 @@
           "comment": "The literal normalize mediator",
           "required": true,
           "unique": true
+        },
+        {
+          "@id": "cit:mediatorMetadata",
+          "comment": "The metadata mediator",
+          "required": true,
+          "unique": true
+        },
+        {
+          "@id": "cit:mediatorMetadataExtract",
+          "comment": "The metadata extract mediator",
+          "required": true,
+          "unique": true
         }
       ],
       "constructorArguments": [
@@ -48,6 +60,14 @@
             {
               "keyRaw": "mediatorLiteralNormalize",
               "value": "cit:mediatorLiteralNormalize"
+            },
+            {
+              "keyRaw": "mediatorMetadata",
+              "value": "cit:mediatorMetadata"
+            },
+            {
+              "keyRaw": "mediatorMetadataExtract",
+              "value": "cit:mediatorMetadataExtract"
             }
           ]
         }

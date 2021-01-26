@@ -31,6 +31,12 @@
       },
       "mediatorLiteralNormalize": {
         "@id": "config-sets:literal-normalize.json#mediatorLiteralNormalize"
+      },
+      "mediatorMetadata": {
+        "@id": "config-sets:resolve-hypermedia.json#mediatorMetadata"
+      },
+      "mediatorMetadataExtract": {
+        "@id": "config-sets:resolve-hypermedia.json#mediatorMetadataExtract"
       }
     }
   ]
