@@ -157,6 +157,9 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           this.buffer.unshift(result);
           this.readable = true;
           this.inTransit -= 1;
+
+          // Immediately start processing the next item on the queue
+          this.scheduleRequests();
         })
         .catch(error => {
           throw error;
