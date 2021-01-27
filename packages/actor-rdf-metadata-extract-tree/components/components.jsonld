@@ -1,0 +1,9 @@
+{
+  "@context": "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/actor-rdf-metadata-extract-tree",
+  "@type": "Module",
+  "requireName": "@hdelva/actor-rdf-metadata-extract-tree",
+  "import": [
+    "files-carmet:components/Actor/RdfMetadataExtract/Tree.jsonld"
+  ]
+}

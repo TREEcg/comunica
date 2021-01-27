@@ -1,0 +1,10 @@
+{
+  "@context": "https://example.org/bus-tree-score/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/bus-tree-score",
+  "@type": "Module",
+  "requireName": "@hdelva/bus-tree-score",
+  "import": [
+    "files-cbts:components/Bus/TreeScore.jsonld",
+    "files-cbts:components/Actor/TreeScore.jsonld"
+  ]
+}

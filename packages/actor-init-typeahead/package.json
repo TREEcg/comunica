@@ -30,7 +30,6 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/actor-rdf-metadata-extract-tree-relations": "^1.1.0",
     "@comunica/bus-http": "^1.18.1",
     "@comunica/bus-init": "^1.18.1",
     "@comunica/bus-rdf-dereference": "^1.18.1",
@@ -39,12 +38,17 @@
     "@comunica/core": "^1.18.1",
     "@comunica/runner": "^1.18.1",
     "@comunica/runner-cli": "^1.18.1",
+    "@hdelva/bus-rdf-score": "^1.0.0",
+    "@hdelva/bus-tree-score": "^1.0.0",
     "n3": "^1.8.0",
     "rdf": "^4.1.0",
-    "rdf-string": "^1.5.0"
+    "rdf-data-factory": "^1.0.4",
+    "rdf-string": "^1.5.0",
+    "tinyqueue": "^2.0.3"
   },
   "devDependencies": {
-    "@comunica/mediator-race": "^1.18.1"
+    "@comunica/mediator-race": "^1.18.1",
+    "@types/rdf-js": "^4.0.0"
   },
   "jest": {
     "globals": {

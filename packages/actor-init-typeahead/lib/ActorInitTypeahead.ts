@@ -13,6 +13,7 @@ import type {
   ActorRdfResolveHypermediaLinks,
   IActionRdfResolveHypermediaLinks,
   IActorRdfResolveHypermediaLinksOutput,
+  ILink,
 } from '@comunica/bus-rdf-resolve-hypermedia-links';
 import type { ActionContext, Actor, IActorArgs, IActorTest, Mediator } from '@comunica/core';
 import type {
@@ -29,11 +30,28 @@ import type {
   IExpectedValues,
   RDFScore,
 } from '@hdelva/bus-rdf-score';
+import type {
+  ActorTreeScore,
+  IActionTreeScore,
+  IActorTreeScoreOutput,
+  IActorTreeScoreTest,
+  TreeValues,
+} from '@hdelva/bus-tree-score';
 import * as N3 from 'n3';
+import { DataFactory } from 'rdf-data-factory';
 import type * as RDF from 'rdf-js';
+
+const TinyQueue = require('tinyqueue');
 
 type DereferenceActor = Actor<IActionRdfDereference, IActorTest, IActorRdfDereferenceOutput>;
 type ScoreActor<T> = Actor<IActionRdfScore<T>, IActorRdfScoreTest, IActorRdfScoreOutputSingle>;
+
+interface ITreeNode {
+  url: string;
+  values: TreeValues;
+}
+
+const DF: RDF.DataFactory = new DataFactory();
 
 export class ActorInitTypeahead extends ActorInit implements IActorInitTypeaheadArgs {
   public readonly mediatorRdfDereference: Mediator<DereferenceActor, IActionRdfDereference,
@@ -53,6 +71,9 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
   public readonly mediatorHypermediaLinks: Mediator<ActorRdfResolveHypermediaLinks, IActionRdfResolveHypermediaLinks,
   IActorTest, IActorRdfResolveHypermediaLinksOutput>;
+
+  public readonly mediatorTreeScore: Mediator<ActorTreeScore, IActionTreeScore,
+  IActorTreeScoreTest, IActorTreeScoreOutput>;
 
   public constructor(args: IActorInitTypeaheadArgs) {
     super(args);
@@ -94,18 +115,21 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
       context: action.context,
     };
 
-    let i = 1;
     for await (const rankedResults of this.query(query)) {
+      const elapsed = new Date().getTime() - start.getTime();
+      readable.push(`Partial Result; Finished in ${elapsed} ms\n`);
+      let i = 1;
       for (const result of rankedResults) {
-        readable.push(`[${i}]`);
+        readable.push(`[${i}]\n`);
         readable.push(`  Subject: ${result.subject}\n`);
         readable.push(`  Score:   ${JSON.stringify(result.score)}\n`);
         for (const quad of result.quads) {
           readable.push(`    ${quad.predicate.value}\n`);
           readable.push(`      ${quad.object.value}\n`);
         }
+        i += 1;
       }
-      i += 1;
+      readable.push('\n');
     }
 
     const elapsed = new Date().getTime() - start.getTime();
@@ -114,10 +138,60 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
     return { stdout: readable };
   }
 
-  public async * query(args: IActorInitTypeaheadQueryArgs): AsyncGenerator<IRankedResult[]> {
-    let results: IRankedResult[] = [];
+  protected gatherExpectedTreeValues(args: IActorInitTypeaheadQueryArgs): RDF.Literal[] {
+    // FIXME: this function makes strings out of everything
+    const result: RDF.Literal[] = [];
+    for (const [ dataType, values ] of Object.entries(args.expectedDatatypeValues)) {
+      if (
+        dataType === 'http://www.w3.org/2001/XMLSchema#string' ||
+        dataType === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString'
+      ) {
+        for (const value of values) {
+          result.push(DF.literal(value, DF.namedNode(dataType)));
+        }
+      }
+    }
+    for (const [ values ] of Object.entries(args.expectedPredicateValues)) {
+      for (const value of values) {
+        result.push(DF.literal(value.toString()));
+      }
+    }
+    return result;
+  }
 
+  public async * query(args: IActorInitTypeaheadQueryArgs): AsyncGenerator<IRankedSubject[]> {
+    let results: IResult = {
+      subjects: new Set(),
+      rankedSubjects: [],
+    };
+    const currentTreeValues: TreeValues = {};
+    const expectedTreeValues: TreeValues = {
+      'https://w3id.org/tree#SubstringRelation': this.gatherExpectedTreeValues(args),
+    };
+
+    let { score } = await this.mediatorTreeScore.mediate({
+      values: {},
+      expectedValues: expectedTreeValues,
+    });
+    if (!Array.isArray(score)) {
+      score = [ score ];
+    }
+
+    const queue = new TinyQueue([], compareTree);
     for (const url of args.urls) {
+      queue.push({
+        score,
+        url,
+        values: currentTreeValues,
+      });
+    }
+
+    while (queue.length > 0) {
+      const aaa = queue.pop();
+      if (!aaa) {
+        break;
+      }
+      const { url } = aaa;
       const dereference: IActionRdfDereference = {
         context: args.context,
         url,
@@ -132,31 +206,77 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
       const { metadata } = await this.mediatorMetadataExtract
         .mediate({ url, metadata: rdfMetadataOuput.metadata });
 
-      const _treeNodes = this.extractTreeNodes(metadata);
-      const { urls: _urls } = await this.mediatorHypermediaLinks.mediate({ metadata });
+      const treeNodes = this.extractTreeNodes(metadata);
+      const { urls } = await this.mediatorHypermediaLinks.mediate({ metadata });
+
+      for (const childNode of urls) {
+        const values = this.assignValueToLink(childNode, currentTreeValues, treeNodes);
+        let { score: treeScore } = await this.mediatorTreeScore.mediate({
+          values,
+          expectedValues: expectedTreeValues,
+        });
+
+        if (!Array.isArray(treeScore)) {
+          treeScore = [ treeScore ];
+        }
+
+        const sum = treeScore.reduce((acc, cur) => acc + cur, 0);
+        if (sum > 0) {
+          queue.push({
+            treeScore,
+            url: <string> childNode,
+            values,
+          });
+        }
+      }
 
       results = await this.processPage(rdfMetadataOuput.data, results, args.expectedDatatypeValues);
-      yield results;
+      yield results.rankedSubjects;
     }
+  }
+
+  protected assignValueToLink(
+    link: string | ILink,
+    currentValues: TreeValues,
+    treeNodes: Record<string, ITreeNode>,
+  ): TreeValues {
+    let url: string;
+    if (typeof link === 'string' || link instanceof String) {
+      url = <string> link;
+    } else {
+      url = link.url;
+    }
+
+    if (url in treeNodes) {
+      return { ...currentValues, ...treeNodes[url].values };
+    }
+    return currentValues;
   }
 
   protected extractTreeNodes(metadata: Record<string, any>): Record<string, ITreeNode> {
     const result: Record<string, ITreeNode> = {};
-    if ('treeProperties' in metadata) {
-      for (const [ _, relation ] of metadata.treeProperties.relations) {
-        const uri: string = relation['tree:node'];
-        const type = relation['@type'];
-        const value = relation['tree:value'];
+    if ('treeMetadata' in metadata) {
+      for (const [ _, relation ] of metadata.treeMetadata.relations) {
+        for (const node of relation.node) {
+          const url = node['@id'];
 
-        if (!(uri in result)) {
-          result[uri] = {
-            uri,
-            values: {},
-          };
+          if (!(url in result)) {
+            result[url] = {
+              url,
+              values: {},
+            };
+          }
+
+          const treeNode: ITreeNode = result[url];
+          for (const type of relation['@type']) {
+            // Always overwrite
+            treeNode.values[type] = [];
+
+            for (const value of relation.value) {
+              treeNode.values[type].push(DF.literal(value['@value'], value['@type']));
+            }
+          }
         }
-
-        const node: ITreeNode = result[uri];
-        node.values[type] = value;
       }
     }
     return result;
@@ -164,17 +284,24 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
   protected processPage(
     quadStream: RDF.Stream,
-    previousResults: IRankedResult[],
+    previousResults: IResult,
     expectedDatatypeValues: IExpectedValues,
-  ): Promise<IRankedResult[]> {
-    const buffer: IRankedResult[] = [ ...previousResults ];
+  ): Promise<IResult> {
+    const rankedSubjects: IRankedSubject[] = [ ...previousResults.rankedSubjects ];
+    const subjects = previousResults.subjects;
 
     const store = new N3.Store();
     store.import(quadStream);
 
-    const result: Promise<IRankedResult[]> = new Promise(resolve => {
+    const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
         for (const subject of store.getSubjects(null, null, null)) {
+          if (subjects.has(subject.value)) {
+            // No need to reevaluate this one
+            continue;
+          }
+          subjects.add(subject.value);
+
           let score: RDFScore[] = [];
           const quads = store.getQuads(subject, null, null, null);
           for (const quad of quads) {
@@ -213,7 +340,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
             !score.includes(Number.NEGATIVE_INFINITY)
           ) {
             const cast: number[] = <number[]>score;
-            buffer.push({
+            rankedSubjects.push({
               score: cast,
               subject: subject.value,
               quads,
@@ -221,8 +348,11 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
           }
         }
 
-        buffer.sort(compareResults);
-        resolve(buffer.slice(0, 10));
+        rankedSubjects.sort(compareResults);
+        resolve({
+          subjects,
+          rankedSubjects: rankedSubjects.slice(0, 10),
+        });
       });
     });
 
@@ -260,10 +390,21 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
   }
 }
 
-export interface IRankedResult {
+export interface IRankedSubject {
   score: number[];
   subject: string;
   quads: RDF.Quad[];
+}
+
+export interface IResult {
+  subjects: Set<string>;
+  rankedSubjects: IRankedSubject[];
+}
+
+export interface IRankedTreeNode {
+  score: number[];
+  url: string;
+  values: TreeValues;
 }
 
 export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorTest, IActorOutputInit> {
@@ -284,6 +425,9 @@ export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorT
 
   mediatorHypermediaLinks: Mediator<ActorRdfResolveHypermediaLinks, IActionRdfResolveHypermediaLinks,
   IActorTest, IActorRdfResolveHypermediaLinksOutput>;
+
+  mediatorTreeScore: Mediator<ActorTreeScore, IActionTreeScore,
+  IActorTreeScoreTest, IActorTreeScoreOutput>;
 }
 
 export interface IActorInitTypeaheadQueryArgs {
@@ -296,7 +440,7 @@ export interface IActorInitTypeaheadQueryArgs {
   context?: ActionContext;
 }
 
-function compareResults(first: IRankedResult, second: IRankedResult): number {
+function compareResults(first: IRankedSubject, second: IRankedSubject): number {
   if (first.score.length < second.score.length) {
     // Longer scores are assumed to be better;
     // The missing entries are assumed to be `null`
@@ -333,7 +477,32 @@ function compareResults(first: IRankedResult, second: IRankedResult): number {
   return 0;
 }
 
-interface ITreeNode {
-  uri: string;
-  values: Record<string, RDF.Literal>;
+function compareTree(first: IRankedTreeNode, second: IRankedTreeNode): number {
+  if (first.score.length < second.score.length) {
+    // Longer scores are assumed to be better;
+    // The missing entries are assumed to be `null`
+    return 1;
+  }
+  if (second.score.length < first.score.length) {
+    return -1;
+  }
+
+  for (let i = 0; i < first.score.length; i++) {
+    const e1 = first.score[i];
+    const e2 = second.score[i];
+
+    if (e1 === null || e2 === null) {
+      continue;
+    }
+
+    if (e1 < e2) {
+      // Higher is better
+      return 1;
+    }
+    if (e2 < e1) {
+      return -1;
+    }
+  }
+
+  return 0;
 }

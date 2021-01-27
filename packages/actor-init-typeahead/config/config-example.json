@@ -12,6 +12,7 @@
     "files-cit:config/sets/rdf-score.json",
     "files-cit:config/sets/literal-normalize.json",
     "files-cit:config/sets/resolve-hypermedia.json",
-    "files-cit:config/sets/init-typeahead.json"
+    "files-cit:config/sets/init-typeahead.json",
+    "files-cit:config/sets/tree-score.json"
   ]
 }

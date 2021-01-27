@@ -48,6 +48,12 @@
           "comment": "The hypermedia links mediator",
           "required": true,
           "unique": true
+        },
+        {
+          "@id": "cit:mediatorTreeScore",
+          "comment": "The TREE node score mediator",
+          "required": true,
+          "unique": true
         }
       ],
       "constructorArguments": [
@@ -78,6 +84,10 @@
             {
               "keyRaw": "mediatorHypermediaLinks",
               "value": "cit:mediatorHypermediaLinks"
+            },
+            {
+              "keyRaw": "mediatorTreeScore",
+              "value": "cit:mediatorTreeScore"
             }
           ]
         }

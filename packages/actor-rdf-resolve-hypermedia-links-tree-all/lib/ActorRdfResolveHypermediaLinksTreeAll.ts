@@ -13,8 +13,8 @@ export class ActorRdfResolveHypermediaLinksTreeAll extends ActorRdfResolveHyperm
   }
 
   public async test(action: IActionRdfResolveHypermediaLinks): Promise<IActorTest> {
-    if (!action.metadata.next && !action.metadata.treeProperties) {
-      throw new Error(`Actor ${this.name} requires a 'next' or a 'treeProperties' metadata entry.`);
+    if (!action.metadata.next && !action.metadata.treeMetadata) {
+      throw new Error(`Actor ${this.name} requires a 'next' or a 'treeMetadata' metadata entry.`);
     }
     return true;
   }
@@ -24,9 +24,11 @@ export class ActorRdfResolveHypermediaLinksTreeAll extends ActorRdfResolveHyperm
     if (action.metadata.next) {
       urls.push(action.metadata.next);
     }
-    if (action.metadata.treeProperties) {
-      for (const [ _, relation ] of action.metadata.treeProperties.relations) {
-        urls.push(relation['tree:node']);
+    if (action.metadata.treeMetadata) {
+      for (const [ _, relation ] of action.metadata.treeMetadata.relations) {
+        for (const node of relation.node) {
+          urls.push(node['@id']);
+        }
       }
     }
     return { urls };

@@ -1,0 +1,21 @@
+{
+  "@context": [
+    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-metadata-extract/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-rdf-metadata-extract-tree",
+  "components": [
+    {
+      "@id": "carmet:Actor/RdfMetadataExtract/Tree",
+      "@type": "Class",
+      "extends": "cbrme:Actor/RdfMetadataExtract",
+      "requireElement": "ActorRdfMetadataExtractTree",
+      "comment": "A comunica actor to extract the tree metadata from RDF sources",
+      "constructorArguments": [
+        {
+          "extends": "cbrme:Actor/RdfMetadataExtract/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

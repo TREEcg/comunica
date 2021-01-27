@@ -40,6 +40,9 @@
       },
       "mediatorHypermediaLinks": {
         "@id": "config-sets:resolve-hypermedia.json#mediatorHypermediaLinks"
+      },
+      "mediatorTreeScore": {
+        "@id": "config-sets:tree-score.json#mediatorTreeScore"
       }
     }
   ]

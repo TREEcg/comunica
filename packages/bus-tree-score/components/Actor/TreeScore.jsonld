@@ -1,0 +1,28 @@
+{
+  "@context": "https://example.org/bus-tree-score/^1.0.0/components/context.jsonld",
+  "@id": "https://example.org/bus-tree-score",
+  "components": [
+    {
+      "@id": "cbts:Actor/TreeScore",
+      "@type": "AbstractClass",
+      "extends": "cc:Actor",
+      "requireElement": "ActorTreeScore",
+      "comment": "A comunica actor for the tree-score bus.",
+      "parameters": [
+        {
+          "@id": "cc:Actor/bus",
+          "defaultScoped": {
+            "defaultScope": "cbts:Actor/TreeScore",
+            "defaultScopedValue": { "@id": "cbts:Bus/TreeScore" }
+          }
+        }
+      ],
+      "constructorArguments": [
+        {
+          "@id": "cbts:Actor/TreeScore/constructorArgumentsObject",
+          "extends": "cc:Actor/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
+    {
+      "catsep": "https://example.org/actor-tree-score-exact-prefix/",
+      "files-catsep": "catsep:^1.0.0/",
+      "ActorTreeScoreExactPrefix": "catsep:Actor/TreeScore/ExactPrefix"
+    }
+  ]
+}

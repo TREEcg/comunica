@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
+    {
+      "carmet": "https://example.org/actor-rdf-metadata-extract-tree/",
+      "files-carmet": "carmet:^1.0.0/",
+      "ActorRdfMetadataExtractTree": "carmet:Actor/RdfMetadataExtract/Tree"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "@context": [
+    "https://example.org/actor-tree-score-exact-prefix/^1.0.0/components/context.jsonld",
+    "https://example.org/bus-tree-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://example.org/actor-tree-score-exact-prefix",
+  "components": [
+    {
+      "@id": "catsep:Actor/TreeScore/ExactPrefix",
+      "@type": "Class",
+      "extends": "cbts:Actor/TreeScore",
+      "requireElement": "ActorTreeScoreExactPrefix",
+      "constructorArguments": [
+        {
+          "@id": "catsep:Actor/TreeScore/ExactPrefix/constructorArgumentsObject",
+          "extends": "cbts:Actor/TreeScore/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

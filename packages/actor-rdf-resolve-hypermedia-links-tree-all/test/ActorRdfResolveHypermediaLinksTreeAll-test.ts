@@ -37,9 +37,11 @@ describe('ActorRdfResolveHypermediaLinksTreeAll', () => {
       return expect(actor.test({ metadata: { next: 'NEXT' }})).resolves.toBeTruthy();
     });
 
-    it('should test on treeProperties metadata', () => {
-      const treeProperties = { relations: [{ 'tree:node': 'node' }]};
-      return expect(actor.test({ metadata: { treeProperties }})).resolves.toBeTruthy();
+    it('should test on treeMetadata metadata', () => {
+      const relations = new Map();
+      relations.set('_', { node: [{ '@id': 'node' }]});
+      const treeMetadata = { relations };
+      return expect(actor.test({ metadata: { treeMetadata }})).resolves.toBeTruthy();
     });
 
     it('should not test without next metadata', () => {
@@ -51,11 +53,11 @@ describe('ActorRdfResolveHypermediaLinksTreeAll', () => {
       return expect(actor.run({ metadata: { next: 'NEXT' }})).resolves.toMatchObject({ urls: [ 'NEXT' ]});
     });
 
-    it('should run on treeProperties metadata', () => {
+    it('should run on treeMetadata metadata', () => {
       const relations = new Map();
-      relations.set('_', { 'tree:node': 'node' });
-      const treeProperties = { relations };
-      return expect(actor.run({ metadata: { treeProperties }})).resolves.toMatchObject({ urls: [ 'node' ]});
+      relations.set('_', { node: [{ '@id': 'node' }]});
+      const treeMetadata = { relations };
+      return expect(actor.run({ metadata: { treeMetadata }})).resolves.toMatchObject({ urls: [ 'node' ]});
     });
   });
 });

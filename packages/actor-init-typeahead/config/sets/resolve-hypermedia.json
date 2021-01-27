@@ -9,8 +9,8 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-all/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-combine-union/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-extract-tree-relations/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-resolve-hypermedia-links/^1.0.0/components/context.jsonld",
+    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
     "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld"
   ],
   "@id": "urn:comunica:my",
@@ -31,8 +31,8 @@
           "@type": "ActorRdfMetadataExtractHydraCount"
         },
         {
-          "@id": "config-sets:resolve-hypermedia.json#myRdfMetadataExtractTreeRelations",
-          "@type": "ActorRdfMetadataExtractTreeRelations"
+          "@id": "config-sets:resolve-hypermedia.json#myRdfMetadataExtractTree",
+          "@type": "ActorRdfMetadataExtractTree"
         },
         {
           "@id": "config-sets:resolve-hypermedia.json#myHypermediaLinksTreeAll",

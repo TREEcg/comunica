@@ -12,7 +12,8 @@
       "mediatorLiteralNormalize": "cit:mediatorLiteralNormalize",
       "mediatorMetadata": "cit:mediatorMetadata",
       "mediatorMetadataExtract": "cit:mediatorMetadataExtract",
-      "mediatorHypermediaLinks": "cit:mediatorHypermediaLinks"
+      "mediatorHypermediaLinks": "cit:mediatorHypermediaLinks",
+      "mediatorTreeScore": "cit:mediatorTreeScore"
     }
   ]
 }
