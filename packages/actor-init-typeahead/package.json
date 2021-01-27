@@ -40,6 +40,7 @@
     "@comunica/runner-cli": "^1.18.1",
     "@hdelva/bus-rdf-score": "^1.0.0",
     "@hdelva/bus-tree-score": "^1.0.0",
+    "asynciterator": "^3.0.3",
     "n3": "^1.8.0",
     "rdf": "^4.1.0",
     "rdf-data-factory": "^1.0.4",
