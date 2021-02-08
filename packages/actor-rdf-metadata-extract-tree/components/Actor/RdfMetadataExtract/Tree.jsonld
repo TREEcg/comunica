@@ -1,9 +1,9 @@
 {
   "@context": [
-    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-metadata-extract/^1.0.0/components/context.jsonld"
   ],
-  "@id": "https://example.org/actor-rdf-metadata-extract-tree",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-metadata-extract-tree",
   "components": [
     {
       "@id": "carmet:Actor/RdfMetadataExtract/Tree",

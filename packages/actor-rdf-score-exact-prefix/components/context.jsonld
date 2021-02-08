@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "carsep": "https://example.org/actor-rdf-score-exact-prefix/",
+      "carsep": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-exact-prefix/",
       "files-carsep": "carsep:^1.0.0/",
       "ActorRdfScoreExactPrefix": "carsep:Actor/RdfScore/ExactPrefix"
     }

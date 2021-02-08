@@ -1,10 +1,10 @@
 import type { IActorArgs } from '@comunica/core';
-import { ActorLiteralNormalize } from '@hdelva/bus-literal-normalize';
+import { ActorLiteralNormalize } from '@treecg/bus-literal-normalize';
 import type {
   IActionLiteralNormalize,
   IActorLiteralNormalizeOutput,
   IActorLiteralNormalizeTest,
-} from '@hdelva/bus-literal-normalize';
+} from '@treecg/bus-literal-normalize';
 import type { Quad } from 'rdf-js';
 
 export class ActorLiteralNormalizeNFKD extends ActorLiteralNormalize<string> {

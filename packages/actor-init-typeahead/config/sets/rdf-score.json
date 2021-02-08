@@ -1,11 +1,11 @@
 {
   "@context": [
-    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-score-bigram/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
-    "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
-    "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-bigram/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-rdf-score/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/mediator-combine-sequence/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld"
   ],

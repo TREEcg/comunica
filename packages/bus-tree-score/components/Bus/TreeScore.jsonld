@@ -1,5 +1,5 @@
 {
-  "@context": "https://example.org/bus-tree-score/^1.0.0/components/context.jsonld",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score/^1.0.0/components/context.jsonld",
   "@id": "cbts:Bus/TreeScore",
   "@type": "cc:Bus",
   "comment": "A comunica bus for scoring TREE values."

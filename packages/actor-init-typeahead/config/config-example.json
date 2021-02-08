@@ -1,10 +1,9 @@
 {
   "@context": [
-    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld"
   ],
   "@id": "urn:comunica:my",
-  "@type": "Runner",
   "import": [
     "files-cit:config/sets/http.json",
     "files-cit:config/sets/rdf-dereference.json",

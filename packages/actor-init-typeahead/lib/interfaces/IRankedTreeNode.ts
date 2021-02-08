@@ -1,4 +1,4 @@
-import type { TreeValues } from '@hdelva/bus-tree-score';
+import type { TreeValues } from '@treecg/bus-tree-score';
 
 export default interface IRankedTreeNode {
   score: number[];

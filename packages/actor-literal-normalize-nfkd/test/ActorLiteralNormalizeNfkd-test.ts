@@ -1,5 +1,5 @@
 import { Bus } from '@comunica/core';
-import { ActorLiteralNormalize } from '@hdelva/bus-literal-normalize';
+import { ActorLiteralNormalize } from '@treecg/bus-literal-normalize';
 import { DataFactory } from 'rdf-data-factory';
 import { ActorLiteralNormalizeNFKD } from '../lib/ActorLiteralNormalizeNfkd';
 

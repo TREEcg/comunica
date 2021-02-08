@@ -1,6 +1,6 @@
 import type { IActorArgs } from '@comunica/core';
-import { ActorRdfScoreCommonPrefix } from '@hdelva/actor-rdf-score-common-prefix';
-import type { IActionRdfScore, IActorRdfScoreOutputSingle, IActorRdfScoreTest } from '@hdelva/bus-rdf-score';
+import { ActorRdfScoreCommonPrefix } from '@treecg/actor-rdf-score-common-prefix';
+import type { IActionRdfScore, IActorRdfScoreOutputSingle, IActorRdfScoreTest } from '@treecg/bus-rdf-score';
 
 /**
  * This actor returns how many of the expectedValue(s) occurred as in the foundValue(s) as well.

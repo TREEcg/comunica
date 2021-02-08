@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/actor-tree-score-exact-prefix/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/actor-tree-score-exact-prefix",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-exact-prefix/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-exact-prefix",
   "@type": "Module",
-  "requireName": "@hdelva/actor-tree-score-exact-prefix",
+  "requireName": "@treecg/actor-tree-score-exact-prefix",
   "import": [
     "files-catsep:components/Actor/TreeScore/ExactPrefix.jsonld"
   ]

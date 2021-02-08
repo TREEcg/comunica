@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "cbts": "https://example.org/bus-tree-score/",
+      "cbts": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score/",
       "files-cbts": "cbts:^1.0.0/",
 
       "BusTreeScore": "cbts:Bus/BusTreeScore",

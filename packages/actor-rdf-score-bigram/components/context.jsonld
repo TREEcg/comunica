@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "carsbg": "https://example.org/actor-rdf-score-bigram/",
+      "carsbg": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-bigram/",
       "files-carsbg": "carsbg:^1.0.0/",
       "ActorRdfScoreBiGram": "carsbg:Actor/RdfScore/BiGram"
     }

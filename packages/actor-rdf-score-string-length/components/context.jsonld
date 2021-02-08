@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "carssl": "https://example.org/actor-rdf-score-string-length/",
+      "carssl": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-string-length/",
       "files-carssl": "carssl:^1.0.0/",
       "ActorRdfScoreStringLength": "carssl:Actor/RdfScore/StringLength"
     }

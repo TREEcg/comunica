@@ -1,8 +1,8 @@
 import type { IActionRdfDereference } from '@comunica/bus-rdf-dereference';
 import type { IActorRdfMetadataOutput } from '@comunica/bus-rdf-metadata';
 import type { IActorRdfParseOutput } from '@comunica/bus-rdf-parse';
-import type { IActionRdfScore, IExpectedValues, RDFScore } from '@hdelva/bus-rdf-score';
-import type { TreeValues } from '@hdelva/bus-tree-score';
+import type { IActionRdfScore, IExpectedValues, RDFScore } from '@treecg/bus-rdf-score';
+import type { TreeValues } from '@treecg/bus-tree-score';
 import { AsyncIterator } from 'asynciterator';
 import * as N3 from 'n3';
 import type * as RDF from 'rdf-js';
@@ -137,7 +137,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     }
 
     // Always exists, we already checked the length
-    const result: IResult = <IResult> this.buffer.pop();
+    const result: IResult = this.buffer.pop()!;
 
     return result;
   }

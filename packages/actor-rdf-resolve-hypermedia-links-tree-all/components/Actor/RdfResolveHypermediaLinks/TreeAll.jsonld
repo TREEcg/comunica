@@ -1,9 +1,9 @@
 {
   "@context": [
-    "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-resolve-hypermedia-links/^1.0.0/components/context.jsonld"
   ],
-  "@id": "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
   "components": [
     {
       "@id": "carrhlta:Actor/RdfResolveHypermediaLinks/TreeAll",

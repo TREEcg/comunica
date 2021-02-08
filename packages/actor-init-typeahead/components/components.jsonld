@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/actor-init-typeahead",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead",
   "@type": "Module",
-  "requireName": "@hdelva/actor-init-typeahead",
+  "requireName": "@treecg/actor-init-typeahead",
   "import": [
     "files-cit:components/Actor/Init/Typeahead.jsonld"
   ]

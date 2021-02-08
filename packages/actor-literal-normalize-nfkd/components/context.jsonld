@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "calnnfkd": "https://example.org/actor-literal-normalize-nfkd/",
+      "calnnfkd": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-literal-normalize-nfkd/",
       "files-calnnfkd": "calnnfkd:^1.0.0/",
       "ActorLiteralNormalizeNFKD": "calnnfkd:Actor/LiteralNormalize/NFKD"
     }

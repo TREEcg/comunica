@@ -1,15 +1,9 @@
 {
+  "private": true,
   "name": "@comunica/actor-rdf-resolve-hypermedia-none",
-  "version": "1.18.1",
+  "version": "1.19.2",
   "description": "A none rdf-resolve-hypermedia actor",
-  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-resolve-hypermedia-none",
-  "lsd:components": "components/components.jsonld",
-  "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-resolve-hypermedia-none/^1.0.0/components/context.jsonld": "components/context.jsonld"
-  },
-  "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-resolve-hypermedia-none/^1.0.0/components/": "components/"
-  },
+  "lsd:module": true,
   "main": "index.js",
   "typings": "index",
   "repository": {
@@ -39,7 +33,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/actor-rdf-resolve-quad-pattern-rdfjs-source": "^1.18.1",
+    "@comunica/actor-rdf-resolve-quad-pattern-rdfjs-source": "^1.19.2",
     "@types/rdf-js": "*",
     "rdf-store-stream": "^1.0.1"
   },
@@ -48,8 +42,8 @@
     "@comunica/core": "^1.8.0"
   },
   "devDependencies": {
-    "@comunica/bus-rdf-resolve-hypermedia": "^1.18.1",
-    "@comunica/core": "^1.18.1"
+    "@comunica/bus-rdf-resolve-hypermedia": "^1.19.2",
+    "@comunica/core": "^1.19.2"
   },
   "jest": {
     "globals": {

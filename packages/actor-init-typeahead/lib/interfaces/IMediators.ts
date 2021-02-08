@@ -20,18 +20,18 @@ import type {
   IActionLiteralNormalize,
   IActorLiteralNormalizeOutput,
   IActorLiteralNormalizeTest,
-} from '@hdelva/bus-literal-normalize';
+} from '@treecg/bus-literal-normalize';
 import type {
   IActionRdfScore,
   IActorRdfScoreOutput,
   ActorRdfScore,
-} from '@hdelva/bus-rdf-score';
+} from '@treecg/bus-rdf-score';
 import type {
   ActorTreeScore,
   IActionTreeScore,
   IActorTreeScoreOutput,
   IActorTreeScoreTest,
-} from '@hdelva/bus-tree-score';
+} from '@treecg/bus-tree-score';
 
 export default interface IMediators {
   mediatorRdfDereference: Mediator<ActorRdfDereference, IActionRdfDereference,

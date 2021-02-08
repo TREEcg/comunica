@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
     {
-      "cbln": "https://example.org/bus-literal-normalize/",
+      "cbln": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-literal-normalize/",
       "files-cbln": "cbln:^1.0.0/",
 
       "BusLiteralNormalize": "cbln:Bus/BusLiteralNormalize",

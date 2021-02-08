@@ -1,5 +1,5 @@
 {
-  "@context": "https://example.org/bus-literal-normalize/^1.0.0/components/context.jsonld",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-literal-normalize/^1.0.0/components/context.jsonld",
   "@id": "cbln:Bus/LiteralNormalize",
   "@type": "cc:Bus",
   "comment": "A comunica bus for scoring RDF statements (quads)."

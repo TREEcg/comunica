@@ -1,15 +1,9 @@
 {
+  "private": true,
   "name": "@comunica/actor-query-operation-reduced-hash",
-  "version": "1.18.1",
+  "version": "1.19.2",
   "description": "A reduced-hash query-operation actor",
-  "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-query-operation-reduced-hash",
-  "lsd:components": "components/components.jsonld",
-  "lsd:contexts": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-query-operation-reduced-hash/^1.0.0/components/context.jsonld": "components/context.jsonld"
-  },
-  "lsd:importPaths": {
-    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-query-operation-reduced-hash/^1.0.0/components/": "components/"
-  },
+  "lsd:module": true,
   "main": "index.js",
   "typings": "index",
   "repository": {
@@ -45,8 +39,8 @@
   },
   "devDependencies": {
     "@comunica/actor-abstract-bindings-hash": "^1.2.0",
-    "@comunica/bus-query-operation": "^1.18.1",
-    "@comunica/core": "^1.18.1"
+    "@comunica/bus-query-operation": "^1.19.2",
+    "@comunica/core": "^1.19.2"
   },
   "jest": {
     "globals": {
@@ -71,7 +65,7 @@
     "validate": "npm ls"
   },
   "dependencies": {
-    "@comunica/actor-abstract-bindings-hash": "^1.18.1",
+    "@comunica/actor-abstract-bindings-hash": "^1.19.2",
     "@types/lru-cache": "^5.1.0",
     "lru-cache": "^6.0.0",
     "sparqlalgebrajs": "^2.4.0"

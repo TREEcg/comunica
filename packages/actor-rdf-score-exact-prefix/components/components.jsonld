@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/actor-rdf-score-exact-prefix",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-exact-prefix/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-exact-prefix",
   "@type": "Module",
-  "requireName": "@hdelva/actor-rdf-score-exact-prefix",
+  "requireName": "@treecg/actor-rdf-score-exact-prefix",
   "import": [
     "files-carsep:components/Actor/RdfScore/ExactPrefix.jsonld"
   ]

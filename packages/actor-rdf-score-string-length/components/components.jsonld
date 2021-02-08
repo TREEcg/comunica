@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/actor-rdf-score-string-length",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-string-length/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-string-length",
   "@type": "Module",
-  "requireName": "@hdelva/actor-rdf-score-string-length",
+  "requireName": "@treecg/actor-rdf-score-string-length",
   "import": [
     "files-carssl:components/Actor/RdfScore/StringLength.jsonld"
   ]

@@ -23,21 +23,21 @@ import type {
   IActionLiteralNormalize,
   IActorLiteralNormalizeOutput,
   IActorLiteralNormalizeTest,
-} from '@hdelva/bus-literal-normalize';
+} from '@treecg/bus-literal-normalize';
 import type {
   IActionRdfScore,
   IActorRdfScoreTest,
   IActorRdfScoreOutput,
   IExpectedValues,
   ActorRdfScore,
-} from '@hdelva/bus-rdf-score';
+} from '@treecg/bus-rdf-score';
 import type {
   ActorTreeScore,
   IActionTreeScore,
   IActorTreeScoreOutput,
   IActorTreeScoreTest,
   TreeValues,
-} from '@hdelva/bus-tree-score';
+} from '@treecg/bus-tree-score';
 
 import { DataFactory } from 'rdf-data-factory';
 import type * as RDF from 'rdf-js';
@@ -86,7 +86,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
       // Do nothing
     };
 
-    const start = new Date();
+    const start = Date.now();
 
     let expectedValues: string[] = [];
     for (const rawValue of rawValues) {
@@ -112,7 +112,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
 
     this.query(query)
       .on('data', (result: IResult) => {
-        const elapsed = new Date().getTime() - start.getTime();
+        const elapsed = Date.now() - start;
         readable.push(`Partial Result; Finished in ${elapsed} ms\n`);
         let i = 1;
         for (const entry of result.rankedSubjects) {
@@ -128,7 +128,7 @@ export class ActorInitTypeahead extends ActorInit implements IActorInitTypeahead
         readable.push('\n');
       })
       .on('end', () => {
-        const elapsed = new Date().getTime() - start.getTime();
+        const elapsed = Date.now() - start;
         readable.push(`Finished in ${elapsed} ms`);
       });
 

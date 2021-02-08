@@ -1,6 +1,6 @@
 import type { IActorArgs } from '@comunica/core';
-import { ActorRdfScore } from '@hdelva/bus-rdf-score';
-import type { IActionRdfScore, IActorRdfScoreOutputSingle, IActorRdfScoreTest } from '@hdelva/bus-rdf-score';
+import { ActorRdfScore } from '@treecg/bus-rdf-score';
+import type { IActionRdfScore, IActorRdfScoreOutputSingle, IActorRdfScoreTest } from '@treecg/bus-rdf-score';
 
 export class ActorRdfScoreBiGram extends ActorRdfScore<string> {
   public constructor(

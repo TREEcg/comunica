@@ -1,6 +1,28 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.19.2"></a>
+## [v1.19.2](https://github.com/comunica/comunica/compare/v1.19.1...v1.19.2) - 2021-02-02
+
+### Changed
+* [Remove disabling of stacktraces when in production](https://github.com/comunica/comunica/commit/72c3b03fa1adda907dbcfbda2bafca7ce710167a)
+
+### Fixed
+* [Fix unhandled promise rejection on server errors](https://github.com/comunica/comunica/commit/4e2771d1e9307e2d5cfb1f97abd54d23f398bc87)
+
+<a name="v1.19.1"></a>
+## [v1.19.1](https://github.com/comunica/comunica/compare/v1.19.0...v1.19.1) - 2021-01-22
+
+### Fixed
+* [Fix logger not always producing output, Closes #774](https://github.com/comunica/comunica/commit/3cb07b6e81fe74820110487bccda8d9a2fc804b9)
+
+<a name="v1.19.0"></a>
+## [v1.19.0](https://github.com/comunica/comunica/compare/v1.18.1...v1.19.0) - 2021-01-15
+
+### Changed
+* [Update to Components.js 4](https://github.com/comunica/comunica/commit/26160e821cd13a71d4d2bd0178b351f8d257f8d8)
+* [Update dependency htmlparser2 to v6](https://github.com/comunica/comunica/commit/25e7a6b05c96f46a82efaa126d18ff7d47fdac13)
+
 <a name="v1.18.1"></a>
 ## [v1.18.1](https://github.com/comunica/comunica/compare/v1.18.0...v1.18.1) - 2020-12-01
 

@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/actor-rdf-score-common-prefix",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-common-prefix/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-common-prefix",
   "@type": "Module",
-  "requireName": "@hdelva/actor-rdf-score-common-prefix",
+  "requireName": "@treecg/actor-rdf-score-common-prefix",
   "import": [
     "files-carscp:components/Actor/RdfScore/CommonPrefix.jsonld"
   ]

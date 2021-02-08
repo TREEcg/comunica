@@ -1,6 +1,6 @@
 {
-  "@context": "https://example.org/bus-tree-score/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/bus-tree-score",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score",
   "components": [
     {
       "@id": "cbts:Actor/TreeScore",

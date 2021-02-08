@@ -1,5 +1,5 @@
 import { Bus } from '@comunica/core';
-import { ActorRdfScore } from '@hdelva/bus-rdf-score';
+import { ActorRdfScore } from '@treecg/bus-rdf-score';
 import { DataFactory } from 'rdf-data-factory';
 import { ActorRdfScoreStringLength } from '../lib/ActorRdfScoreStringLength';
 

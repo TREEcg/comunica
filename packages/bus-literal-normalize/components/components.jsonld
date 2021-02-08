@@ -1,8 +1,8 @@
 {
-  "@context": "https://example.org/bus-literal-normalize/^1.0.0/components/context.jsonld",
-  "@id": "https://example.org/bus-literal-normalize",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-literal-normalize/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-literal-normalize",
   "@type": "Module",
-  "requireName": "@hdelva/bus-literal-normalize",
+  "requireName": "@treecg/bus-literal-normalize",
   "import": [
     "files-cbln:components/Bus/LiteralNormalize.jsonld",
     "files-cbln:components/Actor/LiteralNormalize.jsonld"

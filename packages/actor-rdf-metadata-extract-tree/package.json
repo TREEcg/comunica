@@ -1,15 +1,8 @@
 {
-  "name": "@hdelva/actor-rdf-metadata-extract-tree",
+  "name": "@treecg/actor-rdf-metadata-extract-tree",
   "version": "1.0.0",
   "description": "A tree rdf-metadata-extract actor",
-  "lsd:module": "https://example.org/actor-rdf-metadata-extract-tree",
-  "lsd:components": "components/components.jsonld",
-  "lsd:contexts": {
-    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld": "components/context.jsonld"
-  },
-  "lsd:importPaths": {
-    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/": "components/"
-  },
+  "lsd:module": true,
   "main": "index.js",
   "typings": "index",
   "publishConfig": {

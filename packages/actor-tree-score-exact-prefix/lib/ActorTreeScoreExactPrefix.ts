@@ -3,8 +3,8 @@ import type {
   IActionTreeScore,
   IActorTreeScoreOutput,
   IActorTreeScoreTest,
-} from '@hdelva/bus-tree-score';
-import { ActorTreeScore } from '@hdelva/bus-tree-score';
+} from '@treecg/bus-tree-score';
+import { ActorTreeScore } from '@treecg/bus-tree-score';
 
 const SUBSTRING_TYPE = 'https://w3id.org/tree#SubstringRelation';
 const PREFIX_TYPE = 'https://w3id.org/tree#PrefixRelation';

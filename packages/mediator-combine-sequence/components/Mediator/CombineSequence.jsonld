@@ -1,9 +1,9 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
-    "https://example.org/mediator-combine-sequence/^1.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/mediator-combine-sequence/^1.0.0/components/context.jsonld"
   ],
-  "@id": "https://example.org/mediator-combine-sequence",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/mediator-combine-sequence",
   "components": [
     {
       "@id": "cmcs:Mediator/CombineSequence",

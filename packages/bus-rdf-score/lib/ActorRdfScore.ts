@@ -37,11 +37,11 @@ export abstract class ActorRdfScore<T> extends
       expectedValues = action.expectedPredicateValues[action.quad.predicate.value];
     }
 
-    if (!expectedValues || expectedValues.length === 0) {
-      // No match yet
-      if (action.quad.object.termType === 'Literal' && action.expectedDatatypeValues) {
-        expectedValues = action.expectedDatatypeValues[action.quad.object.datatype.value];
-      }
+    if (
+      (!expectedValues || expectedValues.length === 0) &&
+      (action.quad.object.termType === 'Literal' && action.expectedDatatypeValues)
+    ) {
+      expectedValues = action.expectedDatatypeValues[action.quad.object.datatype.value];
     }
 
     return expectedValues || [];

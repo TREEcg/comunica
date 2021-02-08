@@ -1,6 +1,6 @@
 {
   "@context": [
-    "https://example.org/actor-init-typeahead/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-metadata-extract/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-rdf-metadata-extract-hydra-controls/^1.0.0/components/context.jsonld",
@@ -10,8 +10,8 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-combine-union/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/mediator-race/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-resolve-hypermedia-links/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
-    "https://example.org/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-metadata-extract-tree/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld"
   ],
   "@id": "urn:comunica:my",
   "@graph": [

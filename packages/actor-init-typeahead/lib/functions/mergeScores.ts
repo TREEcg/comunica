@@ -1,4 +1,4 @@
-import type { RDFScore } from '@hdelva/bus-rdf-score';
+import type { RDFScore } from '@treecg/bus-rdf-score';
 
 /**
  * Function to combine scores from different RDF statements

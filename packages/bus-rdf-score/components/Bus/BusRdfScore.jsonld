@@ -1,5 +1,5 @@
 {
-  "@context": "https://example.org/bus-rdf-score/^1.0.0/components/context.jsonld",
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-rdf-score/^1.0.0/components/context.jsonld",
   "@id": "cbrs:Bus/RdfScore",
   "@type": "cc:Bus",
   "comment": "A comunica bus for scoring RDF statements (quads)."

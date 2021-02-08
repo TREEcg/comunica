@@ -1,8 +1,8 @@
 {
   "@context": [
-    "https://linkedsoftwaredependencies.org/bundles/npm/componentsjs/^3.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/componentsjs/^4.0.0/components/context.jsonld",
     {
-      "cit": "https://example.org/actor-init-typeahead/",
+      "cit": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/",
       "files-cit": "cit:^1.0.0/",
       "config-sets": "files-cit:config/sets/",
 
