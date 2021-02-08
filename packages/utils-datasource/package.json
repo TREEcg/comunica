@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@comunica/utils-datasource",
   "version": "1.19.3-alpha.0",
   "description": "An abstract actor for handling mediatype detection.",

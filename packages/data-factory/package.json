@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@comunica/data-factory",
   "version": "1.17.0",
   "description": "RDFJS DataFactory utilities",

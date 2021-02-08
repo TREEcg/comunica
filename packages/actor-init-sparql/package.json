@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@comunica/actor-init-sparql",
   "version": "1.19.3-alpha.0",
   "description": "A SPARQL query engine for querying over decentralized RDF knowledge graphs on the Web",
