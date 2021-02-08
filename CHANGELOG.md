@@ -1,6 +1,46 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.19.3-alpha.0"></a>
+## [v1.19.3-alpha.0](https://github.com/comunica/comunica/compare/v1.18.1...v1.19.3-alpha.0) - 2021-02-08
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [streamline versions](https://github.com/comunica/comunica/commit/e0ea4dbb827c6d849822926af8a00108d120f26d)
+* [Bump comunica version to 1.19 and components.js to 4.0.0](https://github.com/comunica/comunica/commit/82ba709d332b0b36fe968c378c4ff1862cae5f89)
+* [Update dependency eslint-config-es to v3.28.1](https://github.com/comunica/comunica/commit/5c4a31e321fd3a198cf38a50aba1f200255e6071)
+* [Bump to release version v1.19.2](https://github.com/comunica/comunica/commit/73525f72e616c1f8ee244ea5c64e10e4a6032cf5)
+* [Fix unhandled promise rejection on server errors](https://github.com/comunica/comunica/commit/4e2771d1e9307e2d5cfb1f97abd54d23f398bc87)
+* [Remove disabling of stacktraces when in production](https://github.com/comunica/comunica/commit/72c3b03fa1adda907dbcfbda2bafca7ce710167a)
+* [Update dependency @types/rdf-js to v4.0.1](https://github.com/comunica/comunica/commit/60adc745811f78ad44c81385e64fda2d5c7440c8)
+* [Update dependency eslint-config-es to v3.28.0](https://github.com/comunica/comunica/commit/4e0374b2c349807ad76c0824dcf8ecfc4e9c7950)
+* [Keep the number of inTransit requests as high as possible](https://github.com/comunica/comunica/commit/08580c1ae8c96cd92283d9cf0958f76716422417)
+* [Make the typeahead actor return an AsyncIterator No more supply side jesus](https://github.com/comunica/comunica/commit/b680e017e81c073e6574400fa489df20f6215e3a)
+* [Add link traversal to the actor init typeahead + add scoring of tree nodes + revise tree metadata extraction](https://github.com/comunica/comunica/commit/1f45e134f3b1e892ecbbd382f47698bc9ee7b625)
+* [Add link extraction to the typeahead actor](https://github.com/comunica/comunica/commit/b542d06ef2de7e1488f81659bd1d08a981fa0331)
+* [Add metadata extraction to the init typeahead actor](https://github.com/comunica/comunica/commit/06288a3775d5cdf9f8715e52c86de69258bd3f9f)
+* [Hook up the normalize actors to the init typeahead](https://github.com/comunica/comunica/commit/185a78771214dd09e8da62f2125a8751f0e33b72)
+* [Support javascript primitives in LiteralNormalize actors](https://github.com/comunica/comunica/commit/3835d5db1bdff335c8771774ce0a6fe3ea2688d3)
+* [Add literal normalize actor](https://github.com/comunica/comunica/commit/0bf78da7517271cf828bf36208efaf68101ca159)
+* [Make the MediatorCombineSequence actually use the test results](https://github.com/comunica/comunica/commit/69952b1656cd8c57dd794a9ab9638416702ff6bb)
+* [Disambiguate invalid scores from missing scores](https://github.com/comunica/comunica/commit/46c0ee2287ec638eafc36f99234f66fe2ded6309)
+* [Add string length scoring actor](https://github.com/comunica/comunica/commit/5d7730c0b9d028d4f7e4c0bd7c4388f6d203f04f)
+* [Bump to release version v1.19.1](https://github.com/comunica/comunica/commit/88cc1f59f9f6a235b36fcddf89e3e49072a3c58b)
+* [Fix logger not always producing output, Closes #774](https://github.com/comunica/comunica/commit/3cb07b6e81fe74820110487bccda8d9a2fc804b9)
+* [Add bigram scoring actor](https://github.com/comunica/comunica/commit/f07d955e25ccdb09fec2ced059fe99befa6025b8)
+* [Make SortActors responsible for deciding how multiple expectedValues should be interpreted](https://github.com/comunica/comunica/commit/fd3efd94c34d68fa21d2793c0f85167aee680628)
+* [Add mediator that gathers the results from all actors](https://github.com/comunica/comunica/commit/fc2013c340d9f2e227d9dc62df63e187fb0f52e3)
+* [Initial version of the typeahead init actor](https://github.com/comunica/comunica/commit/a6bdb946116cdaa0a071a47af3e52d63422addd6)
+* [Update dependency eslint-config-es to v3.27.6](https://github.com/comunica/comunica/commit/abf09339f55ba277fb84df15b0282d4d5207ac79)
+* [Add an actor that scores string literals by the length of their common prefixes with one or more search strings](https://github.com/comunica/comunica/commit/58fdb8f37b9bcea3889df776b43d52d8ccbed539)
+* [Bump to release version v1.19.0](https://github.com/comunica/comunica/commit/6a46f089ac0fbef36eb8373cadc8c319dc39efd7)
+* [Fix browser build failure after Components.js 4 upgrade](https://github.com/comunica/comunica/commit/f45ba3581b00cb7fcbcb9af207a24ab6d1ed559d)
+* [Pin eslint config and fix its linting issues](https://github.com/comunica/comunica/commit/5e98df444b11da84972ebfc9217089f175a0e3a1)
+* [Update to Components.js 4](https://github.com/comunica/comunica/commit/26160e821cd13a71d4d2bd0178b351f8d257f8d8)
+* [Fix unit test failures due to TypeScript strictness changes](https://github.com/comunica/comunica/commit/b657046f59b1d71e58b676e738b972f62adeec66)
+* [Remove async clause from abstract methods](https://github.com/comunica/comunica/commit/964374c88373be02908d0006143b166bcc9e12fb)
+* [Update dependency typedoc to ^0.20.0](https://github.com/comunica/comunica/commit/64b57f0a3ffe0a46004a5d4a1cdd990b6e156ec4)
+* [Update dependency htmlparser2 to v6](https://github.com/comunica/comunica/commit/25e7a6b05c96f46a82efaa126d18ff7d47fdac13)
+
 <a name="v1.19.2"></a>
 ## [v1.19.2](https://github.com/comunica/comunica/compare/v1.19.1...v1.19.2) - 2021-02-02
 

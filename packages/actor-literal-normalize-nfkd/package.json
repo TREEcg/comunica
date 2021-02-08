@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-literal-normalize-nfkd",
-  "version": "1.19.2",
+  "version": "1.19.3-alpha.0",
   "description": "An actor that normalized strings using NFKD",
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-literal-normalize-nfkd",
   "lsd:components": "components/components.jsonld",
@@ -27,12 +27,12 @@
     "@types/rdf-js": "^3.0.0"
   },
   "peerDependencies": {
-    "@treecg/bus-literal-normalize": "^1.0.0",
-    "@comunica/core": "^1.8.0"
+    "@comunica/core": "^1.8.0",
+    "@treecg/bus-literal-normalize": "^1.0.0"
   },
   "devDependencies": {
-    "@treecg/bus-literal-normalize": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/core": "^1.19.3-alpha.0",
+    "@treecg/bus-literal-normalize": "^1.19.3-alpha.0"
   },
   "jest": {
     "globals": {
