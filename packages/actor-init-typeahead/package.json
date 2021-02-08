@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.18.1",
+  "version": "1.19.2",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -22,14 +22,14 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-http": "^1.18.1",
-    "@comunica/bus-init": "^1.18.1",
-    "@comunica/bus-rdf-dereference": "^1.18.1",
+    "@comunica/bus-http": "^1.19.2",
+    "@comunica/bus-init": "^1.19.2",
+    "@comunica/bus-rdf-dereference": "^1.19.2",
     "@comunica/bus-rdf-metadata": "^1.19.0",
-    "@comunica/bus-rdf-parse": "^1.18.1",
-    "@comunica/core": "^1.18.1",
-    "@comunica/runner": "^1.18.1",
-    "@comunica/runner-cli": "^1.18.1",
+    "@comunica/bus-rdf-parse": "^1.19.2",
+    "@comunica/core": "^1.19.2",
+    "@comunica/runner": "^1.19.2",
+    "@comunica/runner-cli": "^1.19.2",
     "@treecg/bus-rdf-score": "^1.0.0",
     "@treecg/bus-tree-score": "^1.0.0",
     "asynciterator": "^3.0.3",
@@ -40,7 +40,7 @@
     "tinyqueue": "^2.0.3"
   },
   "devDependencies": {
-    "@comunica/mediator-race": "^1.18.1",
+    "@comunica/mediator-race": "^1.19.2",
     "@types/rdf-js": "^4.0.0"
   },
   "jest": {

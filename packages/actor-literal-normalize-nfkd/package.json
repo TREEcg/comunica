@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-literal-normalize-nfkd",
-  "version": "1.18.1",
+  "version": "1.19.2",
   "description": "An actor that normalized strings using NFKD",
   "lsd:module": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-literal-normalize-nfkd",
   "lsd:components": "components/components.jsonld",
@@ -31,8 +31,8 @@
     "@comunica/core": "^1.8.0"
   },
   "devDependencies": {
-    "@treecg/bus-literal-normalize": "^1.18.1",
-    "@comunica/core": "^1.18.1"
+    "@treecg/bus-literal-normalize": "^1.19.2",
+    "@comunica/core": "^1.19.2"
   },
   "jest": {
     "globals": {

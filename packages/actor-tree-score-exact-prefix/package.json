@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-tree-score-exact-prefix",
-  "version": "1.18.1",
+  "version": "1.19.2",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -24,8 +24,8 @@
     "@comunica/core": "^1.8.0"
   },
   "devDependencies": {
-    "@treecg/bus-tree-score": "^1.18.1",
-    "@comunica/core": "^1.18.1"
+    "@treecg/bus-tree-score": "^1.19.2",
+    "@comunica/core": "^1.19.2"
   },
   "jest": {
     "globals": {
