@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.19.3-alpha.0",
+  "version": "1.19.3-alpha.0+59e17e164",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -30,8 +30,8 @@
     "@comunica/core": "^1.19.3-alpha.0",
     "@comunica/runner": "^1.19.3-alpha.0",
     "@comunica/runner-cli": "^1.19.3-alpha.0",
-    "@treecg/bus-rdf-score": "^1.19.3-alpha.0",
-    "@treecg/bus-tree-score": "^1.19.3-alpha.0",
+    "@treecg/bus-rdf-score": "^1.19.3-alpha.0+59e17e164",
+    "@treecg/bus-tree-score": "^1.19.3-alpha.0+59e17e164",
     "asynciterator": "^3.0.3",
     "n3": "^1.8.0",
     "rdf": "^4.1.0",
@@ -64,5 +64,6 @@
     "test-watch": "node \"../../node_modules/jest/bin/jest.js\" ${1} --watch",
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
-  }
+  },
+  "gitHead": "59e17e164537b6fab6b5927949ccc192bfeec254"
 }

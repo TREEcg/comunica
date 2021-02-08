@@ -1,6 +1,6 @@
 {
   "name": "@treecg/bus-literal-normalize",
-  "version": "1.19.3-alpha.0",
+  "version": "1.19.3-alpha.0+59e17e164",
   "description": "A comunica bus for normalizing literal values.",
   "lsd:module": true,
   "main": "index.js",
@@ -45,5 +45,6 @@
   "scripts": {
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
-  }
+  },
+  "gitHead": "59e17e164537b6fab6b5927949ccc192bfeec254"
 }

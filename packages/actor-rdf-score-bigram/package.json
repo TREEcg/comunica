@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-score-bigram",
-  "version": "1.19.3-alpha.0",
+  "version": "1.19.3-alpha.0+59e17e164",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@comunica/core": "^1.19.3-alpha.0",
-    "@treecg/bus-rdf-score": "^1.19.3-alpha.0"
+    "@treecg/bus-rdf-score": "^1.19.3-alpha.0+59e17e164"
   },
   "jest": {
     "globals": {
@@ -44,5 +44,6 @@
     "test-watch": "node \"../../node_modules/jest/bin/jest.js\" ${1} --watch",
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
-  }
+  },
+  "gitHead": "59e17e164537b6fab6b5927949ccc192bfeec254"
 }
