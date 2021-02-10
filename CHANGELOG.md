@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.19.3"></a>
+## [v1.19.3](https://github.com/comunica/comunica/compare/v1.19.3-alpha.0...v1.19.3) - 2021-02-10
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Commit some weird stuff lerna generated](https://github.com/comunica/comunica/commit/2b381a11a1381a01cfd4f03bfa14f99985be5088)
+* [Make last comunica packages private](https://github.com/comunica/comunica/commit/59e17e164537b6fab6b5927949ccc192bfeec254)
+
 <a name="v1.19.3-alpha.0"></a>
 ## [v1.19.3-alpha.0](https://github.com/comunica/comunica/compare/v1.18.1...v1.19.3-alpha.0) - 2021-02-08
 

@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-metadata-extract-tree",
-  "version": "1.19.3-alpha.0+59e17e164",
+  "version": "1.19.3",
   "description": "A tree rdf-metadata-extract actor",
   "lsd:module": true,
   "main": "index.js",
