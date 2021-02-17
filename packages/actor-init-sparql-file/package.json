@@ -51,8 +51,8 @@
   ],
   "dependencies": {
     "@comunica/actor-init-sparql": "^1.19.3",
-    "@comunica/actor-rdf-dereference-file": "^1.19.3-alpha.0",
-    "@comunica/runner-cli": "^1.19.3-alpha.0",
+    "@comunica/actor-rdf-dereference-file": "^1.19.2",
+    "@comunica/runner-cli": "^1.19.2",
     "sparqlalgebrajs": "^2.4.0"
   },
   "scripts": {
