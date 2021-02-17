@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-score-common-prefix",
-  "version": "1.19.3",
+  "version": "1.19.4-alpha.1+2b76df24c",
   "description": "An actor that scores string literals by the length of the common prefix with the search string",
   "lsd:module": true,
   "main": "index.js",
@@ -20,13 +20,9 @@
     "index.d.ts",
     "index.js"
   ],
-  "peerDependencies": {
-    "@comunica/core": "^1.8.0",
-    "@treecg/bus-rdf-score": "^1.0.0"
-  },
-  "devDependencies": {
+  "dependencies": {
     "@comunica/core": "^1.19.2",
-    "@treecg/bus-rdf-score": "^1.19.3"
+    "@treecg/bus-rdf-score": "^1.19.4-alpha.1+2b76df24c"
   },
   "jest": {
     "globals": {
@@ -50,5 +46,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "59e17e164537b6fab6b5927949ccc192bfeec254"
+  "gitHead": "2b76df24c1c207090c6fa77a56ec67e22f61b291"
 }

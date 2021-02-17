@@ -1,6 +1,6 @@
 {
   "name": "@treecg/bus-tree-score",
-  "version": "1.19.3",
+  "version": "1.19.4-alpha.1+2b76df24c",
   "description": "A comunica bus for scoring TREE values.",
   "lsd:module": true,
   "main": "index.js",
@@ -18,12 +18,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/rdf-js": "*"
-  },
-  "peerDependencies": {
-    "@comunica/core": "^1.0.0"
-  },
-  "devDependencies": {
+    "@types/rdf-js": "*",
     "@comunica/core": "^1.19.2"
   },
   "jest": {
@@ -46,5 +41,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "59e17e164537b6fab6b5927949ccc192bfeec254"
+  "gitHead": "2b76df24c1c207090c6fa77a56ec67e22f61b291"
 }
