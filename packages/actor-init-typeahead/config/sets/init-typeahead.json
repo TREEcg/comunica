@@ -21,7 +21,7 @@
   "@type": "Runner",
   "actors": [
     {
-      "@id": "config-sets:myInit",
+      "@id": "urn:comunica:typeaheadinit",
       "@type": "ActorInitTypeahead",
       "mediatorRdfDereference": {
         "@id": "config-sets:rdf-dereference.json#mediatorRdfDereference"

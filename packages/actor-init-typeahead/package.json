@@ -3,6 +3,9 @@
   "version": "1.19.3",
   "lsd:module": true,
   "main": "index.js",
+  "browser": {
+    "./index.js": "./indexBrowser.js"
+  },
   "typings": "index",
   "publishConfig": {
     "access": "public"
@@ -19,7 +22,10 @@
     "bin/**/*.d.ts",
     "bin/**/*.js",
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "index-browser.d.ts",
+    "index-browser.js",
+    "engine-default.js"
   ],
   "dependencies": {
     "@comunica/bus-http": "^1.19.3-alpha.0",
@@ -60,6 +66,8 @@
     "collectCoverage": true
   },
   "scripts": {
+    "prepare": "comunica-compile-config config/config-default.json urn:comunica:typeaheadinit > engine-default.js",
+    "browser": "npm run prepare && \"../../node_modules/webpack/bin/webpack.js\" --config webpack.config.js --mode production",
     "test": "node \"../../node_modules/jest/bin/jest.js\" ${1}",
     "test-watch": "node \"../../node_modules/jest/bin/jest.js\" ${1} --watch",
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
