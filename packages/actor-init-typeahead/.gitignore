@@ -12,6 +12,6 @@ bin/**/*.d.ts
 index.js
 index.js.map
 index.d.ts
-index-browser.js
-index-browser.js.map
-index-browser.d.ts
+indexBrowser.js
+indexBrowser.js.map
+indexBrowser.d.ts

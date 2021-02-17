@@ -24,6 +24,7 @@
   "include": [
     "packages/*/index.ts",
     "packages/*/index-browser.ts",
+    "packages/*/indexBrowser.ts",
     "packages/*/bin/**/*",
     "packages/*/lib/**/*"
   ],

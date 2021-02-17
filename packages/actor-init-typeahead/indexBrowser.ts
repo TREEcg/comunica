@@ -1,6 +1,7 @@
 export * from './lib/ActorInitTypeaheadBrowser';
 
 // eslint-disable-next-line no-duplicate-imports
+export { ActorInitTypeaheadBrowser as ActorInitTypeahead } from './lib/ActorInitTypeaheadBrowser';
 import type { ActorInitTypeaheadBrowser } from './lib/ActorInitTypeaheadBrowser';
 
 /**

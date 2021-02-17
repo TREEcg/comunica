@@ -16,7 +16,7 @@ import type IRankedSubject from './interfaces/IRankedSubject';
 import type IRankedTreeNode from './interfaces/IRankedTreeNode';
 import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
-const TinyQueue = require('tinyqueue');
+const TinyQueue = require('tinyqueue').default;
 
 export default class ResultsIterator extends AsyncIterator<IResult> {
   protected mediators: IMediators;
