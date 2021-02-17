@@ -1,18 +1,18 @@
 import type IRankedTreeNode from '../interfaces/IRankedTreeNode';
 
 export default function compareTreeNodes(first: IRankedTreeNode, second: IRankedTreeNode): number {
-  if (first.score.length < second.score.length) {
+  if (first.treeScore.length < second.treeScore.length) {
     // Longer scores are assumed to be better;
     // The missing entries are assumed to be `null`
     return 1;
   }
-  if (second.score.length < first.score.length) {
+  if (second.treeScore.length < first.treeScore.length) {
     return -1;
   }
 
-  for (let i = 0; i < first.score.length; i++) {
-    const e1 = first.score[i];
-    const e2 = second.score[i];
+  for (let i = 0; i < first.treeScore.length; i++) {
+    const e1 = first.treeScore[i];
+    const e2 = second.treeScore[i];
 
     if (e1 === null || e2 === null) {
       continue;

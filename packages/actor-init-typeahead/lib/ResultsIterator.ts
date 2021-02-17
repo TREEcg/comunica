@@ -16,13 +16,17 @@ import type IRankedSubject from './interfaces/IRankedSubject';
 import type IRankedTreeNode from './interfaces/IRankedTreeNode';
 import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
-const TinyQueue = require('tinyqueue').default;
+
+let TinyQueue = require('tinyqueue');
+if (typeof TinyQueue !== 'function' && TinyQueue.default && typeof TinyQueue.default === 'function') {
+  TinyQueue = TinyQueue.default;
+}
 
 export default class ResultsIterator extends AsyncIterator<IResult> {
   protected mediators: IMediators;
   protected inTransit: number;
   protected maxRequests: number;
-  protected queue: typeof TinyQueue;
+  protected queue: any;
   protected expectedTreeValues: TreeValues;
   protected expectedDatatypeValues: IExpectedValues;
   protected expectedPredicateValues: IExpectedValues;
