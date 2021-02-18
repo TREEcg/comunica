@@ -19,22 +19,14 @@ export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
 
     const start = Date.now();
 
-    let expectedValues: string[] = [];
-    for (const rawValue of rawValues) {
-      try {
-        const result = await this.mediatorLiteralNormalize.mediate({ data: rawValue });
-        expectedValues = [ ...expectedValues, ...result.result ];
-      } catch {
-        expectedValues.push(rawValue);
-      }
-    }
-
+    const expectedValues: string[] = await this.normalizeInput(rawValues);
     const expectedDatatypeValues = {
       'http://www.w3.org/2001/XMLSchema#string': expectedValues,
       'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString': expectedValues,
     };
 
     const query = {
+      numResults: 5,
       urls: [ url ],
       expectedDatatypeValues,
       expectedPredicateValues: {},

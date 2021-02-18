@@ -23,6 +23,7 @@ if (typeof TinyQueue !== 'function' && TinyQueue.default && typeof TinyQueue.def
 }
 
 export default class ResultsIterator extends AsyncIterator<IResult> {
+  protected numResults: number;
   protected mediators: IMediators;
   protected inTransit: number;
   protected maxRequests: number;
@@ -37,6 +38,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   protected buffer: IResult[];
 
   public constructor(
+    numResults: number,
     nodes: ITreeNode[],
     mediators: IMediators,
     expectedTreeValues: TreeValues,
@@ -46,6 +48,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   ) {
     super();
 
+    this.numResults = numResults;
     this.mediators = mediators;
     this.expectedTreeValues = expectedTreeValues;
     this.expectedDatatypeValues = expectedDatatypeValues;
@@ -283,7 +286,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         rankedSubjects.sort(compareResults);
         resolve({
           subjects,
-          rankedSubjects: rankedSubjects.slice(0, 10),
+          rankedSubjects: rankedSubjects.slice(0, this.numResults),
         });
       });
     });

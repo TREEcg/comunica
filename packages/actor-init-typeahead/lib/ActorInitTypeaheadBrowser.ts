@@ -80,6 +80,19 @@ export class ActorInitTypeaheadBrowser extends ActorInit implements IActorInitTy
     throw new Error('ActorInitTypeahead#run is not supported in the browser.');
   }
 
+  public async normalizeInput(rawValues: string[]): Promise<string[]> {
+    let normalizedValues: string[] = [];
+    for (const rawValue of rawValues) {
+      try {
+        const result = await this.mediatorLiteralNormalize.mediate({ data: rawValue });
+        normalizedValues = [ ...normalizedValues, ...result.result ];
+      } catch {
+        normalizedValues.push(rawValue);
+      }
+    }
+    return normalizedValues;
+  }
+
   protected gatherExpectedTreeValues(args: IActorInitTypeaheadQueryArgs): RDF.Literal[] {
     // FIXME: this function makes strings out of everything
     const result: RDF.Literal[] = [];
@@ -122,6 +135,7 @@ export class ActorInitTypeaheadBrowser extends ActorInit implements IActorInitTy
     };
 
     return new ResultsIterator(
+      args.numResults,
       nodes,
       mediators,
       expectedTreeValues,
@@ -138,6 +152,8 @@ export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorT
 export interface IActorInitTypeaheadQueryArgs {
   // Todo, add tree relation data
   urls: string[];
+
+  numResults: number;
 
   expectedDatatypeValues: IExpectedValues;
   expectedPredicateValues: IExpectedValues;
