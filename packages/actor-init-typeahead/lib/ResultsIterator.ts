@@ -84,7 +84,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     }
 
     // After populating the queue, broadcast that we are ready to emit data
-    this.populateQueue({}, urls, this.knownTreeNodes, false)
+    this.populateQueue({}, urls, this.knownTreeNodes)
       .then(() => {
         this.ready = true;
         this.readable = true;
@@ -98,7 +98,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     currentValue: TreeValues,
     urls: string[],
     treeNodes: Record<string, ITreeNode>,
-    prune = true,
   ): Promise<void> {
     for (const childNode of urls) {
       const values = assignValueToLink(childNode, currentValue, treeNodes);
@@ -170,7 +169,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     }
 
     while (this.queue.length > 0 && this.inTransit < this.maxRequests) {
-      const { treeScore, url } = <IRankedTreeNode> this.queue.pop();
+      const { url } = <IRankedTreeNode> this.queue.pop();
       if (this.visitedTreeNodes.has(url)) {
         continue;
       }
