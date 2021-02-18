@@ -210,24 +210,20 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     await this.populateQueue({}, <string[]>urls, treeNodes);
     // Keep track of all known tree nodes for future queries
     this.knownTreeNodes = { ...this.knownTreeNodes, ...treeNodes };
-    const result = await this.processPageData(
+    return this.processPageData(
       rdfMetadataOuput.data,
-      this.latest,
       this.expectedDatatypeValues,
       this.expectedPredicateValues,
     );
-    this.latest = result;
-    return result;
   }
 
   protected processPageData(
     quadStream: RDF.Stream,
-    previousResults: IResult,
     expectedDatatypeValues: IExpectedValues,
     expectedPredicateValues: IExpectedValues,
   ): Promise<IResult> {
-    const rankedSubjects: IRankedSubject[] = [ ...previousResults.rankedSubjects ];
-    const subjects = previousResults.subjects;
+    let rankedSubjects: IRankedSubject[] = [];
+    const subjects = this.latest.subjects;
 
     const store = new N3.Store();
     store.import(quadStream);
@@ -300,12 +296,14 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           }
         }
 
+        rankedSubjects = [ ...rankedSubjects, ...this.latest.rankedSubjects ];
         rankedSubjects.sort(compareResults);
-        resolve({
+        this.latest = {
           subjects,
           knownTreeNodes: Object.values(this.knownTreeNodes),
           rankedSubjects: rankedSubjects.slice(0, this.numResults),
-        });
+        };
+        resolve(this.latest);
       });
     });
 
