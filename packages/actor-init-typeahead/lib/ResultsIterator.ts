@@ -4,7 +4,6 @@ import type { IActorRdfParseOutput } from '@comunica/bus-rdf-parse';
 import type { IActionRdfScore, IExpectedValues, RDFScore } from '@treecg/bus-rdf-score';
 import type { TreeValues } from '@treecg/bus-tree-score';
 import { AsyncIterator } from 'asynciterator';
-import * as N3 from 'n3';
 import type * as RDF from 'rdf-js';
 import assignValueToLink from './functions/assignValueToLink';
 import compareResults from './functions/compareResults';
@@ -223,24 +222,26 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   ): Promise<IResult> {
     let rankedSubjects: IRankedSubject[] = [];
 
-    const store = new N3.Store();
-    store.import(quadStream);
+    const store: Record<string, RDF.Quad[]> = {};
+    quadStream
+      .on('data', (quad: RDF.Quad) => {
+        const subject = quad.subject.value;
+        if (!(subject in store)) {
+          store[subject] = [];
+        }
+        store[subject].push(quad);
+      });
 
     const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
-        for (const subject of store.getSubjects(null, null, null)) {
-          if (subject.termType !== 'NamedNode') {
-            // No point in returning blank nodes
-            continue;
-          }
-          if (this.latest.subjects.has(subject.value)) {
+        for (const [ subject, quads ] of Object.entries(store)) {
+          if (this.latest.subjects.has(subject)) {
             // No need to reevaluate this one
             continue;
           }
-          this.latest.subjects.add(subject.value);
+          this.latest.subjects.add(subject);
 
           let score: RDFScore[] = [];
-          const quads = store.getQuads(subject, null, null, null);
           const matchingQuads = [];
           for (const quad of quads) {
             const action: IActionRdfScore<any> = {
@@ -287,7 +288,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             const cast: number[] = <number[]>score;
             rankedSubjects.push({
               score: cast,
-              subject: subject.value,
+              subject,
               matchingQuads,
               quads,
             });

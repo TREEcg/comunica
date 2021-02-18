@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.19.4-alpha.11+971eae30d",
+  "version": "1.19.4-alpha.14+2ecb93957",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
@@ -57,7 +57,6 @@
     "@treecg/bus-tree-score": "^1.19.4-alpha.1+2b76df24c",
     "@treecg/mediator-combine-sequence": "^1.19.4-alpha.1+2b76df24c",
     "asynciterator": "^3.0.3",
-    "n3": "^1.8.0",
     "rdf": "^4.1.0",
     "rdf-data-factory": "^1.0.4",
     "rdf-string": "^1.5.0",
@@ -91,5 +90,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "971eae30de49f383f309a41fb652ae3391b75092"
+  "gitHead": "2ecb93957e9ccd3b1617a656cb012877fed6c5d2"
 }
