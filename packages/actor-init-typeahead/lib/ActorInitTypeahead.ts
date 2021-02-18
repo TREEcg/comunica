@@ -37,6 +37,7 @@ export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
       .on('data', (result: IResult) => {
         const elapsed = Date.now() - start;
         readable.push(`Partial Result; Finished in ${elapsed} ms\n`);
+        readable.push(`# Discovered TREE nodes: ${result.knownTreeNodes.length}\n`);
         let i = 1;
         for (const entry of result.rankedSubjects) {
           readable.push(`[${i}]\n`);

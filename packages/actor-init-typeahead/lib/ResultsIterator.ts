@@ -36,6 +36,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
 
   // All the results that are ready to be read
   protected buffer: IResult[];
+  protected knownTreeNodes: Record<string, ITreeNode>;
 
   public constructor(
     numResults: number,
@@ -60,6 +61,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     this.buffer = [];
     this.latest = {
       subjects: new Set(),
+      knownTreeNodes: nodes,
       rankedSubjects: [],
     };
 
@@ -71,15 +73,15 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     // The constructor is just a special case
     const urls = [];
 
+    this.knownTreeNodes = {};
     // Make the tree nodes indexable
-    const treeNodes: Record<string, ITreeNode> = {};
     for (const node of nodes) {
       urls.push(node.url);
-      treeNodes[node.url] = node;
+      this.knownTreeNodes[node.url] = node;
     }
 
     // After populating the queue, broadcast that we are ready to emit data
-    this.populateQueue({}, urls, treeNodes, false)
+    this.populateQueue({}, urls, this.knownTreeNodes, false)
       .then(() => {
         this.ready = true;
         this.readable = true;
@@ -192,6 +194,8 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     const { urls } = await this.mediators.mediatorHypermediaLinks.mediate({ metadata });
     // TODO, propagate tree values
     await this.populateQueue({}, <string[]>urls, treeNodes);
+    // Keep track of all known tree nodes for future queries
+    this.knownTreeNodes = { ...this.knownTreeNodes, ...treeNodes };
 
     const result = await this.processPageData(
       rdfMetadataOuput.data,
@@ -286,6 +290,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         rankedSubjects.sort(compareResults);
         resolve({
           subjects,
+          knownTreeNodes: Object.values(this.knownTreeNodes),
           rankedSubjects: rankedSubjects.slice(0, this.numResults),
         });
       });
