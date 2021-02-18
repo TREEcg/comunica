@@ -119,9 +119,16 @@ export class ActorInitTypeaheadBrowser extends ActorInit implements IActorInitTy
       'https://w3id.org/tree#SubstringRelation': this.gatherExpectedTreeValues(args),
     };
 
-    const nodes: ITreeNode[] = [];
-    for (const url of args.urls) {
-      nodes.push({ url, values: {}});
+    let nodes: ITreeNode[];
+    if (args.treeNodes) {
+      nodes = args.treeNodes;
+    } else if (args.urls) {
+      nodes = [];
+      for (const url of args.urls) {
+        nodes.push({ url, values: {}});
+      }
+    } else {
+      throw new Error('Arguments must contain either a list of root URLs, or known tree nodes');
     }
 
     const mediators: IMediators = {
@@ -151,7 +158,8 @@ export interface IActorInitTypeaheadArgs extends IActorArgs<IActionInit, IActorT
 
 export interface IActorInitTypeaheadQueryArgs {
   // Todo, add tree relation data
-  urls: string[];
+  urls?: string[];
+  treeNodes?: ITreeNode[];
 
   numResults: number;
 
