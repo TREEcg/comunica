@@ -158,6 +158,11 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   }
 
   protected scheduleRequests(): void {
+    if (this.closed) {
+      // The consumer can signal it no longer cares
+      return;
+    }
+
     if (this.queue.length === 0 && this.inTransit === 0) {
       // Nothing left to schedule
 
