@@ -223,7 +223,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     expectedPredicateValues: IExpectedValues,
   ): Promise<IResult> {
     let rankedSubjects: IRankedSubject[] = [];
-    const subjects = this.latest.subjects;
 
     const store = new N3.Store();
     store.import(quadStream);
@@ -235,11 +234,11 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             // No point in returning blank nodes
             continue;
           }
-          if (subjects.has(subject.value)) {
+          if (this.latest.subjects.has(subject.value)) {
             // No need to reevaluate this one
             continue;
           }
-          subjects.add(subject.value);
+          this.latest.subjects.add(subject.value);
 
           let score: RDFScore[] = [];
           const quads = store.getQuads(subject, null, null, null);
@@ -299,7 +298,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         rankedSubjects = [ ...rankedSubjects, ...this.latest.rankedSubjects ];
         rankedSubjects.sort(compareResults);
         this.latest = {
-          subjects,
+          subjects: this.latest.subjects,
           knownTreeNodes: Object.values(this.knownTreeNodes),
           rankedSubjects: rankedSubjects.slice(0, this.numResults),
         };
