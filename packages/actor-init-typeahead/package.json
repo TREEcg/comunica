@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.19.4-alpha.15+dfac50f41",
+  "version": "1.19.4-alpha.16+deb5fe619",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
@@ -90,5 +90,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "dfac50f41e229607a830e01b9ed74898628ce768"
+  "gitHead": "deb5fe6192154dec8fdb8483a64fcc29769801f3"
 }

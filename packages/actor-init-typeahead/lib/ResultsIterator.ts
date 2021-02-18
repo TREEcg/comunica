@@ -75,15 +75,20 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     // The constructor is just a special case
     const urls = [];
 
+    const treeNodes: Record<string, ITreeNode> = {};
     this.knownTreeNodes = {};
     // Make the tree nodes indexable
     for (const node of nodes) {
       urls.push(node.url);
-      this.knownTreeNodes[node.url] = node;
+      treeNodes[node.url] = node;
+
+      if (Object.keys(node.values).length > 0) {
+        this.knownTreeNodes[node.url] = node;
+      }
     }
 
     // After populating the queue, broadcast that we are ready to emit data
-    this.populateQueue({}, urls, this.knownTreeNodes)
+    this.populateQueue({}, urls, treeNodes)
       .then(() => {
         this.ready = true;
         this.readable = true;
@@ -225,11 +230,13 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     const store: Record<string, RDF.Quad[]> = {};
     quadStream
       .on('data', (quad: RDF.Quad) => {
-        const subject = quad.subject.value;
-        if (!(subject in store)) {
-          store[subject] = [];
+        if (quad.subject.termType === 'NamedNode') {
+          const subject = quad.subject.value;
+          if (!(subject in store)) {
+            store[subject] = [];
+          }
+          store[subject].push(quad);
         }
-        store[subject].push(quad);
       });
 
     const result: Promise<IResult> = new Promise(resolve => {
