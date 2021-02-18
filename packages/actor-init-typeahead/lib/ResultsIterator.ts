@@ -37,6 +37,8 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   // All the results that are ready to be read
   protected buffer: IResult[];
   protected knownTreeNodes: Record<string, ITreeNode>;
+  // Avoid cyclic traversals
+  protected visitedTreeNodes: Set<string>;
 
   public constructor(
     numResults: number,
@@ -58,6 +60,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     this.maxRequests = maxRequests;
     this.queue = new TinyQueue([], compareTreeNodes);
 
+    this.visitedTreeNodes = new Set();
     this.buffer = [];
     this.latest = {
       subjects: new Set(),
@@ -108,7 +111,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         treeScore = [ treeScore ];
       }
 
-      if (prune) {
+      if (Object.keys(values).length > 0) {
         const sum = treeScore.reduce((acc, cur) => acc + cur, 0);
         if (sum > 0) {
           this.queue.push({
@@ -154,11 +157,24 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   protected scheduleRequests(): void {
     if (this.queue.length === 0 && this.inTransit === 0) {
       // Nothing left to schedule
-      this.close();
+
+      if (this.buffer.length === 0) {
+        // Nothing left to read either
+        this.close();
+      } else {
+        // Probably unnecessary, just making sure consumers know there's some final data
+        this.readable = true;
+      }
+
+      return;
     }
 
     while (this.queue.length > 0 && this.inTransit < this.maxRequests) {
-      const { url } = <IRankedTreeNode> this.queue.pop();
+      const { treeScore, url } = <IRankedTreeNode> this.queue.pop();
+      if (this.visitedTreeNodes.has(url)) {
+        continue;
+      }
+      this.visitedTreeNodes.add(url);
       this.inTransit += 1;
       this.processUrl(url)
         .then(result => {
@@ -182,21 +198,18 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     };
 
     const rdfDereferenceOutput: IActorRdfParseOutput = await this.mediators.mediatorRdfDereference.mediate(dereference);
-
     // Determine the metadata
     const rdfMetadataOuput: IActorRdfMetadataOutput = await this.mediators.mediatorMetadata.mediate(
       { url, quads: rdfDereferenceOutput.quads, triples: rdfDereferenceOutput.triples },
     );
     const { metadata } = await this.mediators.mediatorMetadataExtract
       .mediate({ url, metadata: rdfMetadataOuput.metadata });
-
     const treeNodes = extractTreeNodes(metadata);
     const { urls } = await this.mediators.mediatorHypermediaLinks.mediate({ metadata });
     // TODO, propagate tree values
     await this.populateQueue({}, <string[]>urls, treeNodes);
     // Keep track of all known tree nodes for future queries
     this.knownTreeNodes = { ...this.knownTreeNodes, ...treeNodes };
-
     const result = await this.processPageData(
       rdfMetadataOuput.data,
       this.latest,

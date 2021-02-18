@@ -27,5 +27,15 @@ export default function compareTreeNodes(first: IRankedTreeNode, second: IRanked
     }
   }
 
+  const sumFirst = first.treeScore.reduce((acc, value) => acc + value, 0);
+  const sumSecond = second.treeScore.reduce((acc, value) => acc + value, 0);
+
+  if (sumFirst < sumSecond) {
+    return 1;
+  }
+  if (sumFirst > sumSecond) {
+    return -1;
+  }
+
   return 0;
 }

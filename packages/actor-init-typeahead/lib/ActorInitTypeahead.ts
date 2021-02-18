@@ -25,9 +25,10 @@ export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
       'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString': expectedValues,
     };
 
+    const treeNodes = await this.prefetch([ url ]);
     const query = {
       numResults: 5,
-      urls: [ url ],
+      treeNodes,
       expectedDatatypeValues,
       expectedPredicateValues: {},
       context: action.context,

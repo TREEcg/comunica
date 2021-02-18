@@ -41,6 +41,7 @@ import type {
 import { DataFactory } from 'rdf-data-factory';
 import type * as RDF from 'rdf-js';
 import type IMediators from './interfaces/IMediators';
+import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
 import ResultsIterator from './ResultsIterator';
 
@@ -91,6 +92,26 @@ export class ActorInitTypeaheadBrowser extends ActorInit implements IActorInitTy
       }
     }
     return normalizedValues;
+  }
+
+  public async prefetch(urls: string[]): Promise<ITreeNode[]> {
+    return new Promise((resolve, reject) => {
+      const iterator = this.query({
+        urls,
+        numResults: 1,
+        expectedDatatypeValues: {},
+        expectedPredicateValues: {},
+      });
+
+      let treeNodes: ITreeNode[] = [];
+      iterator
+        .on('data', (result: IResult) => {
+          treeNodes = [ ...treeNodes, ...result.knownTreeNodes ];
+        })
+        .on('end', () => {
+          resolve(treeNodes);
+        });
+    });
   }
 
   protected gatherExpectedTreeValues(args: IActorInitTypeaheadQueryArgs): RDF.Literal[] {
