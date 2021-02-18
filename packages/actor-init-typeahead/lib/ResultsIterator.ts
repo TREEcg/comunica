@@ -215,6 +215,10 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
         for (const subject of store.getSubjects(null, null, null)) {
+          if (subject.termType !== 'NamedNode') {
+            // No point in returning blank nodes
+            continue;
+          }
           if (subjects.has(subject.value)) {
             // No need to reevaluate this one
             continue;
@@ -223,6 +227,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
 
           let score: RDFScore[] = [];
           const quads = store.getQuads(subject, null, null, null);
+          const matchingQuads = [];
           for (const quad of quads) {
             const action: IActionRdfScore<any> = {
               quad,
@@ -244,6 +249,12 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             }
 
             if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+              if (quadScore.every(element => element === null)) {
+                // None of the sorting actors had anything to say
+                continue;
+              }
+              matchingQuads.push(quad);
+
               // -Inf indicates the score is too bad to be used
               if (score.length === 0) {
                 // First valid score for this subject
@@ -263,6 +274,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             rankedSubjects.push({
               score: cast,
               subject: subject.value,
+              matchingQuads,
               quads,
             });
           }

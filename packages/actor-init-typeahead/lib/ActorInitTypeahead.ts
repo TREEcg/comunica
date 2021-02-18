@@ -49,6 +49,7 @@ export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
         for (const entry of result.rankedSubjects) {
           readable.push(`[${i}]\n`);
           readable.push(`  Subject: ${entry.subject}\n`);
+          readable.push(`  # Matching Quads: ${entry.matchingQuads.length}\n`);
           readable.push(`  Score:   ${JSON.stringify(entry.score)}\n`);
           for (const quad of entry.quads) {
             readable.push(`    ${quad.predicate.value}\n`);
