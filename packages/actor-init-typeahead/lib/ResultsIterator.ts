@@ -244,6 +244,14 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           let score: RDFScore[] = [];
           const matchingQuads = [];
           for (const quad of quads) {
+            const rightPredicate = quad.predicate.value in expectedPredicateValues;
+            const rightDatatype = quad.object.termType === 'Literal' &&
+              (quad.object.datatype.value in expectedDatatypeValues);
+            if (!rightPredicate && !rightDatatype) {
+              // This is't the quad we're looking for
+              continue;
+            }
+
             const action: IActionRdfScore<any> = {
               quad,
               expectedDatatypeValues,
