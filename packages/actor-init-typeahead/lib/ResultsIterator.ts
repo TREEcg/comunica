@@ -192,7 +192,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           this.inTransit -= 1;
 
           // Immediately start processing the next item on the queue
-          this.scheduleRequests();
+          // this.scheduleRequests();
         })
         .catch(error => {
           throw error;
@@ -210,6 +210,10 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     const rdfMetadataOuput: IActorRdfMetadataOutput = await this.mediators.mediatorMetadata.mediate(
       { url, quads: rdfDereferenceOutput.quads, triples: rdfDereferenceOutput.triples },
     );
+    if (this.closed) {
+      // The next step can be expensive, see if we can abort
+      return this.latest;
+    }
     const { metadata } = await this.mediators.mediatorMetadataExtract
       .mediate({ url, metadata: rdfMetadataOuput.metadata });
     const treeNodes = extractTreeNodes(metadata);
