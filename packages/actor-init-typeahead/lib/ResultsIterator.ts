@@ -25,7 +25,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   protected numResults: number;
   protected mediators: IMediators;
   protected inTransit: number;
-  protected maxRequests: number;
   protected queue: any;
   protected expectedTreeValues: TreeValues;
   protected expectedDatatypeValues: IExpectedValues;
@@ -46,7 +45,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     expectedTreeValues: TreeValues,
     expectedDatatypeValues: IExpectedValues,
     expectedPredicateValues: IExpectedValues,
-    maxRequests = 8,
   ) {
     super();
 
@@ -56,7 +54,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     this.expectedDatatypeValues = expectedDatatypeValues;
     this.expectedPredicateValues = expectedPredicateValues;
     this.inTransit = 0;
-    this.maxRequests = maxRequests;
     this.queue = new TinyQueue([], compareTreeNodes);
 
     this.visitedTreeNodes = new Set();
@@ -177,27 +174,25 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
       return;
     }
 
-    while (this.queue.length > 0 && this.inTransit < this.maxRequests) {
-      const { url } = <IRankedTreeNode> this.queue.pop();
-      if (this.visitedTreeNodes.has(url)) {
-        continue;
-      }
-      this.visitedTreeNodes.add(url);
-      this.inTransit += 1;
-      this.processUrl(url)
-        .then(result => {
-          // Add next result to front of the queue
-          this.buffer.unshift(result);
-          this.readable = true;
-          this.inTransit -= 1;
-
-          // Immediately start processing the next item on the queue
-          // this.scheduleRequests();
-        })
-        .catch(error => {
-          throw error;
-        });
+    const { url } = <IRankedTreeNode> this.queue.pop();
+    if (this.visitedTreeNodes.has(url)) {
+      return;
     }
+    this.visitedTreeNodes.add(url);
+    this.inTransit += 1;
+    this.processUrl(url)
+      .then(result => {
+        // Add next result to front of the queue
+        this.buffer.unshift(result);
+        this.readable = true;
+        this.inTransit -= 1;
+
+        // Immediately start processing the next item on the queue
+        // this.scheduleRequests();
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   protected async processUrl(url: string): Promise<IResult> {
