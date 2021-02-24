@@ -23,7 +23,7 @@ This is a fork of the Comunica framework, so that most of Comunica's documentati
 
 ### ActorInitTypeahead
 
-*todo*, point to readme of actor itself
+[This actor has its own documentation](https://github.com/TREEcg/treemunica/tree/master/packages/actor-init-typeahead).
 
 ### ActorRdfScore
 
