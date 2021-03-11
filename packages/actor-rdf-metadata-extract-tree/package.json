@@ -17,8 +17,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-rdf-metadata-extract": "^1.19.4",
-    "@comunica/core": "^1.19.4",
+    "@comunica/bus-rdf-metadata-extract": "^1.19.2",
+    "@comunica/core": "^1.19.2",
     "@dexagod/tree-metadata-extraction": "^1.0.4"
   },
   "jest": {

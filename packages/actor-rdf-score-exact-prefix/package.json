@@ -20,7 +20,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.4",
+    "@comunica/core": "^1.19.2",
     "@treecg/bus-rdf-score": "^1.19.4"
   },
   "jest": {

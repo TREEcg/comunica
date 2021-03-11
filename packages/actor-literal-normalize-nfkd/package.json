@@ -24,13 +24,13 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.4",
+    "@comunica/core": "^1.19.2",
     "@treecg/bus-literal-normalize": "^1.0.0",
     "@types/rdf-js": "^3.0.0"
   },
   "devDependencies": {
     "@comunica/core": "^1.19.2",
-    "@treecg/bus-literal-normalize": "^1.19.4-alpha.1+2b76df24c"
+    "@treecg/bus-literal-normalize": "^1.19.4"
   },
   "jest": {
     "globals": {
