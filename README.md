@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://treecg.github.io/specification/">
-    <img alt="TREE" src="https://raw.githubusercontent.com/TREEcg/specification/master/tree-logo.svg" width="200">
+    <img alt="TREE" src="https://raw.githubusercontent.com/TREEcg/specification/master/tree-logo.svg" height="200">
   </a>
   <a href="https://comunica.dev/">
-    <img alt="Comunica" src="https://comunica.dev/img/comunica_red.svg" width="200">
+    <img alt="Comunica" src="https://comunica.dev/img/comunica_red.svg" height="200">
   </a>
 </p>
 
@@ -12,21 +12,22 @@
 </p>
 
 **[Learn more about Comunica on the comunica.dev](https://comunica.dev/).**
+
 **[Read the TREE specification at treecg.github.io/specification](https://treecg.github.io/specification/).**
 
 # Overview
 
-This is a fork of the Comunica framework, and most of Comunica's documentation can be translated to this project as well. The main difference is the scope of the two projects; whereas Comunica focuses on querying Knowledge Graphs, this fork focuses on utilizing the TREE hypermedia specification. These scopes overlap, but the latter includes usecases such as autocompletion (over RDF documents published on the Web), and tracking an evolving reference dataset.
+This is a fork of the Comunica framework, so that most of Comunica's documentation can be applied to this project as well. The main difference is the scope of the two projects; whereas Comunica focuses on querying Knowledge Graphs, this fork focuses on utilizing the TREE hypermedia specification for usecases such as autocompletion and tracking evolving datasets.
 
 ## Components
 
 ### ActorInitTypeahead
 
-*todo*, point to readme of actor itself
+[This actor has its own documentation](https://github.com/TREEcg/treemunica/tree/master/packages/actor-init-typeahead).
 
 ### ActorRdfScore
 
-Some usecases require the ordering of all found results, often because only a fixed small amount of results will be shown to the end-user. These actors score a single RDF quad on `{ [-Inf, +Inf] ∪ {null} }`, where +Inf signifies the best possible score, and -Inf signifies the worst possible score. `null` indicates the actor could not score this quad. These scores have a partial ordering, where the `null` score is incomparable to any other score. 
+Some usecases require the ordering of all found results, often because only a fixed small amount of results will be shown to the end-user. These actors score a single RDF quad to `{ [-Inf, +Inf] ∪ {null} }`, where +Inf signifies the best possible score, and -Inf signifies the worst possible score. `null` indicates the actor could not score this quad. These scores have a partial ordering, where the `null` score is incomparable to any other score. 
 
 A single score will often be insufficient as additional scores are needed to break ties. For example, it may be desirable to first order by the length of the common substring, followed by the length of the found string. Sequences of scores can be ordered as well, where `(a,b) ≤ (a′,b′) if and only if a < a′ or (¬(a' < a') and b ≤ b′)` . 
 
