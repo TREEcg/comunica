@@ -1,0 +1,45 @@
+{
+  "name": "@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
+  "version": "1.19.4",
+  "lsd:module": true,
+  "main": "index.js",
+  "typings": "index",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "files": [
+    "components",
+    "lib/**/*.d.ts",
+    "lib/**/*.js",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@comunica/bus-rdf-resolve-hypermedia-links": "^1.19.2",
+    "@comunica/core": "^1.19.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "../../tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "collectCoverage": true
+  },
+  "scripts": {
+    "test": "node \"../../node_modules/jest/bin/jest.js\" ${1}",
+    "test-watch": "node \"../../node_modules/jest/bin/jest.js\" ${1} --watch",
+    "build": "node \"../../node_modules/typescript/bin/tsc\"",
+    "validate": "npm ls"
+  },
+  "gitHead": "2b76df24c1c207090c6fa77a56ec67e22f61b291"
+}

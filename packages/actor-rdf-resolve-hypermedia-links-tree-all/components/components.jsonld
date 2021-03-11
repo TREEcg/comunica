@@ -1,0 +1,9 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
+  "@type": "Module",
+  "requireName": "@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
+  "import": [
+    "files-carrhlta:components/Actor/RdfResolveHypermediaLinks/TreeAll.jsonld"
+  ]
+}

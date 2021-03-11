@@ -1,0 +1,20 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/bus-rdf-resolve-hypermedia-links/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
+  "components": [
+    {
+      "@id": "carrhlta:Actor/RdfResolveHypermediaLinks/TreeAll",
+      "@type": "Class",
+      "extends": "cbrrhl:Actor/RdfResolveHypermediaLinks",
+      "requireElement": "ActorRdfResolveHypermediaLinksTreeAll",
+      "constructorArguments": [
+        {
+          "extends": "cbrrhl:Actor/RdfResolveHypermediaLinks/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}
