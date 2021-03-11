@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.19.5"></a>
+## [v1.19.5](https://github.com/comunica/comunica/compare/v1.19.4...v1.19.5) - 2021-03-11
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Small version bump](https://github.com/comunica/comunica/commit/68cde3eb38526501a747c91759972b74534af2c5)
+* [Forgot to actually add the missing files](https://github.com/comunica/comunica/commit/aab71e6e1aa4d738437af43050d20806ca7382c5)
+* [Bring back a missing file from the dead](https://github.com/comunica/comunica/commit/cb50455769c6ff2cf7953e2338a8f7e343731872)
+* [Remove original comunica actors](https://github.com/comunica/comunica/commit/dd632f5cfec133f8ad32a38508da100f37aee705)
+
 <a name="v1.19.4"></a>
 ## [v1.19.4](https://github.com/comunica/comunica/compare/v1.19.3...v1.19.4) - 2021-03-11
 

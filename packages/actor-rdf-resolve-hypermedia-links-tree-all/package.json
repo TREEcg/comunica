@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
-  "version": "1.19.5-alpha.2+aab71e6e1",
+  "version": "1.19.5",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
