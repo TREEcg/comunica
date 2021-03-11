@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.19.4",
+  "version": "1.19.5-alpha.0+dd632f5cf",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
@@ -44,18 +44,18 @@
     "@comunica/core": "^1.19.2",
     "@comunica/runner": "^1.19.2",
     "@comunica/runner-cli": "^1.19.2",
-    "@treecg/actor-literal-normalize-nfkd": "^1.19.4",
-    "@treecg/actor-rdf-metadata-extract-tree": "^1.19.4",
+    "@treecg/actor-literal-normalize-nfkd": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/actor-rdf-metadata-extract-tree": "^1.19.5-alpha.0+dd632f5cf",
     "@treecg/actor-rdf-resolve-hypermedia-links-tree-all": "^1.19.4",
-    "@treecg/actor-rdf-score-bigram": "^1.19.4",
-    "@treecg/actor-rdf-score-common-prefix": "^1.19.4",
-    "@treecg/actor-rdf-score-exact-prefix": "^1.19.4",
-    "@treecg/actor-rdf-score-string-length": "^1.19.4",
-    "@treecg/actor-tree-score-exact-prefix": "^1.19.4",
-    "@treecg/bus-literal-normalize": "^1.19.4",
-    "@treecg/bus-rdf-score": "^1.19.4",
-    "@treecg/bus-tree-score": "^1.19.4",
-    "@treecg/mediator-combine-sequence": "^1.19.4",
+    "@treecg/actor-rdf-score-bigram": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/actor-rdf-score-common-prefix": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/actor-rdf-score-exact-prefix": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/actor-rdf-score-string-length": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/actor-tree-score-exact-prefix": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/bus-literal-normalize": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/bus-rdf-score": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/bus-tree-score": "^1.19.5-alpha.0+dd632f5cf",
+    "@treecg/mediator-combine-sequence": "^1.19.5-alpha.0+dd632f5cf",
     "asynciterator": "^3.0.3",
     "rdf": "^4.1.0",
     "rdf-data-factory": "^1.0.4",
@@ -90,5 +90,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "a9db9dad556ff0c9782bbbc7f51e5f18393d8595"
+  "gitHead": "dd632f5cfec133f8ad32a38508da100f37aee705"
 }

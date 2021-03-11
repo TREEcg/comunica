@@ -1,6 +1,6 @@
 {
   "name": "@treecg/bus-rdf-score",
-  "version": "1.19.4",
+  "version": "1.19.5-alpha.0+dd632f5cf",
   "description": "A comunica bus for scoring collections of RDF quads.",
   "lsd:module": true,
   "main": "index.js",
@@ -41,5 +41,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "2b76df24c1c207090c6fa77a56ec67e22f61b291"
+  "gitHead": "dd632f5cfec133f8ad32a38508da100f37aee705"
 }
