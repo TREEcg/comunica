@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-resolve-hypermedia-links-tree-all",
-  "version": "1.19.4",
+  "version": "1.19.5-alpha.2+aab71e6e1",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -41,5 +41,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "2b76df24c1c207090c6fa77a56ec67e22f61b291"
+  "gitHead": "aab71e6e1aa4d738437af43050d20806ca7382c5"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.19.5-alpha.0+dd632f5cf",
+  "version": "1.19.5-alpha.2+aab71e6e1",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
@@ -46,7 +46,7 @@
     "@comunica/runner-cli": "^1.19.2",
     "@treecg/actor-literal-normalize-nfkd": "^1.19.5-alpha.0+dd632f5cf",
     "@treecg/actor-rdf-metadata-extract-tree": "^1.19.5-alpha.0+dd632f5cf",
-    "@treecg/actor-rdf-resolve-hypermedia-links-tree-all": "^1.19.4",
+    "@treecg/actor-rdf-resolve-hypermedia-links-tree-all": "^1.19.5-alpha.2+aab71e6e1",
     "@treecg/actor-rdf-score-bigram": "^1.19.5-alpha.0+dd632f5cf",
     "@treecg/actor-rdf-score-common-prefix": "^1.19.5-alpha.0+dd632f5cf",
     "@treecg/actor-rdf-score-exact-prefix": "^1.19.5-alpha.0+dd632f5cf",
@@ -90,5 +90,5 @@
     "build": "node \"../../node_modules/typescript/bin/tsc\"",
     "validate": "npm ls"
   },
-  "gitHead": "dd632f5cfec133f8ad32a38508da100f37aee705"
+  "gitHead": "aab71e6e1aa4d738437af43050d20806ca7382c5"
 }
