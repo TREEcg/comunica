@@ -56,11 +56,17 @@ export class ActorTreeScoreExactPrefix extends ActorTreeScore {
     let score = 0;
 
     for (const foundValue of foundValues) {
+      let found = false;
       for (const expectedValue of expectedValues) {
         if (expectedValue.startsWith(foundValue)) {
           score += foundValue.length;
+          found = true;
           break;
         }
+      }
+      if (!found) {
+        // None of the expected values matched
+        return 0;
       }
     }
 
