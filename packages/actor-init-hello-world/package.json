@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/actor-init-hello-world",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A Hello World Comunica engine",
   "lsd:module": true,
   "main": "index.js",
@@ -34,10 +34,10 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-init": "^1.19.2",
-    "@comunica/core": "^1.19.2",
-    "@comunica/runner": "^1.19.2",
-    "@comunica/runner-cli": "^1.19.2",
+    "@comunica/bus-init": "^1.19.4",
+    "@comunica/core": "^1.19.4",
+    "@comunica/runner": "^1.19.4",
+    "@comunica/runner-cli": "^1.19.4",
     "streamify-string": "^1.0.1"
   },
   "jest": {

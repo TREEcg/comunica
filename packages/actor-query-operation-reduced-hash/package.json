@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/actor-query-operation-reduced-hash",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A reduced-hash query-operation actor",
   "lsd:module": true,
   "main": "index.js",
@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@comunica/actor-abstract-bindings-hash": "^1.2.0",
-    "@comunica/bus-query-operation": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/bus-query-operation": "^1.19.4",
+    "@comunica/core": "^1.19.4"
   },
   "jest": {
     "globals": {
@@ -65,7 +65,7 @@
     "validate": "npm ls"
   },
   "dependencies": {
-    "@comunica/actor-abstract-bindings-hash": "^1.19.2",
+    "@comunica/actor-abstract-bindings-hash": "^1.19.4",
     "@types/lru-cache": "^5.1.0",
     "lru-cache": "^6.0.0",
     "sparqlalgebrajs": "^2.4.0"

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/actor-rdf-parse-html-script",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A html-script rdf-parse actor",
   "lsd:module": true,
   "main": "index.js",
@@ -33,7 +33,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-rdf-parse-html": "^1.19.2",
+    "@comunica/bus-rdf-parse-html": "^1.19.4",
     "@types/rdf-js": "*",
     "relative-to-absolute-iri": "^1.0.5"
   },
@@ -42,8 +42,8 @@
     "@comunica/core": "^1.4.0"
   },
   "devDependencies": {
-    "@comunica/bus-rdf-parse": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/bus-rdf-parse": "^1.19.4",
+    "@comunica/core": "^1.19.4"
   },
   "jest": {
     "globals": {

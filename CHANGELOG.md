@@ -1,6 +1,38 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.19.4"></a>
+## [v1.19.4](https://github.com/comunica/comunica/compare/v1.19.3...v1.19.4) - 2021-03-11
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Merge branch 'master' of https://github.com/hdelva/comunica](https://github.com/comunica/comunica/commit/e8ef58bb25d95b94d620b140d92337e2775483f3)
+* [Be more conservative in the links the autocompletion client follows](https://github.com/comunica/comunica/commit/e02c58be96000d76b9dea93eee1a18c24d7edbd7)
+* [Refer to typeahead readme from the main one](https://github.com/comunica/comunica/commit/bb9bbd3780a1b80e74e3a09af07500a9c954089f)
+* [Add a readme to the typeahead actor](https://github.com/comunica/comunica/commit/b168f3466355bb6917b853219160119c9bac03c7)
+* [Update README.md](https://github.com/comunica/comunica/commit/5bf2623384e4226fd81a6e5457f3e6fa1f275183)
+* [Update README to focus on the additions of TREEmunica to Comunica](https://github.com/comunica/comunica/commit/1c809c72de06e5bef1655c3907742cb34a940532)
+* [Give up on the constant number of requests in flight This just causes a lot of pointless file parsing](https://github.com/comunica/comunica/commit/753ba792ce3f57565d64cac3890e2f69fa59cc1d)
+* [Try to add more early stopping](https://github.com/comunica/comunica/commit/a9db9dad556ff0c9782bbbc7f51e5f18393d8595)
+* [Support early stopping](https://github.com/comunica/comunica/commit/8ec9a8831c66c8ffc0cd999590eb6fc035871c13)
+* [Don't return root nodes as known tree nodes; they empty](https://github.com/comunica/comunica/commit/ed4b0f247928a312c60a0e904f2aef486f6777a9)
+* [Don't score quads we know are useless](https://github.com/comunica/comunica/commit/deb5fe6192154dec8fdb8483a64fcc29769801f3)
+* [Drop the N3.js store](https://github.com/comunica/comunica/commit/dfac50f41e229607a830e01b9ed74898628ce768)
+* [Clean up some redundant function parameters](https://github.com/comunica/comunica/commit/2ecb93957e9ccd3b1617a656cb012877fed6c5d2)
+* [Don't need these](https://github.com/comunica/comunica/commit/e6530e962874eea38866da92e02a316d3135e641)
+* [Don't build upon stale values](https://github.com/comunica/comunica/commit/2ffd75b94d8f736672e5e255bfe841f9f3b81e0a)
+* [Add prefetching and fix some node prioritization oddities](https://github.com/comunica/comunica/commit/971eae30de49f383f309a41fb652ae3391b75092)
+* [Return all discovered TREE nodes](https://github.com/comunica/comunica/commit/85c6aec238596537d965bebed9915fbf3d431738)
+* [Add known tree nodes to the query interface](https://github.com/comunica/comunica/commit/3f61781cd4c0bdb5c5da4bf5ca24fb0cc8c16aac)
+* [Expose input normalizing and setting number of results](https://github.com/comunica/comunica/commit/0077e8b33ecb5024296991e579bf48e69470e6d1)
+* [Return matched quads separately](https://github.com/comunica/comunica/commit/aa02be98167cf36643e1e56114a097af6f058fd8)
+* [Give tinyqueue another shot](https://github.com/comunica/comunica/commit/af4eecc1e4db5adaebe2110e338eef3303961303)
+* [aaaaaaaaaaaaaa](https://github.com/comunica/comunica/commit/4079fde97426df85319e7567ac16973c67cd57ef)
+* [Try to fix tinyqueue import failing in webpack](https://github.com/comunica/comunica/commit/222cf2c809d383f86ecf6e63c93d9ad9fd913f33)
+* [Make dependencies explicit](https://github.com/comunica/comunica/commit/8943cab2eab462d53441bab726576d8f100542e9)
+* [Simplify dependency structure](https://github.com/comunica/comunica/commit/cf0c09bc60056cf1e42d41ca4e67d25a42895291)
+* [Lerna please stop touching these version numbers](https://github.com/comunica/comunica/commit/2b76df24c1c207090c6fa77a56ec67e22f61b291)
+* [Split up node and browser code](https://github.com/comunica/comunica/commit/ce53f044e19b728c8cb4ab58849c03efff171266)
+
 <a name="v1.19.3"></a>
 ## [v1.19.3](https://github.com/comunica/comunica/compare/v1.19.3-alpha.0...v1.19.3) - 2021-02-10
 

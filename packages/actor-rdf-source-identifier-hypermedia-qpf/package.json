@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/actor-rdf-source-identifier-hypermedia-qpf",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A hypermedia-qpf rdf-source-identifier actor",
   "lsd:module": true,
   "main": "index.js",
@@ -42,10 +42,10 @@
     "@comunica/core": "^1.0.0"
   },
   "devDependencies": {
-    "@comunica/bus-http": "^1.19.2",
-    "@comunica/bus-rdf-source-identifier": "^1.19.2",
-    "@comunica/core": "^1.19.2",
-    "@comunica/mediatortype-priority": "^1.19.2"
+    "@comunica/bus-http": "^1.19.4",
+    "@comunica/bus-rdf-source-identifier": "^1.19.4",
+    "@comunica/core": "^1.19.4",
+    "@comunica/mediatortype-priority": "^1.19.4"
   },
   "jest": {
     "globals": {

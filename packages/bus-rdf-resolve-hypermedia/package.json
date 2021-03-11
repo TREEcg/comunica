@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/bus-rdf-resolve-hypermedia",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A comunica bus for resolving hypermedia to quad streams.",
   "lsd:module": true,
   "main": "index.js",
@@ -32,7 +32,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-rdf-resolve-quad-pattern": "^1.19.2",
+    "@comunica/bus-rdf-resolve-quad-pattern": "^1.19.4",
     "@types/rdf-js": "*",
     "asynciterator": "^3.0.3"
   },
@@ -41,8 +41,8 @@
     "@comunica/core": "^1.0.0"
   },
   "devDependencies": {
-    "@comunica/actor-rdf-metadata-extract-hydra-controls": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/actor-rdf-metadata-extract-hydra-controls": "^1.19.4",
+    "@comunica/core": "^1.19.4"
   },
   "jest": {
     "globals": {

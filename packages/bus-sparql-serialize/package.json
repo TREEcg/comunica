@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/bus-sparql-serialize",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A comunica bus for sparql-serialize events.",
   "lsd:module": true,
   "main": "index.js",
@@ -35,11 +35,11 @@
     "@comunica/core": "^1.0.0"
   },
   "devDependencies": {
-    "@comunica/bus-query-operation": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/bus-query-operation": "^1.19.4",
+    "@comunica/core": "^1.19.4"
   },
   "dependencies": {
-    "@comunica/actor-abstract-mediatyped": "^1.19.2"
+    "@comunica/actor-abstract-mediatyped": "^1.19.4"
   },
   "jest": {
     "globals": {

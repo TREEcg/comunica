@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@comunica/bus-rdf-dereference-paged",
-  "version": "1.19.2",
+  "version": "1.19.4",
   "description": "A comunica bus for rdf-dereference-paged events.",
   "lsd:module": true,
   "main": "index.js",
@@ -39,7 +39,7 @@
     "@comunica/core": "^1.0.0"
   },
   "devDependencies": {
-    "@comunica/core": "^1.19.2"
+    "@comunica/core": "^1.19.4"
   },
   "scripts": {
     "build": "node \"../../node_modules/typescript/bin/tsc\"",

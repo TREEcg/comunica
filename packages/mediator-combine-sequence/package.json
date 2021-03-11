@@ -1,6 +1,6 @@
 {
   "name": "@treecg/mediator-combine-sequence",
-  "version": "1.19.4-alpha.1+2b76df24c",
+  "version": "1.19.4",
   "description": "A combine-sequence mediator",
   "lsd:module": true,
   "main": "index.js",
@@ -17,8 +17,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.2",
-    "@comunica/mediator-combine-union": "^1.0.0"
+    "@comunica/core": "^1.19.4",
+    "@comunica/mediator-combine-union": "^1.19.4"
   },
   "jest": {
     "globals": {

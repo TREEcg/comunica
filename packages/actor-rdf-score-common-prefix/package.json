@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-score-common-prefix",
-  "version": "1.19.4-alpha.1+2b76df24c",
+  "version": "1.19.4",
   "description": "An actor that scores string literals by the length of the common prefix with the search string",
   "lsd:module": true,
   "main": "index.js",
@@ -21,8 +21,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.2",
-    "@treecg/bus-rdf-score": "^1.19.4-alpha.1+2b76df24c"
+    "@comunica/core": "^1.19.4",
+    "@treecg/bus-rdf-score": "^1.19.4"
   },
   "jest": {
     "globals": {
