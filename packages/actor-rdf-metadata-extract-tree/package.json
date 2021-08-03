@@ -19,7 +19,7 @@
   "dependencies": {
     "@comunica/bus-rdf-metadata-extract": "1.21.1",
     "@comunica/core": "1.21.1",
-    "@dexagod/tree-metadata-extraction": "^1.0.4"
+    "@treecg/tree-metadata-extraction": "^1.1.1"
   },
   "jest": {
     "globals": {

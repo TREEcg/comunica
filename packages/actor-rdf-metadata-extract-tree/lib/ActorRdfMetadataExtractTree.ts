@@ -2,7 +2,7 @@ import { ActorRdfMetadataExtract } from '@comunica/bus-rdf-metadata-extract';
 import type { IActionRdfMetadataExtract, IActorRdfMetadataExtractOutput } from '@comunica/bus-rdf-metadata-extract';
 import type { IActorTest } from '@comunica/core';
 
-import { extractMetadata } from '@dexagod/tree-metadata-extraction';
+import { extractMetadata } from '@treecg/tree-metadata-extraction';
 
 /**
  * A comunica actor to extract the tree metadata from RDF sources
