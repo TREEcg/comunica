@@ -20,7 +20,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.2",
+    "@comunica/core": "1.21.1",
     "@treecg/bus-tree-score": "^1.19.5"
   },
   "jest": {

@@ -17,8 +17,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/core": "^1.19.2",
-    "@comunica/mediator-combine-union": "^1.19.2"
+    "@comunica/core": "1.21.1",
+    "@comunica/mediator-combine-union": "1.21.1"
   },
   "jest": {
     "globals": {

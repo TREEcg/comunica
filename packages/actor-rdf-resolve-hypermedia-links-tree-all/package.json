@@ -16,8 +16,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@comunica/bus-rdf-resolve-hypermedia-links": "^1.19.2",
-    "@comunica/core": "^1.19.2"
+    "@comunica/bus-rdf-resolve-hypermedia-links": "1.21.1",
+    "@comunica/core": "1.21.1"
   },
   "jest": {
     "globals": {
