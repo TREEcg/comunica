@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@comunica/core": "1.21.1",
-    "@types/rdf-js": "^3.0.0"
+    "@types/rdf-js": "4.0.2"
   },
   "jest": {
     "globals": {

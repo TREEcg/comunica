@@ -56,15 +56,15 @@
     "@treecg/bus-rdf-score": "^1.19.5",
     "@treecg/bus-tree-score": "^1.19.5",
     "@treecg/mediator-combine-sequence": "^1.19.5",
-    "asynciterator": "^3.0.3",
-    "rdf": "^4.1.0",
-    "rdf-data-factory": "^1.0.4",
-    "rdf-string": "^1.5.0",
-    "tinyqueue": "^2.0.3"
+    "asynciterator": "3.2.0",
+    "rdf": "4.1.0",
+    "rdf-data-factory": "1.0.4",
+    "rdf-string": "1.5.0",
+    "tinyqueue": "2.0.3"
   },
   "devDependencies": {
     "@comunica/mediator-race": "1.21.1",
-    "@types/rdf-js": "^4.0.0"
+    "@types/rdf-js": "4.0.2"
   },
   "jest": {
     "globals": {

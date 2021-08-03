@@ -26,7 +26,7 @@
   "dependencies": {
     "@comunica/core": "1.21.1",
     "@treecg/bus-literal-normalize": "^1.19.5",
-    "@types/rdf-js": "^3.0.0"
+    "@types/rdf-js": "4.0.2"
   },
   "devDependencies": {
     "@comunica/core": "1.21.1",
