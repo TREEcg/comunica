@@ -1,6 +1,6 @@
 {
   "name": "@treecg/mediator-combine-sequence",
-  "version": "1.19.5",
+  "version": "1.20.0",
   "description": "A combine-sequence mediator",
   "lsd:module": true,
   "main": "index.js",

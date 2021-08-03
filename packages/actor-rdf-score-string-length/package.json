@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-score-string-length",
-  "version": "1.19.5",
+  "version": "1.20.0",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "@comunica/core": "1.21.1",
-    "@treecg/bus-rdf-score": "^1.19.5"
+    "@treecg/bus-rdf-score": "^1.20.0"
   },
   "jest": {
     "globals": {

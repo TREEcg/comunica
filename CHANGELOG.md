@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.20.0"></a>
+## [v1.20.0](https://github.com/comunica/comunica/compare/v1.19.5...v1.20.0) - 2021-08-03
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Split on dash punctuation](https://github.com/comunica/comunica/commit/5565d0d2d4e38be393b77d236253ee0dc8f4e457)
+* [Update tree extractor](https://github.com/comunica/comunica/commit/89711419131fc301236e1208190a1db91d647906)
+* [Update non-comunica dependencies](https://github.com/comunica/comunica/commit/79e08e2ea4fe4b81985a8e881b3f6370958dc96e)
+* [Update comunica dependencies](https://github.com/comunica/comunica/commit/1333a0ba2ab4dcea5d7c42913d11305be392f236)
+
 <a name="v1.19.5"></a>
 ## [v1.19.5](https://github.com/comunica/comunica/compare/v1.19.4...v1.19.5) - 2021-03-11
 
