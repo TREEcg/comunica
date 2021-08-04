@@ -15,8 +15,8 @@ export class ActorLiteralNormalizeNFKD extends ActorLiteralNormalize<string> {
     args: IActorArgs<IActionLiteralNormalize<string>, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<string>>,
   ) {
     super(args);
-    this.regex = /[^\p{L}\p{N}\p{Z}\p{Pd}]/gu;
-    this.whitespace = /[\p{Z}\p{Pd}]+/gu;
+    this.regex = /[^\p{L}\p{N}\p{Z}\p{P}]/gu;
+    this.whitespace = /[\p{Z}\p{P}]+/gu;
   }
 
   public async test(action: IActionLiteralNormalize<string>): Promise<IActorLiteralNormalizeTest> {
