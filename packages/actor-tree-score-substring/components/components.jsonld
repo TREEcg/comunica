@@ -1,0 +1,9 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-substring/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-substring",
+  "@type": "Module",
+  "requireName": "@treecg/actor-tree-score-substring",
+  "import": [
+    "files-catss:components/Actor/TreeScore/Substring.jsonld"
+  ]
+}

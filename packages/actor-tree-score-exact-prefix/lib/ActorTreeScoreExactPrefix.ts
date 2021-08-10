@@ -9,6 +9,9 @@ import { ActorTreeScore } from '@treecg/bus-tree-score';
 const SUBSTRING_TYPE = 'https://w3id.org/tree#SubstringRelation';
 const PREFIX_TYPE = 'https://w3id.org/tree#PrefixRelation';
 
+/**
+ * Returns the sum of the tree values' length if, and only if, all found tree values are prefixes of the input terms.
+ */
 export class ActorTreeScoreExactPrefix extends ActorTreeScore {
   public constructor(args: IActorTreeScoreExactPrefixArgs) {
     super(args);
@@ -52,14 +55,14 @@ export class ActorTreeScoreExactPrefix extends ActorTreeScore {
     return { score };
   }
 
-  protected _score(foundValues: string[], expectedValues: string[]): number {
+  protected _score(treeValues: string[], expectedValues: string[]): number {
     let score = 0;
 
-    for (const foundValue of foundValues) {
+    for (const treeValue of treeValues) {
       let found = false;
       for (const expectedValue of expectedValues) {
-        if (expectedValue.startsWith(foundValue)) {
-          score += foundValue.length;
+        if (expectedValue.startsWith(treeValue)) {
+          score += treeValue.length;
           found = true;
           break;
         }

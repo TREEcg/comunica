@@ -7,25 +7,19 @@ import { AsyncIterator } from 'asynciterator';
 import type * as RDF from 'rdf-js';
 import assignValueToLink from './functions/assignValueToLink';
 import compareResults from './functions/compareResults';
-import compareTreeNodes from './functions/compareTreeNodes';
 import extractTreeNodes from './functions/extractTreeNodes';
 import mergeScores from './functions/mergeScores';
 import type IMediators from './interfaces/IMediators';
 import type IRankedSubject from './interfaces/IRankedSubject';
-import type IRankedTreeNode from './interfaces/IRankedTreeNode';
 import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
-
-let TinyQueue = require('tinyqueue');
-if (typeof TinyQueue !== 'function' && TinyQueue.default && typeof TinyQueue.default === 'function') {
-  TinyQueue = TinyQueue.default;
-}
+import TreeNodeQueue from './TreeNodeQueue';
 
 export default class ResultsIterator extends AsyncIterator<IResult> {
   protected numResults: number;
   protected mediators: IMediators;
   protected inTransit: number;
-  protected queue: any;
+  protected queue: TreeNodeQueue;
   protected expectedTreeValues: TreeValues;
   protected expectedDatatypeValues: IExpectedValues;
   protected expectedPredicateValues: IExpectedValues;
@@ -54,7 +48,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     this.expectedDatatypeValues = expectedDatatypeValues;
     this.expectedPredicateValues = expectedPredicateValues;
     this.inTransit = 0;
-    this.queue = new TinyQueue([], compareTreeNodes);
+    this.queue = new TreeNodeQueue();
 
     this.visitedTreeNodes = new Set();
     this.buffer = [];
@@ -114,18 +108,10 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
       if (Object.keys(values).length > 0) {
         const sum = treeScore.reduce((acc, cur) => acc + cur, 0);
         if (sum > 0) {
-          this.queue.push({
-            treeScore,
-            url: childNode,
-            values,
-          });
+          this.queue.push(treeScore, childNode, values);
         }
       } else {
-        this.queue.push({
-          treeScore,
-          url: childNode,
-          values,
-        });
+        this.queue.push(treeScore, childNode, values);
       }
     }
   }
@@ -160,21 +146,23 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
       return;
     }
 
-    if (this.queue.length === 0 && this.inTransit === 0) {
+    if (this.queue.size() === 0) {
       // Nothing left to schedule
 
-      if (this.buffer.length === 0) {
-        // Nothing left to read either
-        this.close();
-      } else {
-        // Probably unnecessary, just making sure consumers know there's some final data
-        this.readable = true;
+      if (this.inTransit === 0) {
+        if (this.buffer.length === 0) {
+          // Nothing left to read either
+          this.close();
+        } else {
+          // Probably unnecessary, just making sure consumers know there's some final data
+          this.readable = true;
+        }
       }
 
       return;
     }
 
-    const { url } = <IRankedTreeNode> this.queue.pop();
+    const url = this.queue.pop();
     if (this.visitedTreeNodes.has(url)) {
       return;
     }
@@ -188,7 +176,9 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         this.inTransit -= 1;
 
         // Immediately start processing the next item on the queue
-        // this.scheduleRequests();
+        if (this.inTransit < 1) {
+          this.scheduleRequests();
+        }
       })
       .catch(error => {
         throw error;

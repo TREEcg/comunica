@@ -1,0 +1,21 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-substring/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score/^1.0.0/components/context.jsonld"
+  ],
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-substring",
+  "components": [
+    {
+      "@id": "catss:Actor/TreeScore/Substring",
+      "@type": "Class",
+      "extends": "cbts:Actor/TreeScore",
+      "requireElement": "ActorTreeScoreSubstring",
+      "constructorArguments": [
+        {
+          "@id": "catss:Actor/TreeScore/Substring/constructorArgumentsObject",
+          "extends": "cbts:Actor/TreeScore/constructorArgumentsObject"
+        }
+      ]
+    }
+  ]
+}

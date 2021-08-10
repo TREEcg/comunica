@@ -8,13 +8,15 @@ import type {
 import type { Quad } from 'rdf-js';
 
 export class ActorLiteralNormalizeNFKD extends ActorLiteralNormalize<string> {
-  public readonly separators: RegExp;
+  public readonly regex: RegExp;
+  public readonly whitespace: RegExp;
 
   public constructor(
     args: IActorArgs<IActionLiteralNormalize<string>, IActorLiteralNormalizeTest, IActorLiteralNormalizeOutput<string>>,
   ) {
     super(args);
-    this.separators = /[^\p{L}\p{N}]+/gu;
+    this.regex = /[^\p{L}\p{N}\p{Z}]/gu;
+    this.whitespace = /[\p{Z}]+/gu;
   }
 
   public async test(action: IActionLiteralNormalize<string>): Promise<IActorLiteralNormalizeTest> {
@@ -39,7 +41,8 @@ export class ActorLiteralNormalizeNFKD extends ActorLiteralNormalize<string> {
       input = input.toLowerCase();
       // Normalize diacritics
       input = input.normalize('NFKD');
-      return { result: input.split(this.separators) };
+      input = input.replace(this.regex, '');
+      return { result: input.split(this.whitespace) };
     }
 
     return { result: []};

@@ -1,7 +1,7 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-init-typeahead/^1.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-exact-prefix/^1.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-tree-score-substring/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/bus-tree-score/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/mediator-combine-sequence/^1.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
@@ -13,8 +13,8 @@
       "@id": "urn:comunica:my",
       "actors": [
         {
-          "@id": "config-sets:tree-score.json#myRdfScoreExactPrefix",
-          "@type": "ActorTreeScoreExactPrefix"
+          "@id": "config-sets:tree-score.json#myTreeScore",
+          "@type": "ActorTreeScoreSubstring"
         }
       ]
     },

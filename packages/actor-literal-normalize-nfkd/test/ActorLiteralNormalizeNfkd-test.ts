@@ -112,11 +112,11 @@ describe('ActorLiteralNormalizeNFKD', () => {
       return expect(result).resolves.toMatchObject({ result: [ 'bateau', 'a', 'moteur' ]});
     });
 
-    it('should split on dash punctuation', () => {
+    it('should NOT split on dash punctuation', () => {
       const result = actor.run({
         data: createStringQuad('sub', 'pred', 'sint-denijs'),
       });
-      return expect(result).resolves.toMatchObject({ result: [ 'sint', 'denijs' ]});
+      return expect(result).resolves.toMatchObject({ result: [ 'sintdenijs' ]});
     });
 
     it('should lowercase', () => {
