@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-tree-score-substring",
-  "version": "1.20.0",
+  "version": "1.21.0-alpha.0",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",

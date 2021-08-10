@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.21.0-alpha.0"></a>
+## [v1.21.0-alpha.0](https://github.com/comunica/comunica/compare/v1.20.1...v1.21.0-alpha.0) - 2021-08-10
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Improve genericity of literal matches, some substrings are now allowed](https://github.com/comunica/comunica/commit/80000ea7576bbc8b35ee167f0a61d0fbe52154cf)
+* [Improve genericity of link traversal; substring TREE values can be actual substrings now](https://github.com/comunica/comunica/commit/ca6906e8d825b37bac8f7118616d20511d631000)
+
 <a name="v1.20.1"></a>
 ## [v1.20.1](https://github.com/comunica/comunica/compare/v1.20.0...v1.20.1) - 2021-08-04
 
