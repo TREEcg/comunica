@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/core/^1.0.0/components/context.jsonld",
+    {
+      "carss": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-substring/",
+      "files-carss": "carss:^1.0.0/",
+      "ActorRdfScoreSubstring": "carss:Actor/RdfScore/Substring"
+    }
+  ]
+}

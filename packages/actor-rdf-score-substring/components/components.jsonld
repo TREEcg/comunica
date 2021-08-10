@@ -1,0 +1,9 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-substring/^1.0.0/components/context.jsonld",
+  "@id": "https://linkedsoftwaredependencies.org/bundles/npm/@treecg/actor-rdf-score-substring",
+  "@type": "Module",
+  "requireName": "@treecg/actor-rdf-score-substring",
+  "import": [
+    "files-carss:components/Actor/RdfScore/Substring.jsonld"
+  ]
+}
