@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.21.0-alpha.0",
+  "version": "1.21.1-alpha.0",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
@@ -47,8 +47,8 @@
     "@treecg/actor-literal-normalize-nfkd": "^1.21.0-alpha.0",
     "@treecg/actor-rdf-metadata-extract-tree": "^1.20.0",
     "@treecg/actor-rdf-resolve-hypermedia-links-tree-all": "^1.20.0",
-    "@treecg/actor-rdf-score-substring": "^1.21.0-alpha.0",
     "@treecg/actor-rdf-score-string-length": "^1.20.0",
+    "@treecg/actor-rdf-score-substring": "^1.21.0-alpha.0",
     "@treecg/actor-tree-score-substring": "^1.21.0-alpha.0",
     "@treecg/bus-literal-normalize": "^1.20.0",
     "@treecg/bus-rdf-score": "^1.20.0",

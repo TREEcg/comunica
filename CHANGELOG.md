@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.21.1-alpha.0"></a>
+## [v1.21.1-alpha.0](https://github.com/comunica/comunica/compare/v1.21.0-alpha.0...v1.21.1-alpha.0) - 2021-08-11
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Update actor dependencies in init actor](https://github.com/comunica/comunica/commit/fd33926c25905dd349a6e572ee8cf91e17b55c3d)
+
 <a name="v1.21.0-alpha.0"></a>
 ## [v1.21.0-alpha.0](https://github.com/comunica/comunica/compare/v1.20.1...v1.21.0-alpha.0) - 2021-08-10
 
