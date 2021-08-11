@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<a name="v1.21.1"></a>
+## [v1.21.1](https://github.com/comunica/comunica/compare/v1.21.1-alpha.0...v1.21.1) - 2021-08-11
+
+### TODO: categorize commits, choose titles from: Added, Changed, Deprecated, Removed, Fixed, Security.
+* [Make substring matches less prominent](https://github.com/comunica/comunica/commit/97f35289fd9ed6c76a2ec74f355822518764eb2d)
+
 <a name="v1.21.1-alpha.0"></a>
 ## [v1.21.1-alpha.0](https://github.com/comunica/comunica/compare/v1.21.0-alpha.0...v1.21.1-alpha.0) - 2021-08-11
 

@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-rdf-score-substring",
-  "version": "1.21.0-alpha.0",
+  "version": "1.21.1",
   "lsd:module": true,
   "main": "index.js",
   "typings": "index",
