@@ -163,12 +163,12 @@ describe('ActorRdfScoreSubstring', () => {
     it('should find non-prefix matches', () => {
       const result = actor.run({
         quad: createStringQuad('sub', 'pred', 'de'),
-        literalValue: [ 'dedaa' ],
+        literalValue: [ 'dedba' ],
         expectedPredicateValues: {
           pred: [ 'a', 'ded' ],
         },
       });
-      return expect(result).resolves.toMatchObject({ score: 3.725 });
+      return expect(result).resolves.toMatchObject({ score: 3.85 });
     });
 
     it('should only allow one incomplete word', () => {

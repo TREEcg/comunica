@@ -3,9 +3,7 @@ import { ActorRdfScoreCommonPrefix } from '@treecg/actor-rdf-score-common-prefix
 import type { IActionRdfScore, IActorRdfScoreOutputSingle, IActorRdfScoreTest } from '@treecg/bus-rdf-score';
 
 /**
- * This actor returns how many of the expectedValue(s) occurred as in the foundValue(s) as well.
- * A constant amount `maxPrefixTolerance` of these matches does not have to be an exact match,
- * But may be a prefix match instead.
+ * Based on ActorTreeScoreSubstring, which is better documented.
  */
 export class ActorRdfScoreSubstring extends ActorRdfScoreCommonPrefix {
   public readonly maxPrefixTolerance: number;
@@ -28,6 +26,7 @@ export class ActorRdfScoreSubstring extends ActorRdfScoreCommonPrefix {
       // Nothing to work with
       return { score: Number.NEGATIVE_INFINITY };
     }
+
     // Longest substrings first; these are the most specific
     inputValues = inputValues.sort((first, second) => first.length > second.length ? -1 : 1);
 
@@ -69,7 +68,7 @@ export class ActorRdfScoreSubstring extends ActorRdfScoreCommonPrefix {
         // Find the best match for this tree value in this expected value, exclusively using unused characters
         const index = this.findMatch(inputValue, literalValue, usedSubstrings[literalIdx]);
         if (index > -1) {
-          score += inputValue.length / (literalValue.length + index);
+          score += inputValue.length / index;
           this.markUsed(usedSubstrings[literalIdx], index, inputValue.length);
           found = true;
           break;
