@@ -3,6 +3,8 @@ import type { IActionInit, IActorOutputInit } from '@comunica/bus-init';
 import type { IActorInitTypeaheadArgs } from './ActorInitTypeaheadBrowser';
 import { ActorInitTypeaheadBrowser } from './ActorInitTypeaheadBrowser';
 import type IResult from './interfaces/IResult';
+import type ITreeNode from './interfaces/ITreeNode';
+import type { TreeValues } from '../../bus-tree-score/lib/ActorTreeScore';
 
 export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
   public constructor(args: IActorInitTypeaheadArgs) {
@@ -25,7 +27,8 @@ export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
       'http://www.w3.org/1999/02/22-rdf-syntax-ns#langString': expectedValues,
     };
 
-    const treeNodes = await this.prefetch([ url ]);
+    const values: TreeValues = {};
+    const treeNodes: ITreeNode[] = [{ url, values }];
     const query = {
       numResults: 5,
       treeNodes,
