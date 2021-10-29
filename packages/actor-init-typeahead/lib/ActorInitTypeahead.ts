@@ -1,10 +1,10 @@
 import { Readable } from 'stream';
 import type { IActionInit, IActorOutputInit } from '@comunica/bus-init';
+import type { TreeValues } from '../../bus-tree-score/lib/ActorTreeScore';
 import type { IActorInitTypeaheadArgs } from './ActorInitTypeaheadBrowser';
 import { ActorInitTypeaheadBrowser } from './ActorInitTypeaheadBrowser';
 import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
-import type { TreeValues } from '../../bus-tree-score/lib/ActorTreeScore';
 
 export class ActorInitTypeahead extends ActorInitTypeaheadBrowser {
   public constructor(args: IActorInitTypeaheadArgs) {
