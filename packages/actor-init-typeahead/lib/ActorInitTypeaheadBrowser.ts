@@ -140,15 +140,19 @@ export class ActorInitTypeaheadBrowser extends ActorInit implements IActorInitTy
       'https://w3id.org/tree#SubstringRelation': this.gatherExpectedTreeValues(args),
     };
 
-    let nodes: ITreeNode[];
+    let nodes: ITreeNode[] = [];
     if (args.treeNodes) {
       nodes = args.treeNodes;
-    } else if (args.urls) {
-      nodes = [];
+    }
+    if (args.urls) {
+      const nodeURLs = new Set(nodes.map(node => node.url));
       for (const url of args.urls) {
-        nodes.push({ url, values: {}});
+        if (!nodeURLs.has(url)) {
+          nodes.push({ url, values: {}});
+        }
       }
-    } else {
+    }
+    if (!args.treeNodes && !args.urls) {
       throw new Error('Arguments must contain either a list of root URLs, or known tree nodes');
     }
 
