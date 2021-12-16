@@ -13,7 +13,14 @@ import type IMediators from './interfaces/IMediators';
 import type IRankedSubject from './interfaces/IRankedSubject';
 import type IResult from './interfaces/IResult';
 import type ITreeNode from './interfaces/ITreeNode';
+import evaluatePath from './PathMatcher';
 import TreeNodeQueue from './TreeNodeQueue';
+
+const TREE = 'https://w3id.org/tree#';
+const SHACL = 'http://www.w3.org/ns/shacl#';
+const FIRST = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first';
+const REST = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#rest';
+const NIL = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#nil';
 
 export default class ResultsIterator extends AsyncIterator<IResult> {
   protected numResults: number;
@@ -32,6 +39,8 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
   // Avoid cyclic traversals
   protected visitedTreeNodes: Set<string>;
 
+  private relationPath: any;
+
   public constructor(
     numResults: number,
     nodes: ITreeNode[],
@@ -39,6 +48,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     expectedTreeValues: TreeValues,
     expectedDatatypeValues: IExpectedValues,
     expectedPredicateValues: IExpectedValues,
+
   ) {
     super();
 
@@ -199,6 +209,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
       // The next step can be expensive, see if we can abort
       return this.latest;
     }
+
     const { metadata } = await this.mediators.mediatorMetadataExtract
       .mediate({ url, metadata: rdfMetadataOuput.metadata });
     const treeNodes = extractTreeNodes(metadata);
@@ -207,6 +218,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     await this.populateQueue({}, <string[]>urls, treeNodes);
     // Keep track of all known tree nodes for future queries
     this.knownTreeNodes = { ...this.knownTreeNodes, ...treeNodes };
+
     return this.processPageData(
       rdfMetadataOuput.data,
       this.expectedDatatypeValues,
@@ -222,9 +234,16 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     let rankedSubjects: IRankedSubject[] = [];
 
     const store: Record<string, RDF.Quad[]> = {};
+    const pathEntryPointQuads: RDF.Quad[] = [];
+    const pathQuads: RDF.Quad[] = [];
     quadStream
       .on('data', (quad: RDF.Quad) => {
-        if (quad.subject.termType === 'NamedNode') {
+        if (quad.predicate.value === `${TREE}path`) {
+          pathEntryPointQuads.push(quad);
+        } else if (!this.relationPath && (quad.predicate.value.startsWith(SHACL) ||
+        quad.predicate.value === FIRST || quad.predicate.value === REST || quad.predicate.value === NIL)) {
+          pathQuads.push(quad);
+        } else if (quad.subject.termType === 'NamedNode') {
           const subject = quad.subject.value;
           if (!(subject in store)) {
             store[subject] = [];
@@ -235,6 +254,14 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
 
     const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
+        if (!this.relationPath) {
+          const relationsPaths = pathEntryPointQuads.map(quad =>
+            ({ entrypoint: quad.object.value, quads: getPathQuads(quad, pathQuads) }));
+          if (relationsPaths.length > 0) {
+            this.relationPath = relationsPaths[0];
+          }
+        }
+
         for (const [ subject, quads ] of Object.entries(store)) {
           if (this.latest.subjects.has(subject)) {
             // No need to reevaluate this one
@@ -242,13 +269,15 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           }
           this.latest.subjects.add(subject);
 
+          // Process the singular quads
           let score: RDFScore[] = [];
           const matchingQuads = [];
           for (const quad of quads) {
+            // The * predicate matches all predicates
             const rightPredicate = quad.predicate.value in expectedPredicateValues;
             const rightDatatype = quad.object.termType === 'Literal' &&
               (quad.object.datatype.value in expectedDatatypeValues);
-            if (!rightPredicate && !rightDatatype) {
+            if (!rightPredicate || !rightDatatype) {
               // This is't the quad we're looking for
               continue;
             }
@@ -273,6 +302,7 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             }
 
             if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+              console.log('quadScore1', quadScore, quad);
               if (quadScore.every(element => element === null)) {
                 // None of the sorting actors had anything to say
                 continue;
@@ -285,6 +315,58 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
                 score = quadScore;
               } else {
                 score = mergeScores(score, quadScore);
+              }
+            }
+          }
+
+          if (this.relationPath) {
+            const matchingLiterals =
+              evaluatePath(quads, this.relationPath.quads, subject, this.relationPath.entrypoint);
+
+            for (const literal of matchingLiterals) {
+              let matchingQuad: RDF.Quad | null = null;
+              for (const quad of quads) {
+                if (quad.object.value === literal.value) {
+                  matchingQuad = quad;
+                  break;
+                }
+              }
+              if (matchingQuad && !matchingQuads.includes(matchingQuad)) {
+                const action: IActionRdfScore<any> = {
+                  quad: matchingQuad,
+                  expectedDatatypeValues,
+                  expectedPredicateValues,
+                };
+
+                try {
+                  const literalValue = await this.mediators.mediatorLiteralNormalize.mediate({ data: matchingQuad });
+                  action.literalValue = literalValue.result;
+                } catch {
+                  // Is ok
+                }
+
+                let { score: quadScore } = await this.mediators.mediatorRdfScore.mediate(action);
+                if (!Array.isArray(quadScore)) {
+                  // Most useful mediators will return an array, but no guarantees
+                  quadScore = [ quadScore ];
+                }
+
+                if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+                  console.log('quadScore2', quadScore, matchingQuad);
+                  if (quadScore.every(element => element === null)) {
+                    // None of the sorting actors had anything to say
+                    continue;
+                  }
+                  matchingQuads.push(matchingQuad);
+
+                  // -Inf indicates the score is too bad to be used
+                  if (score.length === 0) {
+                    // First valid score for this subject
+                    score = quadScore;
+                  } else {
+                    score = mergeScores(score, quadScore);
+                  }
+                }
               }
             }
           }
@@ -317,4 +399,13 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
 
     return result;
   }
+}
+
+function getPathQuads(startQuad: RDF.Quad, pathQuads: RDF.Quad[]): RDF.Quad[] {
+  let relationPathQuads = [ startQuad ];
+  const outQuads = pathQuads.filter(quad => quad.subject.value === startQuad.object.value);
+  for (const outQuad of outQuads) {
+    relationPathQuads = relationPathQuads.concat(getPathQuads(outQuad, pathQuads));
+  }
+  return relationPathQuads;
 }
