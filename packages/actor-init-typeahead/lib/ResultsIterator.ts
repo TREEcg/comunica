@@ -239,11 +239,14 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
     quadStream
       .on('data', (quad: RDF.Quad) => {
         if (quad.predicate.value === `${TREE}path`) {
+          // Extract quads with predicate tree:path as path quads
           pathEntryPointQuads.push(quad);
         } else if (!this.relationPath && (quad.predicate.value.startsWith(SHACL) ||
         quad.predicate.value === FIRST || quad.predicate.value === REST || quad.predicate.value === NIL)) {
+          // Extract quads with the shacl path predicates orrdf:first, rdf:last and rdf:nil as path quads
           pathQuads.push(quad);
         } else if (quad.subject.termType === 'NamedNode') {
+          // Extract other quads as data quads
           const subject = quad.subject.value;
           if (!(subject in store)) {
             store[subject] = [];
@@ -251,6 +254,9 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           store[subject].push(quad);
         }
       });
+    // Note: this may not be the best place to extract the data like this,
+    // as it already happens in the metadata extraction lib.
+    // Maybe the metadata extraction should return the metadata in quads format as well?
 
     const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
@@ -302,7 +308,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             }
 
             if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
-              console.log('quadScore1', quadScore, quad);
               if (quadScore.every(element => element === null)) {
                 // None of the sorting actors had anything to say
                 continue;
@@ -352,7 +357,6 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
                 }
 
                 if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
-                  console.log('quadScore2', quadScore, matchingQuad);
                   if (quadScore.every(element => element === null)) {
                     // None of the sorting actors had anything to say
                     continue;

@@ -19,11 +19,11 @@ export default function extractTreeNodes(metadata: Record<string, any>): Record<
         }
 
         const treeNode: ITreeNode = result[url];
-        for (const type of relation['@type']) {
+        for (const type of relation['@type'] || []) {
           // Always overwrite
           treeNode.values[type] = [];
 
-          for (const value of relation.value) {
+          for (const value of relation.value || []) {
             treeNode.values[type].push(DF.literal(value['@value'], value['@type']));
           }
         }

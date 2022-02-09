@@ -4,6 +4,7 @@
 import type {
   Quad,
   Term,
+  BlankNode,
 } from '@rdfjs/types';
 import * as N3 from 'n3';
 
@@ -28,7 +29,6 @@ const rdf = {
 };
 
 // Interfaces
-
 interface IPathMapping {
   currentShapeTerm: Term;
   currentDataGraphTerms: Term[];
@@ -42,40 +42,42 @@ interface IResultPathMapping {
 
 // Helper functions
 const nn = (term: string): N3.NamedNode => new N3.NamedNode(term);
-const bn = (term: string): N3.BlankNode => new N3.BlankNode(term);
-
-// Functionality
 
 /**
- *
+ * Evaluate the path contained in the pathQuads over the graph constructed by the dataQuads.
  * @param dataQuads The quads containing the data over which the path is evaluated
  * @param pathQuads The quads containing the data path
- * @param objectEntry The identifier of the point in the data graph from where the path is evaluated
- * @param pathEntry The identifier in the path graph from where the path predicate should be discovered
+ * @param graphEntry The identifier of the point in the data graph from where the path is evaluated
+ * @param pathEntry The identifier in the path graph from where the path predicate should be discovered. A quad of the form - <pathEntry> tree:path <shape> - must be present in the pathQuads. Defaults to any triple containing the predicate tree:path.
  * @returns The resulting terms of evaluating the SHACL path over the data graph.
  */
-export default function evaluatePath(dataQuads: Quad[], pathQuads: Quad[], objectEntry: string | Term, pathEntry: string | Term | null): Term[] {
+export default function evaluatePath(dataQuads: Quad[], pathQuads: Quad[], graphEntry: string | Term, pathEntry?: string | Term | null): Term[] {
   const dataStore = new N3.Store(dataQuads);
   const pathStore = new N3.Store(pathQuads);
 
-  if (!objectEntry) {
-    throw new Error('Please provide a valid string or term as objectEntry parameter');
-  }
-  if (typeof objectEntry === 'string' || objectEntry instanceof String) {
-    objectEntry = nn(<string>objectEntry);
-  } else if (objectEntry.termType === 'BlankNode') {
-    objectEntry = bn(objectEntry.value);
-  } else if (objectEntry.termType === 'NamedNode') {
-    objectEntry = nn(objectEntry.value);
-  } else {
-    throw new Error('Please provide a valid string or term as objectEntry parameter');
+  // Create Term of graphEntry if present
+
+  /* istanbul ignore next */
+  if (!graphEntry) {
+    throw new Error('Please provide a valid string or term as graphEntry parameter');
   }
 
+  if (typeof graphEntry === 'string' || graphEntry instanceof String) {
+    graphEntry = nn(<string>graphEntry);
+  } else if (graphEntry.termType === 'BlankNode') {
+    graphEntry = <BlankNode><unknown>graphEntry;
+  } else if (graphEntry.termType === 'NamedNode') {
+    graphEntry = nn(graphEntry.value);
+  } else {
+    throw new Error('Please provide a valid string or term as graphEntry parameter');
+  }
+
+  // Create Term of pathEntry if present
   if (pathEntry) {
     if (typeof pathEntry === 'string' || pathEntry instanceof String) {
       pathEntry = nn(<string>pathEntry);
     } else if (pathEntry.termType === 'BlankNode') {
-      pathEntry = bn(pathEntry.value);
+      pathEntry = <BlankNode><unknown>pathEntry;
     } else if (pathEntry.termType === 'NamedNode') {
       pathEntry = nn(pathEntry.value);
     } else {
@@ -85,32 +87,42 @@ export default function evaluatePath(dataQuads: Quad[], pathQuads: Quad[], objec
 
   let shapeIds;
 
+  // Look for the start of the predicate paths in the triple store initialized with the pathQuads
   if (pathEntry) {
-    shapeIds = pathStore.getQuads(pathEntry, tree.path, null, null).map(q => q.object);
-  } else {
-    shapeIds = pathStore.getQuads(null, tree.path, null, null).map(q => q.object);
-  }
-
-  if (!shapeIds) {
-    throw new Error('No shacl shape found.');
-  }
-
-  if (pathQuads.length === 1) {
-    // We only have a match for shacl:path or tree:path
-    const predicatePathValue = pathQuads[0].object.value;
-    const foundQuads = [];
-    for (const quad of dataQuads) {
-      if (quad.predicate.value === predicatePathValue) {
-        foundQuads.push(quad);
-      }
+    shapeIds = pathStore.getQuads(pathEntry, sh.path, null, null).map(q => q.object);
+    if (!shapeIds || shapeIds.length === 0) {
+      shapeIds = pathStore.getQuads(pathEntry, tree.path, null, null).map(q => q.object);
     }
-    return foundQuads.map(quad => quad.object);
+  } else {
+    shapeIds = pathStore.getQuads(null, sh.path, null, null).map(q => q.object);
+    if (!shapeIds || shapeIds.length === 0) {
+      shapeIds = pathStore.getQuads(null, tree.path, null, null).map(q => q.object);
+    }
   }
 
+  if (!shapeIds || shapeIds.length === 0) {
+    throw new Error('No data shape found.');
+  }
+
+  // If we only have a single quad in our pathQuads array, the resulting path MUST be a predicate path of the form <pathEntry> tree:path <predicatePath>.
+  // if (pathQuads.length === 1) {
+  //   // We only have a match for shacl:path or tree:path
+  //   const predicatePathValue = pathQuads[0].object.value;
+  //   const foundQuads = [];
+  //   for (const quad of dataQuads) {
+  //     if ((!graphEntry || graphEntry.value === quad.subject.value) && quad.predicate.value === predicatePathValue) {
+  //       foundQuads.push(quad);
+  //     }
+  //   }
+  //   return foundQuads.map(quad => quad.object);
+  // }
+
+  // In the case of more than a single quad in the pathQauds array, we keep a mapping of our location in the dataGraph and the pathGraph, and traverse both at the same time to find our resulting values.
   const mapping: IPathMapping = {
     currentShapeTerm: shapeIds[0],
-    currentDataGraphTerms: [ objectEntry ],
+    currentDataGraphTerms: [ graphEntry ],
   };
+
   const mappings = processPath(dataStore, pathStore, mapping, false);
 
   const resultingDataTerms = [];
@@ -125,11 +137,11 @@ export default function evaluatePath(dataQuads: Quad[], pathQuads: Quad[], objec
 
 /**
  *
- * @param dataStore
- * @param pathStore
- * @param mapping
- * @param inverted
- * @param alterantive Indicates if the current parsing is happening directly inside an alternative path, and must return every subsequent list entry.
+ * @param dataStore Triple store containing the quads in the dataQuads parameter
+ * @param pathStore Triple store containing the quads in the pathQuads parameter
+ * @param mapping Mapping of the current location in out path graph to the locations that match in the data graph.
+ * @param inverted Flag indicating we have to process the data graph inversely (from object to subject)
+ * @param alternative Indicates if the current parsing is happening directly inside an alternative path, and must return every subsequent list entry.
  * @returns
  */
 function processPath(
@@ -137,7 +149,6 @@ function processPath(
   pathStore: N3.Store,
   mapping: IPathMapping, inverted: boolean, alternative = false,
 ): IResultPathMapping[] {
-  // Console.log("processing: path", mapping, inverted)
   const availableShapePathsQuads = pathStore.getQuads(mapping.currentShapeTerm, null, null, null);
 
   if (!availableShapePathsQuads || availableShapePathsQuads.length === 0) {
@@ -173,7 +184,9 @@ function processPath(
 }
 
 /**
- * Process the current predicate path
+ * Process the current location in the path graph as a predicate path (end of a path).
+ * From the current subject in the data graph, follow all predicates matching the path term stored in the mapping.
+ * Returns the object (or subject in inverse flag is set) of the current data graph quads by following the predicate as predicate paths.
  * @param dataStore
  * @param pathStore
  * @param mapping
@@ -181,12 +194,12 @@ function processPath(
  * @returns
  */
 function processPredicatePath(dataStore: N3.Store, pathStore: N3.Store, mapping: IPathMapping, inverted: boolean): IPathMapping[] {
-  // Console.log("processing: predicatePath", mapping.currentShapeTerm.value, mapping.currentDataGraphTerms, inverted)
   const resultMapping: IPathMapping = {
     currentShapeTerm: mapping.currentShapeTerm,
     currentDataGraphTerms: [],
   };
 
+  // Retrieve the quads in the data graph matching the current shape term.
   for (const dataTerm of mapping.currentDataGraphTerms) {
     const values = inverted
       ? dataStore.getQuads(null, mapping.currentShapeTerm, dataTerm, null).map(q => q.subject)
@@ -196,16 +209,33 @@ function processPredicatePath(dataStore: N3.Store, pathStore: N3.Store, mapping:
   return [ resultMapping ];
 }
 
+/**
+ * Process remaining paths inversely (object to subject)
+ * @param dataStore
+ * @param pathStore
+ * @param mapping
+ * @param inverted
+ * @param quad
+ * @returns
+ */
 function processInversePath(dataStore: N3.Store, pathStore: N3.Store, mapping: IPathMapping, inverted: boolean, quad: Quad): IPathMapping[] {
-  // Console.log("processing: inversePath", mapping, inverted)
   // Update the location in the shape graph
   mapping.currentShapeTerm = quad.object;
   // Continue but invert all encountered predicate paths
   return processPath(dataStore, pathStore, mapping, !inverted);
 }
 
+/**
+ * Process alternative path by enabling flag to process nested sequence path as alternatives instead of a sequence.
+ * @param dataStore
+ * @param pathStore
+ * @param mapping
+ * @param inverted
+ * @param quad
+ * @returns
+ */
 function processAlternativePath(dataStore: N3.Store, pathStore: N3.Store, mapping: IPathMapping, inverted: boolean, quad: Quad): IPathMapping[] {
-  // Console.log("processing: alternativePath", mapping, inverted)
+  // Update the mapping by following the sh:alternativePath quad
   const updatedMapping: IPathMapping = {
     currentShapeTerm: quad.object,
     currentDataGraphTerms: mapping.currentDataGraphTerms.slice(),
@@ -213,8 +243,17 @@ function processAlternativePath(dataStore: N3.Store, pathStore: N3.Store, mappin
   return processPath(dataStore, pathStore, updatedMapping, inverted, true);
 }
 
+/**
+ * Process sequence path. If alternative flag is set, entries are processed as alternatives.
+ * @param dataStore
+ * @param pathStore
+ * @param mapping
+ * @param inverted
+ * @param quad
+ * @param alternative
+ * @returns
+ */
 function processSequencePath(dataStore: N3.Store, pathStore: N3.Store, mapping: IPathMapping, inverted: boolean, quad: Quad, alternative: boolean): IPathMapping[] {
-  // Console.log("processing: sequencePath", mapping, inverted, alternative)
   const updatedMapping: IPathMapping = {
     currentShapeTerm: quad.object,
     currentDataGraphTerms: mapping.currentDataGraphTerms.slice(),
@@ -242,8 +281,9 @@ function processSequencePath(dataStore: N3.Store, pathStore: N3.Store, mapping: 
       currentShapeTerm: restQuad.object,
       currentDataGraphTerms: mapping.currentDataGraphTerms.slice(),
     };
-    const resultingMappings = processPath(dataStore, pathStore, tailMapping, Boolean(inverted), alternative); // We keep the alternative flag for the tail as we are in the list of an alternativePath
-    return listHeadMappings.concat(resultingMappings);
+    // We keep the alternative flag for the tail as we are in the list of an alternativePath
+    const processedPath = processPath(dataStore, pathStore, tailMapping, Boolean(inverted), alternative);
+    return listHeadMappings.concat(processedPath);
   }
   // As we are in a normal sequence path, we need to return the result at the tail of the sequence
   let resultingMappings: IPathMapping[] = [];
@@ -256,5 +296,6 @@ function processSequencePath(dataStore: N3.Store, pathStore: N3.Store, mapping: 
       processPath(dataStore, pathStore, tailMapping, Boolean(inverted)),
     );
   }
+
   return resultingMappings;
 }
