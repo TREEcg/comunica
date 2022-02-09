@@ -325,8 +325,14 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           }
 
           if (this.relationPath) {
-            const matchingLiterals =
-              evaluatePath(quads, this.relationPath.quads, subject, this.relationPath.entrypoint);
+            let matchingLiterals: RDF.Term[] = [];
+            try {
+              matchingLiterals = matchingLiterals.concat(
+                evaluatePath(quads, this.relationPath.quads, subject, this.relationPath.entrypoint),
+              );
+            } catch {
+              // Unsure how to catch this
+            }
 
             for (const literal of matchingLiterals) {
               let matchingQuad: RDF.Quad | null = null;
