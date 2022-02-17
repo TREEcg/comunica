@@ -254,10 +254,10 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
           store[subject].push(quad);
         }
       });
+
     // Note: this may not be the best place to extract the data like this,
     // as it already happens in the metadata extraction lib.
     // Maybe the metadata extraction should return the metadata in quads format as well?
-
     const result: Promise<IResult> = new Promise(resolve => {
       quadStream.on('end', async() => {
         if (!this.relationPath) {
@@ -269,61 +269,20 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
         }
 
         for (const [ subject, quads ] of Object.entries(store)) {
+          // Keep track of the scoring for the quads associated with this subject
+          let score: RDFScore[] = [];
+          // Keep track of the quads that match the given path or expected predicate and have been scored.
+          const matchingQuads: any[] = [];
+
           if (this.latest.subjects.has(subject)) {
             // No need to reevaluate this one
             continue;
           }
           this.latest.subjects.add(subject);
 
-          // Process the singular quads
-          let score: RDFScore[] = [];
-          const matchingQuads = [];
-          for (const quad of quads) {
-            // The * predicate matches all predicates
-            const rightPredicate = quad.predicate.value in expectedPredicateValues;
-            const rightDatatype = quad.object.termType === 'Literal' &&
-              (quad.object.datatype.value in expectedDatatypeValues);
-            if (!rightPredicate || !rightDatatype) {
-              // This is't the quad we're looking for
-              continue;
-            }
-
-            const action: IActionRdfScore<any> = {
-              quad,
-              expectedDatatypeValues,
-              expectedPredicateValues,
-            };
-
-            try {
-              const literalValue = await this.mediators.mediatorLiteralNormalize.mediate({ data: quad });
-              action.literalValue = literalValue.result;
-            } catch {
-              // Is ok
-            }
-
-            let { score: quadScore } = await this.mediators.mediatorRdfScore.mediate(action);
-            if (!Array.isArray(quadScore)) {
-              // Most useful mediators will return an array, but no guarantees
-              quadScore = [ quadScore ];
-            }
-
-            if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
-              if (quadScore.every(element => element === null)) {
-                // None of the sorting actors had anything to say
-                continue;
-              }
-              matchingQuads.push(quad);
-
-              // -Inf indicates the score is too bad to be used
-              if (score.length === 0) {
-                // First valid score for this subject
-                score = quadScore;
-              } else {
-                score = mergeScores(score, quadScore);
-              }
-            }
-          }
-
+          // **************************** Path Matching ******************************
+          // Check if relation path is present, and score based on value matching path
+          // *************************************************************************
           if (this.relationPath) {
             let matchingLiterals: RDF.Term[] = [];
             try {
@@ -381,18 +340,71 @@ export default class ResultsIterator extends AsyncIterator<IResult> {
             }
           }
 
-          if (
-            score.length > 0 &&
+          // ***************** Expected Predicate Value Matching *******************
+          // Check if quad predicate is contained in expected predicate values array
+          // ***********************************************************************
+
+          // We only check this if no matching has been done based on the discovered path
+          if (matchingQuads.length === 0) {
+            for (const quad of quads) {
+            // The * predicate matches all predicates
+              const rightPredicate = quad.predicate.value in expectedPredicateValues;
+              const rightDatatype = quad.object.termType === 'Literal' &&
+              (quad.object.datatype.value in expectedDatatypeValues);
+              if (!rightPredicate && !rightDatatype) {
+              // This is't the quad we're looking for
+                continue;
+              }
+
+              const action: IActionRdfScore<any> = {
+                quad,
+                expectedDatatypeValues,
+                expectedPredicateValues,
+              };
+
+              try {
+                const literalValue = await this.mediators.mediatorLiteralNormalize.mediate({ data: quad });
+                action.literalValue = literalValue.result;
+              } catch {
+              // Is ok
+              }
+
+              let { score: quadScore } = await this.mediators.mediatorRdfScore.mediate(action);
+              if (!Array.isArray(quadScore)) {
+              // Most useful mediators will return an array, but no guarantees
+                quadScore = [ quadScore ];
+              }
+
+              if (!quadScore.includes(Number.NEGATIVE_INFINITY)) {
+                if (quadScore.every(element => element === null)) {
+                // None of the sorting actors had anything to say
+                  continue;
+                }
+                matchingQuads.push(quad);
+
+                // -Inf indicates the score is too bad to be used
+                if (score.length === 0) {
+                // First valid score for this subject
+                  score = quadScore;
+                } else {
+                  score = mergeScores(score, quadScore);
+                }
+              }
+            }
+
+            if (
+              score.length > 0 &&
             !score.includes(null) &&
             !score.includes(Number.NEGATIVE_INFINITY)
-          ) {
-            const cast: number[] = <number[]>score;
-            rankedSubjects.push({
-              score: cast,
-              subject,
-              matchingQuads,
-              quads,
-            });
+            ) {
+              const cast: number[] = <number[]>score;
+              rankedSubjects.push({
+                score: cast,
+                subject,
+                matchingQuads,
+                quads,
+              });
+            }
           }
         }
 
