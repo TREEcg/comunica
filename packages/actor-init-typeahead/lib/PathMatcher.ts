@@ -56,7 +56,6 @@ export default function evaluatePath(dataQuads: Quad[], pathQuads: Quad[], graph
   const pathStore = new N3.Store(pathQuads);
 
   // Create Term of graphEntry if present
-
   /* istanbul ignore next */
   if (!graphEntry) {
     throw new Error('Please provide a valid string or term as graphEntry parameter');
