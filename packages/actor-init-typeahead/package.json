@@ -1,6 +1,6 @@
 {
   "name": "@treecg/actor-init-typeahead",
-  "version": "1.21.3",
+  "version": "1.21.5",
   "lsd:module": true,
   "main": "index.js",
   "browser": {
